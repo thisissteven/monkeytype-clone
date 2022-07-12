@@ -1,0 +1,34 @@
+.winter {
+  --bg-color: 28 101 140;
+  --font-color: 57 138 185;
+  --hl-color: 216 210 203;
+  --fg-color: 238 238 238;
+}
+
+.taro {
+  --bg-color: 137 138 166;
+  --font-color: 201 187 207;
+  --hl-color: 183 211 223;
+  --fg-color: 214 239 237;
+}
+
+.green-tea {
+  --bg-color: 85 124 85;
+  --font-color: 166 207 152;
+  --hl-color: 242 255 233;
+  --fg-color: 227 243 172;
+}
+
+.wood {
+  --bg-color: 44 54 57;
+  --font-color: 160 147 125;
+  --hl-color: 162 123 92;
+  --fg-color: 208 201 192;
+}
+
+.eye-pain {
+  --bg-color: 34 0 255;
+  --font-color: 163 255 0;
+  --hl-color: 255 0 0;
+  --fg-color: 255 0 231;
+}
