@@ -6,12 +6,13 @@ import { usePreferenceContext } from '@/context/PreferenceProvider';
 export default function Layout({ children }: { children: React.ReactNode }) {
   // Put Header or Footer Here
   const {
-    preferences: { theme },
+    preferences: { theme, fontFamily },
   } = usePreferenceContext();
   return (
     <div
       className={clsx(
         theme,
+        fontFamily,
         'scrollbar h-screen w-full overflow-y-scroll bg-bg transition-colors duration-300'
       )}
     >

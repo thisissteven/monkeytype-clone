@@ -32,3 +32,15 @@
   --hl-color: 255 0 0;
   --fg-color: 255 0 231;
 }
+
+.inter {
+  --font-family: 'Inter';
+}
+
+.poppins {
+  --font-family: 'Poppins';
+}
+
+.chakra-petch {
+  --font-family: 'Chakra Petch';
+}

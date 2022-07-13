@@ -4,17 +4,22 @@ import { FaCog, FaCrown, FaInfo, FaKeyboard } from 'react-icons/fa';
 
 import UnstyledLink from '@/components/links/UnstyledLink';
 
+import { usePreferenceContext } from '@/context/PreferenceProvider';
+
 export default function Header() {
+  const {
+    preferences: { theme, fontFamily },
+  } = usePreferenceContext();
   return (
-    <header className={clsx('bg-transparent')}>
-      <div className='layout flex h-14 items-center justify-between space-x-6 pt-12'>
-        <div className='flex items-center space-x-6'>
+    <header className={clsx('layout bg-transparent', theme, fontFamily)}>
+      <div className='flex w-full flex-col items-center justify-between pt-12 sm:flex-row sm:space-x-6'>
+        <div className='flex w-full items-center justify-start space-x-6 sm:w-auto'>
           <div className='flex space-x-2'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
               viewBox='-680 -1030 300 180'
               width={32}
-              height={44}
+              height={40}
               className='fill-hl'
             >
               <g>
@@ -33,7 +38,7 @@ export default function Header() {
               href='/'
               className='relative text-3xl font-bold text-fg'
             >
-              <div className='absolute top-[-0.725rem] left-0 text-[8px] text-fg/80'>
+              <div className='absolute -top-3 left-0 text-[8px] text-fg/80'>
                 just a clone of
               </div>
               monkeytype
@@ -41,15 +46,15 @@ export default function Header() {
           </div>
         </div>
 
-        <nav className='flex flex-1 items-center justify-between'>
+        <nav className='flex w-full flex-1 items-center justify-between sm:w-auto'>
           <div className='flex space-x-6'>
-            <FaKeyboard className='cursor-pointer fill-fg/50 transition-colors duration-200 hover:fill-fg' />
-            <FaCrown className='cursor-pointer fill-fg/50 transition-colors duration-200 hover:fill-fg' />
-            <FaInfo className='cursor-pointer fill-fg/50 transition-colors duration-200 hover:fill-fg' />
-            <FaCog className='cursor-pointer fill-fg/50 transition-colors duration-200 hover:fill-fg' />
+            <FaKeyboard className='cursor-pointer fill-fg/50 text-lg transition-colors duration-200 hover:fill-fg' />
+            <FaCrown className='cursor-pointer fill-fg/50 text-lg transition-colors duration-200 hover:fill-fg' />
+            <FaInfo className='cursor-pointer fill-fg/50 text-lg transition-colors duration-200 hover:fill-fg' />
+            <FaCog className='cursor-pointer fill-fg/50 text-lg transition-colors duration-200 hover:fill-fg' />
           </div>
-          <div className='flex flex-col -space-y-2'>
-            <div className='flex cursor-pointer list-none space-x-1.5 text-[10px] font-semibold'>
+          <div className='flex flex-col -space-y-1 sm:space-y-1'>
+            <div className='flex cursor-pointer list-none space-x-1.5 text-[10px] font-semibold sm:text-xs'>
               <li className='text-fg/50 transition-colors duration-200 hover:text-fg'>
                 words
               </li>
@@ -60,7 +65,7 @@ export default function Header() {
                 numbers
               </li>
             </div>
-            <div className='flex cursor-pointer list-none justify-end space-x-2 text-[10px] font-semibold'>
+            <div className='flex cursor-pointer list-none justify-end space-x-2 text-[10px] font-semibold sm:text-xs'>
               <li className='text-fg/50 transition-colors duration-200 hover:text-fg'>
                 15
               </li>

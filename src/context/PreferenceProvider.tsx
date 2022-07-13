@@ -9,9 +9,12 @@ const PreferenceContext = React.createContext({} as ProviderState);
 
 type PreferenceState = {
   theme: string;
+  fontFamily: string;
 };
 
-type Action = { type: 'SET_THEME'; payload: string };
+type Action =
+  | { type: 'SET_THEME'; payload: string }
+  | { type: 'SET_FONT_FAMILY'; payload: string };
 
 const reducer = (state: PreferenceState, action: Action) => {
   switch (action.type) {
@@ -22,6 +25,14 @@ const reducer = (state: PreferenceState, action: Action) => {
       return {
         ...state,
         theme: action.payload,
+      };
+    case 'SET_FONT_FAMILY':
+      if (typeof window !== undefined) {
+        window.localStorage.setItem('font-family', action.payload);
+      }
+      return {
+        ...state,
+        fontFamily: action.payload,
       };
     default:
       throw new Error('Unknown action type');
@@ -34,13 +45,17 @@ export default function PreferenceProvider({
   children: React.ReactNode;
 }) {
   const [preferences, dispatch] = React.useReducer(reducer, {
-    theme: '',
+    theme: 'default',
+    fontFamily: 'chakra-petch',
   });
 
   React.useEffect(() => {
     if (typeof window !== undefined) {
       const theme = window.localStorage.getItem('theme');
+      const fontFamily = window.localStorage.getItem('font-family');
       if (theme) dispatch({ type: 'SET_THEME', payload: theme });
+      if (fontFamily)
+        dispatch({ type: 'SET_FONT_FAMILY', payload: fontFamily });
     }
   }, []);
 
