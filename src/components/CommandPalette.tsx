@@ -2,7 +2,6 @@ import { Combobox, Dialog, Transition } from '@headlessui/react';
 import clsx from 'clsx';
 import { useRouter } from 'next/router';
 import * as React from 'react';
-import { useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 
 import { usePreferenceContext } from '@/context/PreferenceProvider';
@@ -13,8 +12,8 @@ export type PokemonData = {
 };
 
 const CommandPalette = ({ results }: { results: PokemonData[] }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [query, setQuery] = useState('');
+  const [isOpen, setIsOpen] = React.useState(false);
+  const [query, setQuery] = React.useState('');
 
   const router = useRouter();
 
@@ -55,13 +54,13 @@ const CommandPalette = ({ results }: { results: PokemonData[] }) => {
         initialFocus={completeButtonRef}
         ref={completeButtonRef}
         className={clsx(
-          'fixed inset-0 overflow-y-auto p-4 pt-[25vh]',
+          'pointer-events-none fixed inset-0 z-20 overflow-y-auto p-4 pt-[25vh]',
           theme,
           fontFamily
         )}
       >
         <Transition.Child
-          enter='duration-300 ease-out'
+          enter='duration-200 ease-out'
           enterFrom='opacity-0'
           enterTo='opacity-100'
           leave='duration-200 ease-in'
@@ -71,7 +70,7 @@ const CommandPalette = ({ results }: { results: PokemonData[] }) => {
           <Dialog.Overlay className='fixed inset-0 bg-fg/50' />
         </Transition.Child>
         <Transition.Child
-          enter='duration-300 ease-out'
+          enter='duration-200 ease-out'
           enterFrom='opacity-0 scale-95'
           enterTo='opacity-100 scale-100'
           leave='duration-200 ease-in'
@@ -79,6 +78,7 @@ const CommandPalette = ({ results }: { results: PokemonData[] }) => {
           leaveTo='opacity-0 scale-95'
         >
           <Combobox
+            value=''
             onChange={(url: string) => {
               setIsOpen(false);
               router.push(url, '_blank');
