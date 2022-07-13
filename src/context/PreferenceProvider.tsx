@@ -10,9 +10,11 @@ const PreferenceContext = React.createContext({} as ProviderState);
 type PreferenceState = {
   theme: string;
   fontFamily: string;
+  isOpen: boolean;
 };
 
 type Action =
+  | { type: 'TOGGLE_COMMAND_PALETTE' }
   | { type: 'SET_THEME'; payload: string }
   | { type: 'SET_FONT_FAMILY'; payload: string };
 
@@ -34,6 +36,11 @@ const reducer = (state: PreferenceState, action: Action) => {
         ...state,
         fontFamily: action.payload,
       };
+    case 'TOGGLE_COMMAND_PALETTE':
+      return {
+        ...state,
+        isOpen: !state.isOpen,
+      };
     default:
       throw new Error('Unknown action type');
   }
@@ -47,6 +54,7 @@ export default function PreferenceProvider({
   const [preferences, dispatch] = React.useReducer(reducer, {
     theme: 'default',
     fontFamily: 'chakra-petch',
+    isOpen: false,
   });
 
   React.useEffect(() => {

@@ -33,7 +33,7 @@ export default function Box() {
           ref.current.focus();
           setList(words);
         }}
-        className='mt-4 flex items-center rounded-lg border-0 px-4 py-2 text-fg/50 outline-none transition-colors duration-200 hover:text-fg focus:bg-hl focus:text-bg'
+        className='mt-4 flex items-center rounded-lg border-0 px-4 py-2 text-fg/50 outline-none transition-colors duration-200 hover:text-fg focus:bg-hl focus:text-bg active:bg-hl active:text-bg'
       >
         <VscDebugRestart className='scale-x-[-1] transform text-2xl' />
       </button>

@@ -12,7 +12,10 @@ export type PokemonData = {
 };
 
 const CommandPalette = ({ results }: { results: PokemonData[] }) => {
-  const [isOpen, setIsOpen] = React.useState(false);
+  const {
+    preferences: { isOpen },
+    dispatch,
+  } = usePreferenceContext();
   const [query, setQuery] = React.useState('');
 
   const router = useRouter();
@@ -34,13 +37,13 @@ const CommandPalette = ({ results }: { results: PokemonData[] }) => {
         (event.metaKey || event.ctrlKey)
       ) {
         event.preventDefault();
-        setIsOpen((isOpen) => !isOpen);
+        dispatch({ type: 'TOGGLE_COMMAND_PALETTE' });
       }
     };
 
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
-  }, []);
+  }, [dispatch]);
 
   const completeButtonRef = React.useRef(null);
   return (
@@ -50,7 +53,7 @@ const CommandPalette = ({ results }: { results: PokemonData[] }) => {
       afterLeave={() => setQuery('')}
     >
       <Dialog
-        onClose={setIsOpen}
+        onClose={() => dispatch({ type: 'TOGGLE_COMMAND_PALETTE' })}
         initialFocus={completeButtonRef}
         ref={completeButtonRef}
         className={clsx(
@@ -80,7 +83,7 @@ const CommandPalette = ({ results }: { results: PokemonData[] }) => {
           <Combobox
             value=''
             onChange={(url: string) => {
-              setIsOpen(false);
+              dispatch({ type: 'TOGGLE_COMMAND_PALETTE' });
               router.push(url, '_blank');
             }}
             as='div'
