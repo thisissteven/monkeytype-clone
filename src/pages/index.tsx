@@ -1,7 +1,8 @@
 import * as React from 'react';
 
-import ButtonLink from '@/components/links/ButtonLink';
+import Kbd from '@/components/Kbd';
 import Seo from '@/components/Seo';
+import Box from '@/components/words/Box';
 
 /**
  * SVGR Support
@@ -23,12 +24,25 @@ export default function HomePage() {
 
       <main>
         <section>
-          <div className='layout flex min-h-screen flex-col items-center justify-center text-center'>
-            <h1 className='mt-4'>Typeracer App</h1>
+          <div className='layout flex flex-col items-center pt-28 text-center'>
+            <Box />
 
-            <ButtonLink className='mt-6' href='/components' variant='light'>
-              See all components
-            </ButtonLink>
+            <div className='mt-8 flex flex-col items-center justify-center gap-2'>
+              <div className='flex items-center space-x-2 text-sm font-light'>
+                <Kbd>tab</Kbd>
+                <span> + </span>
+                <Kbd>enter</Kbd>
+                <span> - restart test </span>
+              </div>
+              <div className='flex items-center space-x-2 text-sm font-light'>
+                <Kbd>ctrl/cmd</Kbd>
+                <span> + </span>
+                <Kbd>k</Kbd>
+                <span> or </span>
+                <Kbd>p</Kbd>
+                <span> - command palette </span>
+              </div>
+            </div>
           </div>
         </section>
       </main>
