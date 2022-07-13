@@ -23,6 +23,7 @@ class MyDocument extends Document {
             type='font/woff2'
             crossOrigin='anonymous'
           />
+          <link rel='shortcut icon' href='#' />
         </Head>
         <body>
           <Main />

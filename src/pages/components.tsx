@@ -18,10 +18,7 @@ export default function ComponentsPage() {
 
   return (
     <>
-      <Seo
-        templateTitle='Components'
-        description='Pre-built components with awesome default'
-      />
+      <Seo title='Components' />
 
       <main>
         <section>
@@ -109,27 +106,27 @@ export default function ComponentsPage() {
                 </div>
 
                 <div className='flex flex-wrap gap-2 text-xs font-medium'>
-                  <div className='flex flex-col gap-1'>
-                    <p className='flex w-full justify-between text-sm'>
-                      <span className='mr-4 font-bold text-fg'>text-sm</span>The
-                      quick brown fox ...
-                    </p>
-                    <p className='flex w-full justify-between text-base'>
+                  <div className='flex flex-col gap-4'>
+                    <div className='flex w-full flex-col items-start justify-between text-sm sm:flex-row sm:items-center sm:gap-2'>
+                      <span className='mr-4 font-bold text-fg'>text-sm</span>
+                      <p>The quick brown fox ...</p>
+                    </div>
+                    <div className='flex w-full flex-col items-start justify-between text-base sm:flex-row sm:items-center sm:gap-2'>
                       <span className='mr-4 font-bold text-fg'>text-base</span>
-                      The quick brown fox ...
-                    </p>
-                    <p className='flex w-full justify-between text-lg'>
-                      <span className='mr-4 font-bold text-fg'>text-lg</span>The
-                      quick brown fox ...
-                    </p>
-                    <p className='flex w-full justify-between text-xl'>
-                      <span className='mr-4 font-bold text-fg'>text-xl</span>The
-                      quick brown fox ...
-                    </p>
-                    <p className='flex w-full justify-between text-2xl'>
+                      <p>The quick brown fox ...</p>
+                    </div>
+                    <div className='flex w-full flex-col items-start justify-between text-lg sm:flex-row sm:items-center sm:gap-2'>
+                      <span className='mr-4 font-bold text-fg'>text-lg</span>
+                      <p>The quick brown fox ...</p>
+                    </div>
+                    <div className='flex w-full flex-col items-start justify-between text-xl sm:flex-row sm:items-center sm:gap-2'>
+                      <span className='mr-4 font-bold text-fg'>text-xl</span>
+                      <p>The quick brown fox ...</p>
+                    </div>
+                    <div className='flex w-full flex-col items-start justify-between text-2xl sm:flex-row sm:items-center sm:gap-2'>
                       <span className='mr-4 font-bold text-fg'>text-2xl</span>
-                      The quick brown fox ...
-                    </p>
+                      <p>The quick brown fox ...</p>
+                    </div>
                   </div>
                 </div>
               </li>

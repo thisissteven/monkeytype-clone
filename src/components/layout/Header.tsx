@@ -4,14 +4,9 @@ import { FaCog, FaCrown, FaInfo, FaKeyboard } from 'react-icons/fa';
 
 import UnstyledLink from '@/components/links/UnstyledLink';
 
-import { usePreferenceContext } from '@/context/PreferenceProvider';
-
 export default function Header() {
-  const {
-    preferences: { theme, fontFamily },
-  } = usePreferenceContext();
   return (
-    <header className={clsx('layout bg-transparent', theme, fontFamily)}>
+    <header className={clsx('layout bg-transparent')}>
       <div className='flex w-full flex-col items-center justify-between pt-12 sm:flex-row sm:space-x-6'>
         <div className='flex w-full items-center justify-start space-x-6 sm:w-auto'>
           <div className='flex space-x-2'>
@@ -41,13 +36,13 @@ export default function Header() {
               <div className='absolute -top-3 left-0 text-[8px] text-fg/80'>
                 just a clone of
               </div>
-              monkeytype
+              <span>monkeytype</span>
             </UnstyledLink>
           </div>
         </div>
 
         <nav className='flex w-full flex-1 items-center justify-between sm:w-auto'>
-          <div className='flex space-x-6'>
+          <div className='flex space-x-4 xs:space-x-6'>
             <FaKeyboard className='cursor-pointer fill-fg/50 text-lg transition-colors duration-200 hover:fill-fg' />
             <FaCrown className='cursor-pointer fill-fg/50 text-lg transition-colors duration-200 hover:fill-fg' />
             <FaInfo className='cursor-pointer fill-fg/50 text-lg transition-colors duration-200 hover:fill-fg' />

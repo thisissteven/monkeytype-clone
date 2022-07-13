@@ -13,7 +13,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       className={clsx(
         theme,
         fontFamily,
-        'scrollbar h-screen w-full overflow-y-scroll bg-bg transition-colors duration-300'
+        'sm:scrollbar h-screen w-full overflow-y-scroll bg-bg transition-colors duration-300'
       )}
     >
       <div className='layout bg-transparent'>{children}</div>

@@ -19,7 +19,7 @@ export default function HomePage() {
   return (
     <>
       {/* <Seo templateTitle='Home' /> */}
-      <Seo title='Typeracer' />
+      <Seo title='Monkeytype Clone' />
 
       <main>
         <section>
