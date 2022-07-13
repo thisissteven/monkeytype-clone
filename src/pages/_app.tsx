@@ -1,3 +1,4 @@
+import { AnimatePresence } from 'framer-motion';
 import { AppProps } from 'next/app';
 
 import '@/styles/globals.css';
@@ -33,13 +34,15 @@ const results = [
   },
 ];
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps, router }: AppProps) {
   return (
     <PreferenceProvider>
+      <CommandPalette results={results} />
       <Layout>
-        <CommandPalette results={results} />
         <Header />
-        <Component {...pageProps} />
+        <AnimatePresence exitBeforeEnter>
+          <Component {...pageProps} key={router.route} />
+        </AnimatePresence>
       </Layout>
     </PreferenceProvider>
   );

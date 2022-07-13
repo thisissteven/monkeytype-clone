@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import Kbd from '@/components/Kbd';
+import AnimateFade from '@/components/layout/AnimateFade';
 import Seo from '@/components/Seo';
 import Box from '@/components/words/Box';
 
@@ -18,7 +19,7 @@ import Box from '@/components/words/Box';
 
 export default function HomePage() {
   return (
-    <>
+    <AnimateFade>
       {/* <Seo templateTitle='Home' /> */}
       <Seo title='Monkeytype Clone' />
 
@@ -46,6 +47,6 @@ export default function HomePage() {
           </div>
         </section>
       </main>
-    </>
+    </AnimateFade>
   );
 }

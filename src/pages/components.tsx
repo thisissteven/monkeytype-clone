@@ -2,6 +2,7 @@
 import clsx from 'clsx';
 import * as React from 'react';
 
+import AnimateFade from '@/components/layout/AnimateFade';
 import ArrowLink from '@/components/links/ArrowLink';
 import Seo from '@/components/Seo';
 
@@ -17,7 +18,7 @@ export default function ComponentsPage() {
   } = usePreferenceContext();
 
   return (
-    <>
+    <AnimateFade>
       <Seo title='Components' />
 
       <main>
@@ -134,7 +135,7 @@ export default function ComponentsPage() {
           </div>
         </section>
       </main>
-    </>
+    </AnimateFade>
   );
 }
 
