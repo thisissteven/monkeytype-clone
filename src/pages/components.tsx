@@ -16,12 +16,6 @@ export default function ComponentsPage() {
     dispatch,
   } = usePreferenceContext();
 
-  React.useEffect(() => {
-    if (typeof window !== undefined) {
-      window.localStorage.setItem('theme', theme);
-    }
-  }, [theme]);
-
   return (
     <Layout>
       <Seo
