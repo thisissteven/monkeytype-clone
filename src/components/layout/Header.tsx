@@ -33,7 +33,7 @@ export default function Header() {
               href='/'
               className='relative text-3xl font-bold text-fg'
             >
-              <div className='absolute -top-2.5 left-0 text-[8px] text-fg/80'>
+              <div className='absolute top-[-0.725rem] left-0 text-[8px] text-fg/80'>
                 just a clone of
               </div>
               monkeytype

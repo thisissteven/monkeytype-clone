@@ -1,8 +1,8 @@
-.winter {
-  --bg-color: 21 114 161;
-  --font-color: 196 221 255;
-  --hl-color: 184 255 249;
-  --fg-color: 239 255 253;
+:root .winter {
+  --bg-color: 21 114 161 !important;
+  --font-color: 196 221 255 !important;
+  --hl-color: 184 255 249 !important;
+  --fg-color: 239 255 253 !important;
 }
 
 .taro {

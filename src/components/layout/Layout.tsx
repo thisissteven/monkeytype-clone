@@ -9,7 +9,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     preferences: { theme },
   } = usePreferenceContext();
   return (
-    <div className={clsx(theme, 'bg-bg transition-all duration-300')}>
+    <div
+      className={clsx(
+        theme,
+        'scrollbar h-screen w-full overflow-y-scroll bg-bg transition-colors duration-300'
+      )}
+    >
       <div className='layout bg-transparent'>{children}</div>
     </div>
   );
