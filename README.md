@@ -3,6 +3,8 @@
   <p>Made using <a href="https://theodorusclarence.com">Theodorus Clarence</a>'s Next.js + Tailwind CSS + TypeScript <a href="https://github.com/theodorusclarence/ts-nextjs-tailwind-starter">starter pack</a>.</p>
 </div>
 
+![Monkeytype Clone](https://github.com/steven2801/monkeytype-clone/blob/main/public/images/monkeytype-clone.png?raw=true)
+
 ## Getting Started
 
 ### 1. Clone this repository
