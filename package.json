@@ -23,6 +23,7 @@
     "@apollo/client": "^3.6.9",
     "@headlessui/react": "^1.6.6",
     "clsx": "^1.2.1",
+    "framer-motion": "^6.5.0",
     "graphql": "^16.5.0",
     "next": "^12.2.1",
     "next-auth": "^4.9.0",
