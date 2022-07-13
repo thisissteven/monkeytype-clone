@@ -1,8 +1,8 @@
 .winter {
-  --bg-color: 28 101 140;
-  --font-color: 57 138 185;
-  --hl-color: 216 210 203;
-  --fg-color: 238 238 238;
+  --bg-color: 21 114 161;
+  --font-color: 196 221 255;
+  --hl-color: 184 255 249;
+  --fg-color: 239 255 253;
 }
 
 .taro {
@@ -14,9 +14,9 @@
 
 .green-tea {
   --bg-color: 85 124 85;
-  --font-color: 166 207 152;
+  --font-color: 227 243 172;
   --hl-color: 242 255 233;
-  --fg-color: 227 243 172;
+  --fg-color: 166 207 152;
 }
 
 .wood {

@@ -3,6 +3,9 @@ import { AppProps } from 'next/app';
 import '@/styles/globals.css';
 import '@/styles/theme.css';
 
+import Header from '@/components/layout/Header';
+import Layout from '@/components/layout/Layout';
+
 import PreferenceProvider from '@/context/PreferenceProvider';
 
 /**
@@ -13,7 +16,10 @@ import PreferenceProvider from '@/context/PreferenceProvider';
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <PreferenceProvider>
-      <Component {...pageProps} />
+      <Layout>
+        <Header />
+        <Component {...pageProps} />
+      </Layout>
     </PreferenceProvider>
   );
 }

@@ -2,7 +2,6 @@
 import clsx from 'clsx';
 import * as React from 'react';
 
-import Layout from '@/components/layout/Layout';
 import ArrowLink from '@/components/links/ArrowLink';
 import Seo from '@/components/Seo';
 
@@ -17,14 +16,14 @@ export default function ComponentsPage() {
   } = usePreferenceContext();
 
   return (
-    <Layout>
+    <>
       <Seo
         templateTitle='Components'
         description='Pre-built components with awesome default'
       />
 
       <main>
-        <section className='bg-bg/20'>
+        <section>
           <div className={clsx('layout min-h-screen py-20')}>
             <h1>Components</h1>
             <ArrowLink direction='left' className='mt-2 text-font' href='/'>
@@ -41,7 +40,7 @@ export default function ComponentsPage() {
                     value={theme}
                     className={clsx(
                       'block max-w-xs rounded',
-                      'border-none bg-bg/50 text-fg',
+                      'border-none bg-fg text-bg',
                       'focus:border-bg focus:outline-none focus:ring focus:ring-bg'
                     )}
                     onChange={(e) =>
@@ -60,17 +59,29 @@ export default function ComponentsPage() {
                 </div>
 
                 <div className='flex flex-wrap gap-2 text-xs font-medium'>
-                  <div className='h-8 w-20 rounded bg-bg text-black' />
-                  <div className='h-8 w-20 rounded bg-font text-black' />
-                  <div className='h-8 w-20 rounded bg-hl text-black' />
-                  <div className='h-8 w-20 rounded bg-fg text-black' />
+                  <div className='flex flex-col gap-1 text-center'>
+                    <div className='h-8 w-20 rounded border-2 border-font bg-bg text-black'></div>
+                    <p>bg</p>
+                  </div>
+                  <div className='flex flex-col gap-1 text-center'>
+                    <div className='h-8 w-20 rounded bg-font text-black'></div>
+                    <p>font</p>
+                  </div>
+                  <div className='flex flex-col gap-1 text-center'>
+                    <div className='h-8 w-20 rounded bg-hl text-black'></div>
+                    <p>hl</p>
+                  </div>
+                  <div className='flex flex-col gap-1 text-center'>
+                    <div className='h-8 w-20 rounded bg-fg text-black'></div>
+                    <p>fg</p>
+                  </div>
                 </div>
               </li>
             </ol>
           </div>
         </section>
       </main>
-    </Layout>
+    </>
   );
 }
 

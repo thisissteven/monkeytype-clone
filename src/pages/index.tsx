@@ -1,6 +1,5 @@
 import * as React from 'react';
 
-import Layout from '@/components/layout/Layout';
 import ButtonLink from '@/components/links/ButtonLink';
 import Seo from '@/components/Seo';
 
@@ -18,12 +17,12 @@ import Seo from '@/components/Seo';
 
 export default function HomePage() {
   return (
-    <Layout>
+    <>
       {/* <Seo templateTitle='Home' /> */}
       <Seo title='Typeracer' />
 
       <main>
-        <section className='bg-bg/20'>
+        <section>
           <div className='layout flex min-h-screen flex-col items-center justify-center text-center'>
             <h1 className='mt-4'>Typeracer App</h1>
 
@@ -33,6 +32,6 @@ export default function HomePage() {
           </div>
         </section>
       </main>
-    </Layout>
+    </>
   );
 }
