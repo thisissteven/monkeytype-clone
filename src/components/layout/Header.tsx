@@ -1,9 +1,8 @@
 import clsx from 'clsx';
+import Link from 'next/link';
 import * as React from 'react';
 import { AiFillBuild } from 'react-icons/ai';
 import { FaCog, FaCrown, FaInfo, FaKeyboard, FaTerminal } from 'react-icons/fa';
-
-import UnstyledLink from '@/components/links/UnstyledLink';
 
 import { usePreferenceContext } from '@/context/PreferenceProvider';
 
@@ -14,7 +13,7 @@ export default function Header() {
     <header className={clsx('layout bg-transparent')}>
       <div className='flex w-full flex-col items-center justify-between space-y-2 pt-12 sm:flex-row sm:space-y-0 sm:space-x-6'>
         <div className='flex w-full items-center justify-start space-x-6 sm:w-auto'>
-          <UnstyledLink href='/'>
+          <Link href='/'>
             <div className='flex space-x-2'>
               <svg
                 xmlns='http://www.w3.org/2000/svg'
@@ -43,7 +42,7 @@ export default function Header() {
                 <span>monkeytype</span>
               </div>
             </div>
-          </UnstyledLink>
+          </Link>
         </div>
 
         <nav className='flex w-full flex-1 items-center justify-between sm:w-auto'>
@@ -52,46 +51,46 @@ export default function Header() {
             <FaCrown className='cursor-pointer fill-fg/50 text-lg transition-colors duration-200 hover:fill-fg' />
             <FaInfo className='cursor-pointer fill-fg/50 text-lg transition-colors duration-200 hover:fill-fg' />
             <FaCog className='cursor-pointer fill-fg/50 text-lg transition-colors duration-200 hover:fill-fg' />
-            <UnstyledLink href='/components'>
+            <Link href='/components'>
               <AiFillBuild className='cursor-pointer fill-fg/50 text-lg transition-colors duration-200 hover:fill-fg' />
-            </UnstyledLink>
+            </Link>
           </div>
           <div className='hidden flex-col -space-y-1 sm:flex sm:space-y-1'>
             <div className='flex cursor-pointer list-none space-x-1.5 text-[10px] font-semibold sm:text-xs'>
-              <button className='text-fg/50 transition-colors duration-200 hover:text-fg'>
+              <div className='text-fg/50 transition-colors duration-200 hover:text-fg'>
                 words
-              </button>
-              <button className='text-fg/50 transition-colors duration-200 hover:text-fg'>
+              </div>
+              <div className='text-fg/50 transition-colors duration-200 hover:text-fg'>
                 sentences
-              </button>
-              <button className='text-fg/50 transition-colors duration-200 hover:text-fg'>
+              </div>
+              <div className='text-fg/50 transition-colors duration-200 hover:text-fg'>
                 numbers
-              </button>
+              </div>
             </div>
             <div className='flex cursor-pointer list-none justify-end space-x-2 text-[10px] font-semibold sm:text-xs'>
-              <button className='text-fg/50 transition-colors duration-200 hover:text-fg'>
+              <div className='text-fg/50 transition-colors duration-200 hover:text-fg'>
                 15
-              </button>
-              <button className='text-fg/50 transition-colors duration-200 hover:text-fg'>
+              </div>
+              <div className='text-fg/50 transition-colors duration-200 hover:text-fg'>
                 30
-              </button>
-              <button className='text-fg/50 transition-colors duration-200 hover:text-fg'>
+              </div>
+              <div className='text-fg/50 transition-colors duration-200 hover:text-fg'>
                 45
-              </button>
-              <button className='text-fg/50 transition-colors duration-200 hover:text-fg'>
+              </div>
+              <div className='text-fg/50 transition-colors duration-200 hover:text-fg'>
                 60
-              </button>
-              <button className='text-fg/50 transition-colors duration-200 hover:text-fg'>
+              </div>
+              <div className='text-fg/50 transition-colors duration-200 hover:text-fg'>
                 120
-              </button>
+              </div>
             </div>
           </div>
-          <button
+          <div
             className='rounded-full bg-hl p-2 sm:hidden'
             onClick={() => dispatch({ type: 'TOGGLE_COMMAND_PALETTE' })}
           >
             <FaTerminal className='cursor-pointer fill-fg text-lg' />
-          </button>
+          </div>
         </nav>
       </div>
     </header>

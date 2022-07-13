@@ -83,6 +83,12 @@
     @apply mx-auto w-11/12;
   }
 
+  #caret {
+    transition: left 0.1s ease;
+    position: absolute;
+    color: rgb(var(--hl-color));
+  }
+
   .bg-dark a.custom-link {
     @apply border-gray-200 hover:border-gray-200/0;
   }
