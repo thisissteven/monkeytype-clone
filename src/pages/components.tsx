@@ -6,10 +6,21 @@ import Layout from '@/components/layout/Layout';
 import ArrowLink from '@/components/links/ArrowLink';
 import Seo from '@/components/Seo';
 
+import { usePreferenceContext } from '@/context/PreferenceProvider';
+
 type Theme = typeof themeList[number];
 
 export default function ComponentsPage() {
-  const [theme, setTheme] = React.useState('');
+  const {
+    preferences: { theme },
+    dispatch,
+  } = usePreferenceContext();
+
+  React.useEffect(() => {
+    if (typeof window !== undefined) {
+      window.localStorage.setItem('theme', theme);
+    }
+  }, [theme]);
 
   return (
     <Layout>
@@ -18,7 +29,7 @@ export default function ComponentsPage() {
         description='Pre-built components with awesome default'
       />
 
-      <main className={clsx(theme)}>
+      <main>
         <section className='bg-bg/20'>
           <div className={clsx('layout min-h-screen py-20')}>
             <h1>Components</h1>
@@ -39,7 +50,12 @@ export default function ComponentsPage() {
                       'border-none bg-bg/50 text-fg',
                       'focus:border-bg focus:outline-none focus:ring focus:ring-bg'
                     )}
-                    onChange={(e) => setTheme(e.target.value as Theme)}
+                    onChange={(e) =>
+                      dispatch({
+                        type: 'SET_THEME',
+                        payload: e.target.value as Theme,
+                      })
+                    }
                   >
                     {themeList.map((t) => (
                       <option key={t} value={t}>
