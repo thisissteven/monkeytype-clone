@@ -89,7 +89,7 @@ export default function Header() {
             className='rounded-full bg-hl p-2 sm:hidden'
             onClick={() => dispatch({ type: 'TOGGLE_COMMAND_PALETTE' })}
           >
-            <FaTerminal className='cursor-pointer fill-fg text-lg' />
+            <FaTerminal className='cursor-pointer fill-bg/90 text-lg' />
           </div>
         </nav>
       </div>
