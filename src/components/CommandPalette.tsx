@@ -1,6 +1,5 @@
 import { Combobox, Dialog, Transition } from '@headlessui/react';
 import clsx from 'clsx';
-import { useRouter } from 'next/router';
 import * as React from 'react';
 import { FaSearch } from 'react-icons/fa';
 
@@ -13,12 +12,11 @@ export type PokemonData = {
 
 const CommandPalette = ({ results }: { results: PokemonData[] }) => {
   const {
-    preferences: { isOpen, theme, fontFamily },
+    preferences: { theme, fontFamily, isOpen },
     dispatch,
   } = usePreferenceContext();
   const [query, setQuery] = React.useState('');
-
-  const router = useRouter();
+  // const [isOpen, setIsOpen] = React.useState(false);
 
   const filteredResults = query
     ? results.filter((result) =>
@@ -33,6 +31,7 @@ const CommandPalette = ({ results }: { results: PokemonData[] }) => {
         (event.metaKey || event.ctrlKey)
       ) {
         event.preventDefault();
+
         dispatch({ type: 'TOGGLE_COMMAND_PALETTE' });
       }
     };
@@ -41,7 +40,6 @@ const CommandPalette = ({ results }: { results: PokemonData[] }) => {
     return () => window.removeEventListener('keydown', onKeyDown);
   }, [dispatch]);
 
-  const completeButtonRef = React.useRef(null);
   return (
     <Transition.Root
       show={isOpen}
@@ -50,8 +48,6 @@ const CommandPalette = ({ results }: { results: PokemonData[] }) => {
     >
       <Dialog
         onClose={() => dispatch({ type: 'TOGGLE_COMMAND_PALETTE' })}
-        initialFocus={completeButtonRef}
-        ref={completeButtonRef}
         className={clsx(
           'pointer-events-none fixed inset-0 z-20 overflow-y-auto p-4 pt-[25vh]',
           theme,
@@ -78,17 +74,15 @@ const CommandPalette = ({ results }: { results: PokemonData[] }) => {
         >
           <Combobox
             value=''
-            onChange={(url: string) => {
+            onChange={() => {
               dispatch({ type: 'TOGGLE_COMMAND_PALETTE' });
-              router.push(url, '_blank');
             }}
             as='div'
-            className='relative mx-auto max-w-xl divide-y divide-font/50 overflow-hidden rounded-xl bg-bg shadow-2xl ring-1 ring-bg/5'
+            className='pointer-events-auto relative mx-auto max-w-xl divide-y divide-font/50 overflow-hidden rounded-xl bg-bg shadow-2xl ring-1 ring-bg/5'
           >
             <div className='flex items-center px-4'>
               <FaSearch className='h-4 w-4 text-font' />
               <Combobox.Input
-                autoFocus={true}
                 autoComplete='off'
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   setQuery(e.target.value);
@@ -105,7 +99,7 @@ const CommandPalette = ({ results }: { results: PokemonData[] }) => {
               >
                 {filteredResults.map((result) => {
                   return (
-                    <Combobox.Option key={result.name} value={result.url}>
+                    <Combobox.Option key={result.name} value={result.name}>
                       {({ active }) => (
                         <div
                           className={`${
