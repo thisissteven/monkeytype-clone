@@ -6,7 +6,10 @@ import { FaSearch } from 'react-icons/fa';
 
 import { CommandType } from '@/data/commands';
 
-import { filterCommands } from '@/components/CommandPalette/functions';
+import {
+  filterCommands,
+  handleSelect,
+} from '@/components/CommandPalette/functions';
 
 import { usePreferenceContext } from '@/context/Preference/PreferenceContext';
 
@@ -107,6 +110,7 @@ const CommandPalette = ({ data }: { data: CommandType[] }) => {
             onChange={(value: string) => {
               setSelected(value);
               if (page === 2) {
+                handleSelect(selected, value, dispatch);
                 setCommands(data);
                 dispatch({ type: 'TOGGLE_COMMAND_PALETTE' });
               }
@@ -140,18 +144,18 @@ const CommandPalette = ({ data }: { data: CommandType[] }) => {
                   >
                     {filteredCommands.map((command, index) => {
                       return (
-                        <motion.div
-                          onHoverStart={() => {
-                            // if (command.)
-                          }}
+                        <Combobox.Option
+                          value={command.commandName}
                           key={command.commandName + index}
                         >
-                          <Combobox.Option value={command.commandName}>
-                            {({ active }) => (
+                          {({ active }) => {
+                            return (
                               <div
                                 className={`${
                                   active ? 'bg-hl' : 'bg-bg'
-                                } cursor-pointer space-x-1 px-4 py-2`}
+                                } cursor-pointer space-x-1 px-4 py-2 ${
+                                  active && command.commandName
+                                }`}
                               >
                                 <span
                                   className={`font-medium ${
@@ -168,9 +172,9 @@ const CommandPalette = ({ data }: { data: CommandType[] }) => {
                                   {command.description}
                                 </span>
                               </div>
-                            )}
-                          </Combobox.Option>
-                        </motion.div>
+                            );
+                          }}
+                        </Combobox.Option>
                       );
                     })}
                   </motion.div>
