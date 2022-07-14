@@ -3,7 +3,7 @@ import * as React from 'react';
 import { IoMdGlobe } from 'react-icons/io';
 import { VscDebugRestart } from 'react-icons/vsc';
 
-import words from '../../wordlists/words.json';
+import words from '../../data/words.json';
 
 export default function Box() {
   const [list, setList] = React.useState(words);
