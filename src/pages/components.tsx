@@ -40,7 +40,8 @@ export default function ComponentsPage() {
                     className={clsx(
                       'block max-w-xs rounded',
                       'border-none bg-fg text-bg',
-                      'focus:border-bg focus:outline-none focus:ring focus:ring-bg'
+                      'focus:border-bg focus:outline-none focus:ring focus:ring-bg',
+                      'font-primary'
                     )}
                     onChange={(e) =>
                       dispatch({
@@ -89,7 +90,8 @@ export default function ComponentsPage() {
                     className={clsx(
                       'block max-w-xs rounded',
                       'border-none bg-fg text-bg',
-                      'focus:border-bg focus:outline-none focus:ring focus:ring-bg'
+                      'focus:border-bg focus:outline-none focus:ring focus:ring-bg',
+                      'font-primary'
                     )}
                     onChange={(e) =>
                       dispatch({
