@@ -6,7 +6,10 @@ import { VscDebugRestart } from 'react-icons/vsc';
 import words from '../../data/words.json';
 
 export default function Box() {
-  const [list, setList] = React.useState(words);
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const _ = require('lodash');
+
+  const [list, setList] = React.useState<string[]>(() => _.shuffle(words));
 
   React.useEffect(() => {
     ref.current.focus();
@@ -19,9 +22,6 @@ export default function Box() {
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
   }, []);
-
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const _ = require('lodash');
 
   const ref = React.useRef() as React.MutableRefObject<HTMLInputElement>;
   const buttonRef = React.useRef() as React.MutableRefObject<HTMLButtonElement>;
