@@ -6,7 +6,7 @@ import { FaCog, FaCrown, FaInfo, FaKeyboard, FaTerminal } from 'react-icons/fa';
 
 import { usePreferenceContext } from '@/context/Preference/PreferenceContext';
 
-const typeList = ['words', 'sentences', 'number'];
+const typeList = ['words', 'sentences', 'numbers'];
 
 const timeList = ['15', '30', '45', '60', '120'];
 

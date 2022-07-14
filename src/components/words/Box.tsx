@@ -3,13 +3,19 @@ import * as React from 'react';
 import { IoMdGlobe } from 'react-icons/io';
 import { VscDebugRestart } from 'react-icons/vsc';
 
-import words from '../../data/words.json';
+import { shuffleList } from '@/components/words/functions';
+
+import { usePreferenceContext } from '@/context/Preference/PreferenceContext';
 
 export default function Box() {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const _ = require('lodash');
 
-  const [list, setList] = React.useState<string[]>(() => _.shuffle(words));
+  const {
+    preferences: { type },
+  } = usePreferenceContext();
+
+  const [list, setList] = React.useState<string[]>(() => shuffleList(type));
 
   React.useEffect(() => {
     ref.current.focus();
@@ -22,6 +28,10 @@ export default function Box() {
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
   }, []);
+
+  React.useEffect(() => {
+    setList(shuffleList(type));
+  }, [type]);
 
   const ref = React.useRef() as React.MutableRefObject<HTMLInputElement>;
   const buttonRef = React.useRef() as React.MutableRefObject<HTMLButtonElement>;
@@ -68,7 +78,7 @@ export default function Box() {
       <button
         onClick={() => {
           ref.current.focus();
-          setList((list) => _.shuffle(list));
+          setList(shuffleList(type));
         }}
         ref={buttonRef}
         className='mt-4 flex items-center rounded-lg border-0 px-4 py-2 text-fg/50 outline-none transition-colors duration-200 hover:text-fg focus:bg-hl focus:text-bg active:bg-hl active:text-bg'
