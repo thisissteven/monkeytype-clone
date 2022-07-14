@@ -24,6 +24,12 @@ export const handleSelect = (
     case 'font-family':
       dispatch({ type: 'SET_FONT_FAMILY', payload: value });
       break;
+    case 'type':
+      dispatch({ type: 'SET_TYPE', payload: value });
+      break;
+    case 'time':
+      dispatch({ type: 'SET_TIME', payload: value });
+      break;
     default:
       return false;
   }

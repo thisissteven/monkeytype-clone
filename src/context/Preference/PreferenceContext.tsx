@@ -14,15 +14,21 @@ export default function PreferenceProvider({
     theme: 'default',
     fontFamily: 'chakra-petch',
     isOpen: false,
+    type: 'words',
+    time: '15',
   });
 
   React.useEffect(() => {
     if (typeof window !== undefined) {
       const theme = window.localStorage.getItem('theme');
       const fontFamily = window.localStorage.getItem('font-family');
+      const type = window.localStorage.getItem('type');
+      const time = window.localStorage.getItem('time');
       if (theme) dispatch({ type: 'SET_THEME', payload: theme });
       if (fontFamily)
         dispatch({ type: 'SET_FONT_FAMILY', payload: fontFamily });
+      if (type) dispatch({ type: 'SET_TYPE', payload: type });
+      if (time) dispatch({ type: 'SET_TIME', payload: time });
     }
   }, []);
 

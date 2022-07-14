@@ -6,8 +6,15 @@ import { FaCog, FaCrown, FaInfo, FaKeyboard, FaTerminal } from 'react-icons/fa';
 
 import { usePreferenceContext } from '@/context/Preference/PreferenceContext';
 
+const typeList = ['words', 'sentences', 'number'];
+
+const timeList = ['15', '30', '45', '60', '120'];
+
 export default function Header() {
-  const { dispatch } = usePreferenceContext();
+  const {
+    preferences: { type, time },
+    dispatch,
+  } = usePreferenceContext();
 
   return (
     <header className={clsx('layout bg-transparent')}>
@@ -59,32 +66,30 @@ export default function Header() {
           </div>
           <div className='hidden flex-col -space-y-1 sm:flex sm:space-y-1'>
             <div className='flex cursor-pointer list-none space-x-1.5 text-[10px] font-semibold sm:text-xs'>
-              <div className='text-fg/50 transition-colors duration-200 hover:text-fg'>
-                words
-              </div>
-              <div className='text-fg/50 transition-colors duration-200 hover:text-fg'>
-                sentences
-              </div>
-              <div className='text-fg/50 transition-colors duration-200 hover:text-fg'>
-                numbers
-              </div>
+              {typeList.map((item) => (
+                <div
+                  onClick={() => dispatch({ type: 'SET_TYPE', payload: item })}
+                  key={item}
+                  className={`${
+                    item === type ? 'text-fg' : 'text-fg/50'
+                  } transition-colors duration-200 hover:text-fg`}
+                >
+                  {item}
+                </div>
+              ))}
             </div>
             <div className='flex cursor-pointer list-none justify-end space-x-2 text-[10px] font-semibold sm:text-xs'>
-              <div className='text-fg/50 transition-colors duration-200 hover:text-fg'>
-                15
-              </div>
-              <div className='text-fg/50 transition-colors duration-200 hover:text-fg'>
-                30
-              </div>
-              <div className='text-fg/50 transition-colors duration-200 hover:text-fg'>
-                45
-              </div>
-              <div className='text-fg/50 transition-colors duration-200 hover:text-fg'>
-                60
-              </div>
-              <div className='text-fg/50 transition-colors duration-200 hover:text-fg'>
-                120
-              </div>
+              {timeList.map((item) => (
+                <div
+                  onClick={() => dispatch({ type: 'SET_TIME', payload: item })}
+                  key={item}
+                  className={`${
+                    item === time ? 'text-fg' : 'text-fg/50'
+                  } transition-colors duration-200 hover:text-fg`}
+                >
+                  {item}
+                </div>
+              ))}
             </div>
           </div>
           <div

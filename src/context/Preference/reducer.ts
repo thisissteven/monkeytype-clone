@@ -18,6 +18,22 @@ const reducer = (state: PreferenceState, action: Action) => {
         ...state,
         fontFamily: action.payload,
       };
+    case 'SET_TYPE':
+      if (typeof window !== undefined) {
+        window.localStorage.setItem('type', action.payload);
+      }
+      return {
+        ...state,
+        type: action.payload,
+      };
+    case 'SET_TIME':
+      if (typeof window !== undefined) {
+        window.localStorage.setItem('time', action.payload);
+      }
+      return {
+        ...state,
+        time: action.payload,
+      };
     case 'TOGGLE_COMMAND_PALETTE':
       return {
         ...state,
