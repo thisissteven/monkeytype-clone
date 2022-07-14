@@ -134,6 +134,15 @@ Not supports in Firefox and IE */
     display: none;
   }
 
+  .scrollbar-hide {
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+  }
+
   .animated-underline {
     background-image: linear-gradient(#33333300, #33333300),
       linear-gradient(to right, rgb(var(--hl-color)), rgb(var(--font-color)));
