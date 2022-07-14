@@ -20,7 +20,7 @@ import PreferenceProvider from '@/context/Preference/PreferenceContext';
 function MyApp({ Component, pageProps, router }: AppProps) {
   return (
     <PreferenceProvider>
-      <CommandPalette commands={commands} />
+      <CommandPalette data={commands} />
       <Layout>
         <Header />
         <AnimatePresence exitBeforeEnter>
