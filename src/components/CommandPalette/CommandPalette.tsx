@@ -24,24 +24,29 @@ const CommandPalette = ({ data }: { data: CommandType[] }) => {
 
   React.useEffect(() => {
     if (selected && page === 1) {
+      setQuery('');
       setPage(2);
       setCommands((commands) => {
         const selectedCommand = commands.filter(
           (item) => item.commandName === selected
         );
+        if (selectedCommand.length === 0) return data;
         return selectedCommand[0].contents;
       });
     }
-  }, [selected, page]);
+  }, [selected, page, data]);
 
-  const filteredCommands = filterCommands(commands, query);
+  const filteredCommands = React.useMemo(
+    () => filterCommands(commands, query),
+    [commands, query]
+  );
 
   React.useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
       if (page === 2 && event.key === 'Escape') {
-        setSelected('');
         setCommands(data);
         setPage(1);
+        setSelected('');
         return;
       }
       if (
@@ -55,13 +60,19 @@ const CommandPalette = ({ data }: { data: CommandType[] }) => {
 
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
-  }, [data, dispatch, page]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, page]);
 
   return (
     <Transition.Root
       show={isOpen}
       as={React.Fragment}
-      afterLeave={() => setQuery('')}
+      afterLeave={() => {
+        setQuery('');
+        setPage(1);
+        setCommands(data);
+        setSelected('');
+      }}
     >
       <Dialog
         onClose={() => {
@@ -94,8 +105,11 @@ const CommandPalette = ({ data }: { data: CommandType[] }) => {
           <Combobox
             value=''
             onChange={(value: string) => {
-              if (page === 2) dispatch({ type: 'TOGGLE_COMMAND_PALETTE' });
               setSelected(value);
+              if (page === 2) {
+                setCommands(data);
+                dispatch({ type: 'TOGGLE_COMMAND_PALETTE' });
+              }
             }}
             as='div'
             className='pointer-events-auto relative mx-auto max-w-xl divide-y divide-font/50 overflow-hidden rounded-xl bg-bg shadow-2xl ring-1 ring-bg/5'
