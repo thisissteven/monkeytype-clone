@@ -52,7 +52,9 @@ export default function Header() {
             <FaInfo className='cursor-pointer fill-fg/50 text-lg transition-colors duration-200 hover:fill-fg' />
             <FaCog className='cursor-pointer fill-fg/50 text-lg transition-colors duration-200 hover:fill-fg' />
             <Link href='/components'>
-              <AiFillBuild className='cursor-pointer fill-fg/50 text-lg transition-colors duration-200 hover:fill-fg' />
+              <a>
+                <AiFillBuild className='cursor-pointer fill-fg/50 text-lg transition-colors duration-200 hover:fill-fg' />
+              </a>
             </Link>
           </div>
           <div className='hidden flex-col -space-y-1 sm:flex sm:space-y-1'>
