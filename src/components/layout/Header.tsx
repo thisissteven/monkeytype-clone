@@ -4,7 +4,7 @@ import * as React from 'react';
 import { AiFillBuild } from 'react-icons/ai';
 import { FaCog, FaCrown, FaInfo, FaKeyboard, FaTerminal } from 'react-icons/fa';
 
-import { usePreferenceContext } from '@/context/PreferenceProvider';
+import { usePreferenceContext } from '@/context/Preference/PreferenceContext';
 
 export default function Header() {
   const { dispatch } = usePreferenceContext();

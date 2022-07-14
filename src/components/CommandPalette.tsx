@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import * as React from 'react';
 import { FaSearch } from 'react-icons/fa';
 
-import { usePreferenceContext } from '@/context/PreferenceProvider';
+import { usePreferenceContext } from '@/context/Preference/PreferenceContext';
 
 export type PokemonData = {
   name: string;
@@ -13,16 +13,12 @@ export type PokemonData = {
 
 const CommandPalette = ({ results }: { results: PokemonData[] }) => {
   const {
-    preferences: { isOpen },
+    preferences: { isOpen, theme, fontFamily },
     dispatch,
   } = usePreferenceContext();
   const [query, setQuery] = React.useState('');
 
   const router = useRouter();
-
-  const {
-    preferences: { theme, fontFamily },
-  } = usePreferenceContext();
 
   const filteredResults = query
     ? results.filter((result) =>

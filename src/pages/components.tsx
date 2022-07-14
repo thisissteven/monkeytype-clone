@@ -6,7 +6,7 @@ import AnimateFade from '@/components/layout/AnimateFade';
 import ArrowLink from '@/components/links/ArrowLink';
 import Seo from '@/components/Seo';
 
-import { usePreferenceContext } from '@/context/PreferenceProvider';
+import { usePreferenceContext } from '@/context/Preference/PreferenceContext';
 
 type Theme = typeof themeList[number];
 type FontFamily = typeof fontFamilyList[number];
