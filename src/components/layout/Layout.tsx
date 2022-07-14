@@ -3,6 +3,7 @@ import Image from 'next/image';
 import * as React from 'react';
 
 import Footer from '@/components/layout/Footer';
+import Seo from '@/components/Seo';
 
 import { usePreferenceContext } from '@/context/Preference/PreferenceContext';
 
@@ -20,56 +21,59 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
       {isLoading ? (
-        <div
-          className={clsx(
-            theme,
-            fontFamily,
-            'fixed inset-0 z-50 flex h-screen w-screen items-center justify-center bg-bg'
-          )}
-        >
-          <div className='flex max-w-[500px] flex-wrap items-center justify-center gap-x-8'>
-            <div className='flex flex-col'>
-              <Image
-                src='/images/walking-mushroom.gif'
-                width={180}
-                height={180}
-                alt='walking-mushroom'
-                className='scale-50'
-              />
-              <p className='loading -mt-12'>Preparing the page for you...</p>
-            </div>
-            <div className='flex flex-col'>
-              <Image
-                src='/images/walking-mushroom.gif'
-                width={180}
-                height={180}
-                alt='walking-mushroom'
-                className='scale-50'
-              />
-              <p className='loading -mt-12'>Preparing the page for you...</p>
-            </div>
-            <div className='flex flex-col'>
-              <Image
-                src='/images/walking-mushroom.gif'
-                width={180}
-                height={180}
-                alt='walking-mushroom'
-                className='scale-50'
-              />
-              <p className='loading -mt-12'>Preparing the page for you...</p>
-            </div>
-            <div className='flex flex-col'>
-              <Image
-                src='/images/walking-mushroom.gif'
-                width={180}
-                height={180}
-                alt='walking-mushroom'
-                className='scale-50'
-              />
-              <p className='loading -mt-12'>Preparing the page for you...</p>
+        <>
+          <Seo title='Preparing page...' />
+          <div
+            className={clsx(
+              theme,
+              fontFamily,
+              'fixed inset-0 z-50 flex h-screen w-screen items-center justify-center bg-bg'
+            )}
+          >
+            <div className='flex max-w-[500px] flex-wrap items-center justify-center gap-x-8'>
+              <div className='flex flex-col'>
+                <Image
+                  src='/images/walking-mushroom.gif'
+                  width={180}
+                  height={180}
+                  alt='walking-mushroom'
+                  className='scale-50'
+                />
+                <p className='loading -mt-12'>Preparing the page for you...</p>
+              </div>
+              <div className='flex flex-col'>
+                <Image
+                  src='/images/walking-mushroom.gif'
+                  width={180}
+                  height={180}
+                  alt='walking-mushroom'
+                  className='scale-50'
+                />
+                <p className='loading -mt-12'>Preparing the page for you...</p>
+              </div>
+              <div className='flex flex-col'>
+                <Image
+                  src='/images/walking-mushroom.gif'
+                  width={180}
+                  height={180}
+                  alt='walking-mushroom'
+                  className='scale-50'
+                />
+                <p className='loading -mt-12'>Preparing the page for you...</p>
+              </div>
+              <div className='flex flex-col'>
+                <Image
+                  src='/images/walking-mushroom.gif'
+                  width={180}
+                  height={180}
+                  alt='walking-mushroom'
+                  className='scale-50'
+                />
+                <p className='loading -mt-12'>Preparing the page for you...</p>
+              </div>
             </div>
           </div>
-        </div>
+        </>
       ) : (
         <div
           className={clsx(
