@@ -78,9 +78,7 @@ const TypingInput = React.forwardRef<HTMLDivElement, TypingInputProps>(
 
     //handle key presses
     const handleKeyDown = (letter: string, control: boolean) => {
-      if (letter === 'Escape') {
-        resetTyping();
-      } else if (letter === 'Backspace') {
+      if (letter === 'Backspace') {
         deleteTyping(control);
       } else if (letter.length === 1) {
         insertTyping(letter);
@@ -95,20 +93,41 @@ const TypingInput = React.forwardRef<HTMLDivElement, TypingInputProps>(
         <div
           tabIndex={1}
           ref={ref}
-          onKeyDown={(e) => handleKeyDown(e.key, e.ctrlKey)}
+          onKeyDown={(e) => {
+            if (e.key === ' ') e.preventDefault();
+            if (e.ctrlKey) return;
+            handleKeyDown(e.key, e.ctrlKey);
+          }}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
-          className='relative h-[140px] w-full max-w-[950px] overflow-hidden text-2xl outline-none'
+          className={clsx(
+            'relative h-[140px] w-full max-w-[950px] overflow-hidden text-2xl outline-none'
+          )}
         >
           <div className='absolute bottom-0 z-10 h-8 w-full bg-gradient-to-t from-bg'></div>
+          <span
+            className={clsx(
+              'absolute z-20 flex h-full w-full cursor-default items-center justify-center text-base opacity-0 transition-all duration-200',
+              { 'text-fg opacity-100 ': !isFocused }
+            )}
+          >
+            Click or press any key to focus
+          </span>
           <div
             ref={letterElements}
-            className='pointer-events-none absolute top-0 left-0 mb-4 w-full text-justify leading-relaxed tracking-wide'
+            className={clsx(
+              'pointer-events-none absolute top-0 left-0 mb-4 w-full text-justify leading-relaxed tracking-wide transition-all duration-200',
+              { 'opacity-40 blur-[8px]': !isFocused }
+            )}
           >
             {text.split('').map((letter, index) => {
               const state = charsState[index];
               const color =
-                state === 0 ? 'text-font' : state === 1 ? 'text-fg' : 'text-hl';
+                state === 0
+                  ? 'text-font'
+                  : state === 1
+                  ? 'text-fg'
+                  : 'text-hl border-b-2 border-hl';
               return (
                 <span
                   key={letter + index}
@@ -134,24 +153,25 @@ const TypingInput = React.forwardRef<HTMLDivElement, TypingInputProps>(
             </span>
           ) : null}
         </div>
-        <p className='mt-4 text-sm'>
+        <div className='mt-4 flex w-full flex-wrap justify-center gap-4 text-sm'>
           {phase === 2 && startTime && endTime ? (
             <>
-              <span className='mr-4 text-green-500'>
+              <span className='text-green-500'>
                 WPM: {Math.round(((60 / duration) * correctChar) / 5)}
               </span>
-              <span className='mr-4 text-blue-500'>
-                Accuracy: {((correctChar / text.length) * 100).toFixed(2)}%
+              <span className='text-blue-500'>
+                Accuracy:{' '}
+                {(((correctChar - errorChar) / (currIndex + 1)) * 100).toFixed(
+                  2
+                )}
+                %
               </span>
-              <span className='mr-4 text-yellow-500'>
-                Duration: {duration}s
-              </span>
+              <span className='text-yellow-500'>Duration: {duration}s</span>
             </>
           ) : null}
-          <span className='mr-4'> Current Index: {currIndex}</span>
-          <span className='mr-4'> Correct Characters: {correctChar}</span>
-          <span className='mr-4'> Error Characters: {errorChar}</span>
-        </p>
+          <span> Correct Characters: {correctChar}</span>
+          <span> Error Characters: {errorChar}</span>
+        </div>
       </div>
     );
   }

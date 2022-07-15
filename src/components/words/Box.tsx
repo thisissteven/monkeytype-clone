@@ -21,6 +21,8 @@ export default function Box() {
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'tab') {
         buttonRef.current.focus();
+      } else if (event.key !== 'Enter') {
+        inputRef.current.focus();
       }
     };
 
