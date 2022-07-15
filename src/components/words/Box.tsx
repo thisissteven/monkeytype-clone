@@ -7,7 +7,7 @@ import TypingInput from '@/components/words/TypingInput';
 
 import { usePreferenceContext } from '@/context/Preference/PreferenceContext';
 
-export default function Box2() {
+export default function Box() {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const _ = require('lodash');
 
