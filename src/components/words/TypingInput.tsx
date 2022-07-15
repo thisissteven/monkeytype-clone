@@ -104,11 +104,14 @@ const TypingInput = React.forwardRef<HTMLDivElement, TypingInputProps>(
           }}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
-          className={clsx(
-            'relative h-[140px] w-full max-w-[950px] overflow-hidden text-2xl outline-none'
-          )}
+          className={clsx('relative h-[140px] w-full text-2xl outline-none')}
         >
-          <div className='absolute bottom-0 z-10 h-8 w-full bg-gradient-to-t from-bg'></div>
+          <div
+            className={clsx(
+              'absolute bottom-0 z-10 h-8 w-full bg-gradient-to-t from-bg transition-all duration-200',
+              { 'opacity-0': !isFocused }
+            )}
+          ></div>
           <span
             className={clsx(
               'absolute z-20 flex h-full w-full cursor-default items-center justify-center text-base opacity-0 transition-all duration-200',
@@ -122,7 +125,7 @@ const TypingInput = React.forwardRef<HTMLDivElement, TypingInputProps>(
           <div
             ref={letterElements}
             className={clsx(
-              'absolute top-0 left-0 mb-4 w-full text-justify leading-relaxed tracking-wide transition-all duration-200',
+              'absolute top-0 left-0 mb-4 h-full w-full overflow-hidden text-justify leading-relaxed tracking-wide transition-all duration-200',
               { 'opacity-40 blur-[8px]': !isFocused }
             )}
           >
@@ -156,14 +159,14 @@ const TypingInput = React.forwardRef<HTMLDivElement, TypingInputProps>(
               })}
             >
               {phase === 2 ? (
-                <div className='group relative z-50'>
-                  <BsFlagFill className='-mb-[8px] text-fg' />
+                <div className='group relative z-40'>
                   <Tooltip
                     className='bg-fg text-bg group-hover:translate-y-0 group-hover:opacity-100'
                     triangle='bg-fg'
                   >
                     You finished here.
                   </Tooltip>
+                  <BsFlagFill className='-mb-[8px] text-fg' />
                 </div>
               ) : (
                 '|'

@@ -29,7 +29,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             className={clsx(
               theme,
               fontFamily,
-              'fixed inset-0 z-50 flex h-screen w-screen items-center justify-center bg-bg'
+              'fixed inset-0 flex h-screen w-screen items-center justify-center bg-bg'
             )}
           >
             <div className='flex max-w-[500px] flex-wrap items-center justify-center gap-x-8'>
