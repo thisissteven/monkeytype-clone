@@ -126,6 +126,9 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
             className='absolute left-0 top-0 z-50 h-full w-full cursor-default opacity-0'
             tabIndex={1}
             ref={ref}
+            value=''
+            // eslint-disable-next-line @typescript-eslint/no-empty-function
+            onChange={() => {}}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
             onKeyDown={(e) => {
