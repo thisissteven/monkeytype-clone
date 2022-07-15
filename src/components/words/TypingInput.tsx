@@ -11,7 +11,7 @@ type TypingInputProps = {
   time: string;
 } & React.ComponentPropsWithRef<'div'>;
 
-const TypingInput = React.forwardRef<HTMLDivElement, TypingInputProps>(
+const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
   ({ text, time }, ref) => {
     const [duration, setDuration] = useState(0);
     const [isFocused, setIsFocused] = useState(false);
@@ -95,17 +95,21 @@ const TypingInput = React.forwardRef<HTMLDivElement, TypingInputProps>(
           {timeLeft}
         </span>
         <div
-          tabIndex={1}
-          ref={ref}
-          onKeyDown={(e) => {
-            if (e.key === ' ') e.preventDefault();
-            if (e.ctrlKey) return;
-            handleKeyDown(e.key, e.ctrlKey);
-          }}
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
           className={clsx('relative h-[140px] w-full text-2xl outline-none')}
         >
+          <input
+            type='text'
+            className='absolute left-0 top-0 z-50 h-full w-full cursor-default opacity-0'
+            tabIndex={1}
+            ref={ref}
+            onKeyDown={(e) => {
+              if (e.key === ' ') e.preventDefault();
+              if (e.ctrlKey) return;
+              handleKeyDown(e.key, e.ctrlKey);
+            }}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
+          />
           <div
             className={clsx(
               'absolute bottom-0 z-10 h-8 w-full bg-gradient-to-t from-bg transition-all duration-200',
