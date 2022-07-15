@@ -37,13 +37,23 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
       actions: { insertTyping, deleteTyping, resetTyping, endTyping },
     } = useTyping(text, { skipCurrentWordOnSpace: true, pauseOnError: false });
 
+    const [margin, setMargin] = useState(0);
+
     // set cursor
     const pos = useMemo(() => {
       if (currIndex !== -1 && letterElements.current) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const spanref: any = letterElements.current.children[currIndex];
+
         const left = spanref.offsetLeft + spanref.offsetWidth - 2;
         const top = spanref.offsetTop - 2;
+        if (top > 60) {
+          setMargin((margin) => margin + 1);
+          return {
+            left,
+            top: top / 2,
+          };
+        }
         return { left, top };
       } else {
         return {
@@ -54,6 +64,7 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
     }, [currIndex]);
 
     useEffect(() => {
+      setMargin(0);
       setTimeLeft(parseInt(time));
       endTyping();
       resetTyping();
@@ -89,6 +100,13 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
     //handle key presses
     const handleKeyDown = (letter: string, control: boolean) => {
       if (letter === 'Backspace') {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const spanref: any = letterElements?.current?.children[currIndex];
+        const top = spanref?.offsetTop - 2;
+
+        if (top < 0) {
+          return;
+        }
         deleteTyping(control);
       } else if (letter.length === 1) {
         insertTyping(letter);
@@ -97,7 +115,7 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
 
     return (
       <div className='relative w-full max-w-[950px]'>
-        <span className='absolute left-0 -top-14 text-4xl text-fg/80'>
+        <span className='absolute left-0 -top-[3.25rem] text-4xl text-fg/80'>
           {timeLeft}
         </span>
         <div
@@ -122,6 +140,12 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
           />
           <div
             className={clsx(
+              'absolute -top-4 z-10 h-4 w-full bg-gradient-to-b from-bg transition-all duration-200',
+              { 'opacity-0': !isFocused }
+            )}
+          ></div>
+          <div
+            className={clsx(
               'absolute bottom-0 z-10 h-8 w-full bg-gradient-to-t from-bg transition-all duration-200',
               { 'opacity-0': !isFocused }
             )}
@@ -137,35 +161,47 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
             or press any key to focus
           </span>
           <div
-            ref={letterElements}
             className={clsx(
               'absolute top-0 left-0 mb-4 h-full w-full overflow-hidden text-justify leading-relaxed tracking-wide transition-all duration-200',
               { 'opacity-40 blur-[8px]': !isFocused }
             )}
           >
-            {text.split('').map((letter, index) => {
-              const state = charsState[index];
-              const color =
-                state === 0
-                  ? 'text-font'
-                  : state === 1
-                  ? 'text-fg'
-                  : 'text-hl border-b-2 border-hl';
-              return (
-                <span
-                  key={letter + index}
-                  className={`${color} ${letter === ' ' && ''}`}
-                >
-                  {letter}
-                </span>
-              );
-            })}
+            <div
+              ref={letterElements}
+              style={
+                margin > 0
+                  ? {
+                      marginTop: -(margin * 39),
+                    }
+                  : {
+                      marginTop: 0,
+                    }
+              }
+            >
+              {text.split('').map((letter, index) => {
+                const state = charsState[index];
+                const color =
+                  state === 0
+                    ? 'text-font'
+                    : state === 1
+                    ? 'text-fg'
+                    : 'text-hl border-b-2 border-hl';
+                return (
+                  <span
+                    key={letter + index}
+                    className={`${color} ${letter === ' ' && ''}`}
+                  >
+                    {letter}
+                  </span>
+                );
+              })}
+            </div>
           </div>
           {isFocused ? (
             <span
               style={{
-                left: pos.left,
-                top: pos.top + 2,
+                left: pos.top < 0 ? -2 : pos.left,
+                top: pos.top < 0 ? 2 : pos.top + 2,
               }}
               className={clsx('caret text-hl', {
                 '-mt-[2px]': currIndex === -1,
