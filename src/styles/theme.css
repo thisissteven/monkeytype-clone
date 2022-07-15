@@ -8,8 +8,8 @@
 .taro {
   --bg-color: 137 138 166;
   --font-color: 201 187 207;
-  --hl-color: 183 211 223;
-  --fg-color: 214 239 237;
+  --hl-color: 214 239 237;
+  --fg-color: 183 211 223;
 }
 
 .green-tea {
@@ -24,6 +24,27 @@
   --font-color: 160 147 125;
   --hl-color: 162 123 92;
   --fg-color: 208 201 192;
+}
+
+.beach {
+  --bg-color: 0 120 170;
+  --font-color: 242 223 58;
+  --hl-color: 246 246 246;
+  --fg-color: 58 180 242;
+}
+
+.halloween {
+  --bg-color: 6 17 60;
+  --font-color: 255 140 50;
+  --hl-color: 221 221 221;
+  --fg-color: 238 238 238;
+}
+
+.spring {
+  --bg-color: 101 193 140;
+  --font-color: 249 255 164;
+  --hl-color: 221 255 188;
+  --fg-color: 255 220 174;
 }
 
 .eye-pain {

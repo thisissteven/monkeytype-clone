@@ -35,6 +35,24 @@ const commands = [
       },
       {
         icon: '',
+        commandName: 'beach',
+        contents: [],
+        description: '- blue, white, and yellow',
+      },
+      {
+        icon: '',
+        commandName: 'halloween',
+        contents: [],
+        description: '- darkblue, orange, and white',
+      },
+      {
+        icon: '',
+        commandName: 'spring',
+        contents: [],
+        description: '- light-green, green, and peach',
+      },
+      {
+        icon: '',
         commandName: 'eye-pain',
         contents: [],
         description: "- you probably won't like this",

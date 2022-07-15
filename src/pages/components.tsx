@@ -147,6 +147,9 @@ const themeList = [
   'taro',
   'green-tea',
   'wood',
+  'beach',
+  'halloween',
+  'spring',
   'eye-pain',
 ] as const;
 

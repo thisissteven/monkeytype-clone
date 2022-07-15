@@ -58,15 +58,15 @@ export default function Header() {
           <div className='flex space-x-6'>
             <Link href='/'>
               <a>
-                <FaKeyboard className='cursor-pointer fill-fg/50 text-lg transition-colors duration-200 hover:fill-fg' />
+                <FaKeyboard className='cursor-pointer fill-hl/50 text-lg transition-colors duration-200 hover:fill-hl' />
               </a>
             </Link>
-            <FaCrown className='cursor-pointer fill-fg/50 text-lg transition-colors duration-200 hover:fill-fg' />
-            <FaInfo className='cursor-pointer fill-fg/50 text-lg transition-colors duration-200 hover:fill-fg' />
-            <FaCog className='cursor-pointer fill-fg/50 text-lg transition-colors duration-200 hover:fill-fg' />
+            <FaCrown className='cursor-pointer fill-hl/50 text-lg transition-colors duration-200 hover:fill-hl' />
+            <FaInfo className='cursor-pointer fill-hl/50 text-lg transition-colors duration-200 hover:fill-hl' />
+            <FaCog className='cursor-pointer fill-hl/50 text-lg transition-colors duration-200 hover:fill-hl' />
             <Link href='/components'>
               <a>
-                <AiFillBuild className='cursor-pointer fill-fg/50 text-lg transition-colors duration-200 hover:fill-fg' />
+                <AiFillBuild className='cursor-pointer fill-hl/50 text-lg transition-colors duration-200 hover:fill-hl' />
               </a>
             </Link>
           </div>
@@ -77,8 +77,8 @@ export default function Header() {
                   onClick={() => dispatch({ type: 'SET_TYPE', payload: item })}
                   key={item}
                   className={`${
-                    item === type ? 'text-fg' : 'text-fg/50'
-                  } transition-colors duration-200 hover:text-fg`}
+                    item === type ? 'text-hl' : 'text-hl/50'
+                  } transition-colors duration-200 hover:text-hl`}
                 >
                   {item}
                 </div>
@@ -90,8 +90,8 @@ export default function Header() {
                   onClick={() => dispatch({ type: 'SET_TIME', payload: item })}
                   key={item}
                   className={`${
-                    item === time ? 'text-fg' : 'text-fg/50'
-                  } transition-colors duration-200 hover:text-fg`}
+                    item === time ? 'text-hl' : 'text-hl/50'
+                  } transition-colors duration-200 hover:text-hl`}
                 >
                   {item}
                 </div>

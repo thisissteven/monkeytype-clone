@@ -84,9 +84,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 const progressColors = {
   default: '63 78 79',
   winter: '239 255 253',
-  taro: '214 239 237',
+  taro: '183 211 223',
   'green-tea': '166 207 152',
   wood: '208 201 192',
+  beach: '58 180 242',
+  halloween: '238 238 238',
+  spring: '255 220 174',
   'eye-pain': '255 0 231',
 };
 
