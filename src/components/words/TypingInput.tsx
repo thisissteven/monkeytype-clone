@@ -4,13 +4,15 @@ import useTyping from 'react-typing-game-hook';
 
 type TypingInputProps = {
   text: string;
+  time: string;
 } & React.ComponentPropsWithRef<'div'>;
 
 const TypingInput = React.forwardRef<HTMLDivElement, TypingInputProps>(
-  ({ text }, ref) => {
+  ({ text, time }, ref) => {
     const [duration, setDuration] = useState(0);
     const [isFocused, setIsFocused] = useState(false);
     const letterElements = useRef<HTMLDivElement>(null);
+    const [timeLeft, setTimeLeft] = useState(() => parseInt(time));
 
     const {
       states: {
@@ -22,7 +24,7 @@ const TypingInput = React.forwardRef<HTMLDivElement, TypingInputProps>(
         startTime,
         endTime,
       },
-      actions: { insertTyping, deleteTyping, resetTyping },
+      actions: { insertTyping, deleteTyping, resetTyping, endTyping },
     } = useTyping(text, { skipCurrentWordOnSpace: true, pauseOnError: false });
 
     // set cursor
@@ -40,6 +42,30 @@ const TypingInput = React.forwardRef<HTMLDivElement, TypingInputProps>(
         };
       }
     }, [currIndex]);
+
+    useEffect(() => {
+      setTimeLeft(parseInt(time));
+      endTyping();
+      resetTyping();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [text, time]);
+
+    // handle timer
+    useEffect(() => {
+      const timerInterval = setInterval(() => {
+        if (phase === 1) {
+          setTimeLeft((timeLeft) => {
+            if (timeLeft === 1) {
+              clearInterval(timerInterval);
+              endTyping();
+            }
+            return timeLeft - 1;
+          });
+        }
+      }, 1000);
+
+      return () => clearInterval(timerInterval);
+    }, [endTyping, phase]);
 
     //set WPM
     useEffect(() => {
@@ -62,7 +88,10 @@ const TypingInput = React.forwardRef<HTMLDivElement, TypingInputProps>(
     };
 
     return (
-      <div className='w-full max-w-[950px]'>
+      <div className='relative w-full max-w-[950px]'>
+        <span className='absolute left-0 -top-14 text-4xl text-fg/80'>
+          {timeLeft}
+        </span>
         <div
           tabIndex={1}
           ref={ref}
@@ -96,8 +125,9 @@ const TypingInput = React.forwardRef<HTMLDivElement, TypingInputProps>(
                 left: pos.left,
                 top: pos.top + 2,
               }}
-              className={clsx('caret animate-blink', {
+              className={clsx('caret text-hl', {
                 '-mt-[2px]': currIndex === -1,
+                'animate-blink': phase === 0,
               })}
             >
               |

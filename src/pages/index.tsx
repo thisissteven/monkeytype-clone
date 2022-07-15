@@ -3,7 +3,7 @@ import * as React from 'react';
 import Kbd from '@/components/Kbd';
 import AnimateFade from '@/components/layout/AnimateFade';
 import Seo from '@/components/Seo';
-import Box2 from '@/components/words/Box2';
+import Box2 from '@/components/words/Box';
 
 /**
  * SVGR Support
