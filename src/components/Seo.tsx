@@ -3,12 +3,11 @@ import { useRouter } from 'next/router';
 
 // !STARTERCONF Change these default meta
 const defaultMeta = {
-  title: 'Next.js + Tailwind CSS + TypeScript Starter',
-  siteName: 'Next.js + Tailwind CSS + TypeScript Starter',
-  description:
-    'A starter for Next.js, Tailwind CSS, and TypeScript with Absolute Import, Seo, Link component, pre-configured with Husky',
+  title: 'Monkeytype Clone',
+  siteName: 'Monkeytype Clone',
+  description: 'A typeracer app based on Monkeytype',
   /** Without additional '/' on the end, e.g. https://theodorusclarence.com */
-  url: 'https://tsnext-tw.thcl.dev',
+  url: 'https://monkeytype-clone.vercel.app',
   type: 'website',
   robots: 'follow, index',
   /**
@@ -62,21 +61,6 @@ export default function Seo(props: SeoProps) {
       <meta name='twitter:title' content={meta.title} />
       <meta name='twitter:description' content={meta.description} />
       <meta name='twitter:image' content={meta.image} />
-      {meta.date && (
-        <>
-          <meta property='article:published_time' content={meta.date} />
-          <meta
-            name='publish_date'
-            property='og:publish_date'
-            content={meta.date}
-          />
-          <meta
-            name='author'
-            property='article:author'
-            content='Theodorus Clarence'
-          />
-        </>
-      )}
 
       {/* Favicons */}
       {favicons.map((linkProps) => (
