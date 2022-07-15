@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import Image from 'next/image';
+import NextNProgress from 'nextjs-progressbar';
 import * as React from 'react';
 
 import Footer from '@/components/layout/Footer';
@@ -18,6 +19,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   React.useEffect(() => {
     setTimeout(() => setIsLoading(false), 1000);
   }, []);
+
   return (
     <>
       {isLoading ? (
@@ -63,6 +65,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           )}
         >
           <div className='layout bg-transparent'>
+            <NextNProgress
+              color={`rgb(${progressColors[theme as ProgressColorType]})`}
+              startPosition={0.3}
+              stopDelayMs={200}
+              height={2}
+              showOnShallow={true}
+            />
             {children}
             <Footer />
           </div>
@@ -71,3 +80,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     </>
   );
 }
+
+const progressColors = {
+  default: '63 78 79',
+  winter: '239 255 253',
+  taro: '214 239 237',
+  'green-tea': '166 207 152',
+  wood: '208 201 192',
+  'eye-pain': '255 0 231',
+};
+
+type ProgressColorType = keyof typeof progressColors;
