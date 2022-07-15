@@ -83,10 +83,10 @@
     @apply mx-auto w-11/12;
   }
 
-  #caret {
+  .caret {
     transition: left 0.1s ease;
     position: absolute;
-    color: rgb(var(--hl-color));
+    display: inline;
   }
 
   .bg-dark a.custom-link {

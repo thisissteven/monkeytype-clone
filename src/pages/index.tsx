@@ -3,7 +3,7 @@ import * as React from 'react';
 import Kbd from '@/components/Kbd';
 import AnimateFade from '@/components/layout/AnimateFade';
 import Seo from '@/components/Seo';
-import Box from '@/components/words/Box';
+import Box2 from '@/components/words/Box2';
 
 /**
  * SVGR Support
@@ -26,7 +26,7 @@ export default function HomePage() {
       <main>
         <section>
           <div className='layout flex flex-col items-center pt-28 text-center'>
-            <Box />
+            <Box2 />
 
             <div className='mt-8 flex flex-col items-center justify-center gap-2'>
               <div className='flex items-center space-x-2 text-sm font-light'>
