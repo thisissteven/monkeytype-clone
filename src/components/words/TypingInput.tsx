@@ -6,10 +6,12 @@ import useTyping from 'react-typing-game-hook';
 
 import Tooltip from '@/components/Tooltip';
 
+import { usePreferenceContext } from '@/context/Preference/PreferenceContext';
+
 type TypingInputProps = {
   text: string;
   time: string;
-} & React.ComponentPropsWithRef<'div'>;
+} & React.ComponentPropsWithRef<'input'>;
 
 const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
   ({ text, time }, ref) => {
@@ -17,6 +19,10 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
     const [isFocused, setIsFocused] = useState(false);
     const letterElements = useRef<HTMLDivElement>(null);
     const [timeLeft, setTimeLeft] = useState(() => parseInt(time));
+
+    const {
+      preferences: { isOpen },
+    } = usePreferenceContext();
 
     const {
       states: {
@@ -102,13 +108,17 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
             className='absolute left-0 top-0 z-50 h-full w-full cursor-default opacity-0'
             tabIndex={1}
             ref={ref}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
             onKeyDown={(e) => {
+              if (isOpen) {
+                setIsFocused(false);
+                return;
+              }
               if (e.key === ' ') e.preventDefault();
               if (e.ctrlKey) return;
               handleKeyDown(e.key, e.ctrlKey);
             }}
-            onFocus={() => setIsFocused(true)}
-            onBlur={() => setIsFocused(false)}
           />
           <div
             className={clsx(

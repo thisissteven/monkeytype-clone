@@ -13,13 +13,14 @@ export default function Box() {
   const _ = require('lodash');
 
   const {
-    preferences: { type, time },
+    preferences: { type, time, isOpen },
   } = usePreferenceContext();
 
   const [list, setList] = React.useState<string[]>(() => shuffleList(type));
 
   React.useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
+      if (isOpen) return;
       if (event.key === 'tab') {
         buttonRef.current.focus();
       } else if (event.key !== 'Enter') {
@@ -29,7 +30,7 @@ export default function Box() {
 
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
-  }, []);
+  }, [isOpen]);
 
   React.useEffect(() => {
     setList(shuffleList(type));
