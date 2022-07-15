@@ -1,6 +1,10 @@
 import clsx from 'clsx';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { BsCursorFill } from 'react-icons/bs';
+import { BsFlagFill } from 'react-icons/bs';
 import useTyping from 'react-typing-game-hook';
+
+import Tooltip from '@/components/Tooltip';
 
 type TypingInputProps = {
   text: string;
@@ -74,7 +78,7 @@ const TypingInput = React.forwardRef<HTMLDivElement, TypingInputProps>(
       } else {
         setDuration(0);
       }
-    }, [phase, startTime, endTime]);
+    }, [phase, startTime, endTime, ref]);
 
     //handle key presses
     const handleKeyDown = (letter: string, control: boolean) => {
@@ -111,12 +115,14 @@ const TypingInput = React.forwardRef<HTMLDivElement, TypingInputProps>(
               { 'text-fg opacity-100 ': !isFocused }
             )}
           >
-            Click or press any key to focus
+            Click
+            <BsCursorFill className='mx-2 scale-x-[-1]' />
+            or press any key to focus
           </span>
           <div
             ref={letterElements}
             className={clsx(
-              'pointer-events-none absolute top-0 left-0 mb-4 w-full text-justify leading-relaxed tracking-wide transition-all duration-200',
+              'absolute top-0 left-0 mb-4 w-full text-justify leading-relaxed tracking-wide transition-all duration-200',
               { 'opacity-40 blur-[8px]': !isFocused }
             )}
           >
@@ -138,7 +144,7 @@ const TypingInput = React.forwardRef<HTMLDivElement, TypingInputProps>(
               );
             })}
           </div>
-          {phase !== 2 && isFocused ? (
+          {isFocused ? (
             <span
               style={{
                 left: pos.left,
@@ -149,28 +155,42 @@ const TypingInput = React.forwardRef<HTMLDivElement, TypingInputProps>(
                 'animate-blink': phase === 0,
               })}
             >
-              |
+              {phase === 2 ? (
+                <div className='group relative z-50'>
+                  <BsFlagFill className='-mb-[8px] text-fg' />
+                  <Tooltip
+                    className='bg-fg text-bg group-hover:translate-y-0 group-hover:opacity-100'
+                    triangle='bg-fg'
+                  >
+                    You finished here.
+                  </Tooltip>
+                </div>
+              ) : (
+                '|'
+              )}
             </span>
           ) : null}
         </div>
-        <div className='mt-4 flex w-full flex-wrap justify-center gap-4 text-sm'>
+        <div className='mt-4 flex w-full flex-col flex-wrap items-center justify-center gap-4 text-sm'>
           {phase === 2 && startTime && endTime ? (
-            <>
-              <span className='text-green-500'>
+            <div className='grid grid-rows-3 items-center gap-4 rounded-lg px-4 py-1 text-xl font-bold sm:flex'>
+              <span>
                 WPM: {Math.round(((60 / duration) * correctChar) / 5)}
               </span>
-              <span className='text-blue-500'>
+              <span>
                 Accuracy:{' '}
                 {(((correctChar - errorChar) / (currIndex + 1)) * 100).toFixed(
                   2
                 )}
                 %
               </span>
-              <span className='text-yellow-500'>Duration: {duration}s</span>
-            </>
+              <span>Duration: {duration}s</span>
+            </div>
           ) : null}
-          <span> Correct Characters: {correctChar}</span>
-          <span> Error Characters: {errorChar}</span>
+          <div className='flex gap-4'>
+            <span> Correct Characters: {correctChar}</span>
+            <span> Error Characters: {errorChar}</span>
+          </div>
         </div>
       </div>
     );

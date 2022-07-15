@@ -62,7 +62,7 @@ export default function Header() {
               <a className='relative'>
                 <FaKeyboard className='peer cursor-pointer fill-hl/50 text-lg transition-colors duration-200 hover:fill-hl' />
                 <Tooltip className='peer-hover:translate-y-0 peer-hover:opacity-100'>
-                  Restart Test
+                  Home
                 </Tooltip>
               </a>
             </Link>
