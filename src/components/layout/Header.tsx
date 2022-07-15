@@ -4,6 +4,8 @@ import * as React from 'react';
 import { AiFillBuild } from 'react-icons/ai';
 import { FaCog, FaCrown, FaInfo, FaKeyboard, FaTerminal } from 'react-icons/fa';
 
+import Tooltip from '@/components/Tooltip';
+
 import { usePreferenceContext } from '@/context/Preference/PreferenceContext';
 
 const typeList = ['words', 'sentences', 'numbers'];
@@ -57,16 +59,43 @@ export default function Header() {
         <nav className='flex w-full flex-1 items-center justify-between sm:w-auto'>
           <div className='flex space-x-6'>
             <Link href='/'>
-              <a>
-                <FaKeyboard className='cursor-pointer fill-hl/50 text-lg transition-colors duration-200 hover:fill-hl' />
+              <a className='relative'>
+                <FaKeyboard className='peer cursor-pointer fill-hl/50 text-lg transition-colors duration-200 hover:fill-hl' />
+                <Tooltip className='peer-hover:translate-y-0 peer-hover:opacity-100'>
+                  Restart Test
+                </Tooltip>
               </a>
             </Link>
-            <FaCrown className='cursor-pointer fill-hl/50 text-lg transition-colors duration-200 hover:fill-hl' />
-            <FaInfo className='cursor-pointer fill-hl/50 text-lg transition-colors duration-200 hover:fill-hl' />
-            <FaCog className='cursor-pointer fill-hl/50 text-lg transition-colors duration-200 hover:fill-hl' />
+            <Link href='/'>
+              <a className='relative'>
+                <FaCrown className='peer cursor-pointer fill-hl/50 text-lg transition-colors duration-200 hover:fill-hl' />
+                <Tooltip className='peer-hover:translate-y-0 peer-hover:opacity-100'>
+                  Leaderboard
+                </Tooltip>
+              </a>
+            </Link>
+            <Link href='/'>
+              <a className='relative'>
+                <FaInfo className='peer cursor-pointer fill-hl/50 text-lg transition-colors duration-200 hover:fill-hl' />
+                <Tooltip className='peer-hover:translate-y-0 peer-hover:opacity-100'>
+                  About
+                </Tooltip>
+              </a>
+            </Link>
+            <Link href='/'>
+              <a className='relative'>
+                <FaCog className='peer cursor-pointer fill-hl/50 text-lg transition-colors duration-200 hover:fill-hl' />
+                <Tooltip className='peer-hover:translate-y-0 peer-hover:opacity-100'>
+                  Settings
+                </Tooltip>
+              </a>
+            </Link>
             <Link href='/components'>
-              <a>
-                <AiFillBuild className='cursor-pointer fill-hl/50 text-lg transition-colors duration-200 hover:fill-hl' />
+              <a className='relative'>
+                <AiFillBuild className='peer cursor-pointer fill-hl/50 text-lg transition-colors duration-200 hover:fill-hl' />
+                <Tooltip className='peer-hover:translate-y-0 peer-hover:opacity-100'>
+                  Components
+                </Tooltip>
               </a>
             </Link>
           </div>
