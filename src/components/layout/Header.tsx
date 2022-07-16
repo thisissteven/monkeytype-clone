@@ -66,7 +66,7 @@ export default function Header() {
                 </Tooltip>
               </a>
             </Link>
-            <Link href='/'>
+            <Link href='/leaderboard'>
               <a className='relative'>
                 <FaCrown className='peer cursor-pointer fill-hl/50 text-lg transition-colors duration-200 hover:fill-hl' />
                 <Tooltip className='peer-hover:translate-y-0 peer-hover:opacity-100'>
@@ -74,7 +74,7 @@ export default function Header() {
                 </Tooltip>
               </a>
             </Link>
-            <Link href='/'>
+            <Link href='/about'>
               <a className='relative'>
                 <FaInfo className='peer cursor-pointer fill-hl/50 text-lg transition-colors duration-200 hover:fill-hl' />
                 <Tooltip className='peer-hover:translate-y-0 peer-hover:opacity-100'>
@@ -82,7 +82,7 @@ export default function Header() {
                 </Tooltip>
               </a>
             </Link>
-            <Link href='/'>
+            <Link href='/settings'>
               <a className='relative'>
                 <FaCog className='peer cursor-pointer fill-hl/50 text-lg transition-colors duration-200 hover:fill-hl' />
                 <Tooltip className='peer-hover:translate-y-0 peer-hover:opacity-100'>
