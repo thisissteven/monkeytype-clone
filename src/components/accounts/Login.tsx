@@ -60,7 +60,7 @@ export default function Login() {
         </div>
         <button
           type='submit'
-          className='flex items-center justify-center rounded-md bg-fg px-4 py-2 text-bg transition-opacity duration-200 hover:opacity-90 active:opacity-70'
+          className='flex items-center justify-center rounded-md bg-font px-4 py-2 text-bg transition-opacity duration-200 hover:opacity-90 active:opacity-70'
         >
           <FiLogIn className='mr-2' />
           Sign in
