@@ -1,5 +1,6 @@
+import clsx from 'clsx';
 import * as React from 'react';
-import { IoMdGlobe } from 'react-icons/io';
+import { FaPeace } from 'react-icons/fa';
 import { VscDebugRestart } from 'react-icons/vsc';
 
 import Tooltip from '@/components/Tooltip';
@@ -13,7 +14,8 @@ export default function Box() {
   const _ = require('lodash');
 
   const {
-    preferences: { type, time, isOpen },
+    preferences: { type, time, isOpen, zenMode },
+    dispatch,
   } = usePreferenceContext();
 
   const [list, setList] = React.useState<string[]>(() => shuffleList(type));
@@ -42,9 +44,15 @@ export default function Box() {
   return (
     <>
       {/* Upper  */}
-      <div className='mb-4 flex items-center space-x-1.5 text-fg/50 transition-colors duration-200 hover:text-fg'>
-        <IoMdGlobe className='text-xl' />
-        <div>english</div>
+      <div
+        onClick={() => dispatch({ type: 'SET_ZEN_MODE', payload: !zenMode })}
+        className={clsx(
+          'mb-4 flex cursor-pointer items-center space-x-1.5 transition-colors duration-200 hover:text-fg',
+          zenMode ? 'text-fg' : 'text-fg/50'
+        )}
+      >
+        <FaPeace className='text-xl' />
+        <div>zen mode - {zenMode ? 'on' : 'off'}</div>
       </div>
 
       {/* Box */}

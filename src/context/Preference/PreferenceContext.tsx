@@ -14,6 +14,7 @@ export default function PreferenceProvider({
     theme: 'default',
     fontFamily: 'chakra-petch',
     isOpen: false,
+    zenMode: false,
     type: 'words',
     time: '15',
   });
@@ -24,11 +25,14 @@ export default function PreferenceProvider({
       const fontFamily = window.localStorage.getItem('font-family');
       const type = window.localStorage.getItem('type');
       const time = window.localStorage.getItem('time');
+      const zenMode = window.localStorage.getItem('zen-mode');
       if (theme) dispatch({ type: 'SET_THEME', payload: theme });
       if (fontFamily)
         dispatch({ type: 'SET_FONT_FAMILY', payload: fontFamily });
       if (type) dispatch({ type: 'SET_TYPE', payload: type });
       if (time) dispatch({ type: 'SET_TIME', payload: time });
+      if (zenMode)
+        dispatch({ type: 'SET_ZEN_MODE', payload: zenMode === 'true' });
     }
   }, []);
 

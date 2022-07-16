@@ -8,7 +8,7 @@ export default function Login() {
 
   return (
     <>
-      <h2 className='flex text-left text-xl font-thin'>login</h2>
+      <h2 className='flex text-left text-xl font-thin'>or login</h2>
       <form
         onSubmit={(e) => e.preventDefault()}
         className='mt-4 flex flex-col gap-2 sm:gap-4'
@@ -45,13 +45,15 @@ export default function Login() {
           )}
         </div>
         <div className='flex items-center gap-2'>
-          <input
-            type='checkbox'
-            id='remember'
-            name='remember'
-            className='rounded-sm bg-fg text-bg focus:border-0 focus:outline-0 focus:ring-0'
-            onChange={() => setIsChecked(!isChecked)}
-          />
+          <div className='flex h-4 w-4 items-center overflow-hidden rounded-sm bg-fg'>
+            <input
+              type='checkbox'
+              id='remember'
+              name='remember'
+              className='border-0 bg-transparent text-transparent outline-0 ring-0'
+              onChange={() => setIsChecked(!isChecked)}
+            />
+          </div>
           <label htmlFor='remember' className='text-fg'>
             remember me
           </label>

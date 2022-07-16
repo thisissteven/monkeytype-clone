@@ -34,6 +34,14 @@ const reducer = (state: PreferenceState, action: Action) => {
         ...state,
         time: action.payload,
       };
+    case 'SET_ZEN_MODE':
+      if (typeof window !== undefined) {
+        window.localStorage.setItem('zen-mode', JSON.stringify(action.payload));
+      }
+      return {
+        ...state,
+        zenMode: action.payload,
+      };
     case 'TOGGLE_COMMAND_PALETTE':
       return {
         ...state,

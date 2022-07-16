@@ -20,7 +20,6 @@ import Box from '@/components/words/Box';
 export default function HomePage() {
   return (
     <AnimateFade>
-      {/* <Seo templateTitle='Home' /> */}
       <Seo title='Monkeytype Clone' />
 
       <main>

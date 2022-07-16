@@ -21,7 +21,7 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
     const [timeLeft, setTimeLeft] = useState(() => parseInt(time));
 
     const {
-      preferences: { isOpen },
+      preferences: { isOpen, zenMode },
     } = usePreferenceContext();
 
     const {
@@ -117,9 +117,18 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
 
     return (
       <div className='relative w-full max-w-[950px]'>
+        {zenMode && (
+          <div
+            className={clsx(
+              'pointer-events-none fixed inset-0 h-screen w-screen bg-bg transition-opacity duration-200',
+              { 'opacity-0': !isFocused }
+            )}
+          ></div>
+        )}
         <span className='absolute left-0 -top-[3.25rem] text-4xl text-fg/80'>
           {timeLeft}
         </span>
+
         <div
           className={clsx('relative h-[140px] w-full text-2xl outline-none')}
           onClick={() => {
@@ -251,7 +260,7 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
             </span>
           ) : null}
         </div>
-        <div className='mt-4 flex w-full flex-col flex-wrap items-center justify-center gap-4 text-sm'>
+        <div className='relative mt-4 flex w-full flex-col flex-wrap items-center justify-center gap-4 text-sm'>
           {phase === 2 && startTime && endTime ? (
             <div className='grid grid-rows-3 items-center gap-4 rounded-lg px-4 py-1 text-xl font-bold sm:flex'>
               <span>
