@@ -38,6 +38,7 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
     } = useTyping(text, { skipCurrentWordOnSpace: true, pauseOnError: false });
 
     const [margin, setMargin] = useState(0);
+    const [value, setValue] = useState('');
 
     // set cursor
     const pos = useMemo(() => {
@@ -64,6 +65,7 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
     }, [currIndex]);
 
     useEffect(() => {
+      setValue('');
       setMargin(0);
       setTimeLeft(parseInt(time));
       endTyping();
@@ -120,25 +122,43 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
         </span>
         <div
           className={clsx('relative h-[140px] w-full text-2xl outline-none')}
+          onClick={() => {
+            if (ref != null && typeof ref !== 'function') {
+              ref?.current?.focus();
+            }
+            setIsFocused(true);
+          }}
         >
           <input
             type='text'
-            className='absolute left-0 top-0 z-50 h-full w-full cursor-default opacity-0'
+            className='absolute left-0 top-0 z-20 h-full w-full cursor-default opacity-0'
             tabIndex={1}
             ref={ref}
-            value=''
-            // eslint-disable-next-line @typescript-eslint/no-empty-function
-            onChange={() => {}}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
+            value={value}
+            onChange={(e) => {
+              setValue((prev) => {
+                if (prev.length > e.target.value.length) {
+                  handleKeyDown('Backspace', false);
+                } else {
+                  handleKeyDown(e.target.value.slice(-1), false);
+                }
+                return e.target.value;
+              });
+            }}
             onKeyDown={(e) => {
               if (isOpen) {
                 setIsFocused(false);
                 return;
               }
-              if (e.key === ' ') e.preventDefault();
               if (e.ctrlKey) return;
-              handleKeyDown(e.key, e.ctrlKey);
+              if (
+                ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(
+                  e.key
+                )
+              )
+                e.preventDefault();
             }}
           />
           <div

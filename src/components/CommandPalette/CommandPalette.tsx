@@ -82,7 +82,7 @@ const CommandPalette = ({ data }: { data: CommandType[] }) => {
           if (page === 1) dispatch({ type: 'TOGGLE_COMMAND_PALETTE' });
         }}
         className={clsx(
-          'pointer-events-none fixed inset-0 z-20 overflow-y-auto p-4 pt-[25vh]',
+          'pointer-events-none fixed inset-0 z-50 overflow-y-auto p-4 pt-[25vh]',
           theme,
           fontFamily
         )}
@@ -108,6 +108,14 @@ const CommandPalette = ({ data }: { data: CommandType[] }) => {
           <Combobox
             value=''
             onChange={(value: string) => {
+              if (value === 'exit') {
+                dispatch({ type: 'TOGGLE_COMMAND_PALETTE' });
+                setQuery('');
+                setPage(1);
+                setCommands(data);
+                setSelected('');
+                return;
+              }
               setSelected(value);
               if (page === 2) {
                 handleSelect(selected, value, dispatch);
@@ -133,7 +141,7 @@ const CommandPalette = ({ data }: { data: CommandType[] }) => {
             {filteredCommands.length > 0 && (
               <Combobox.Options
                 static
-                className='sm:scrollbar max-h-96 overflow-y-scroll py-4 text-sm'
+                className='sm:scrollbar max-h-72 overflow-y-scroll py-4 text-sm'
               >
                 <AnimatePresence exitBeforeEnter>
                   <motion.div
