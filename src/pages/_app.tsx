@@ -1,8 +1,11 @@
+import { ApolloProvider } from '@apollo/client';
 import { AnimatePresence } from 'framer-motion';
 import { AppProps } from 'next/app';
 
 import '@/styles/globals.css';
 import '@/styles/theme.css';
+
+import client from '@/lib/apolloClient';
 
 import commands from '@/data/commands';
 
@@ -11,6 +14,7 @@ import Header from '@/components/layout/Header';
 import Layout from '@/components/layout/Layout';
 
 import PreferenceProvider from '@/context/Preference/PreferenceContext';
+import { AuthProvider } from '@/context/User/UserContext';
 
 /**
  * !STARTERCONF info
@@ -21,12 +25,16 @@ function MyApp({ Component, pageProps, router }: AppProps) {
   return (
     <PreferenceProvider>
       <CommandPalette data={commands} />
-      <Layout>
-        <Header />
-        <AnimatePresence exitBeforeEnter>
-          <Component {...pageProps} key={router.route} />
-        </AnimatePresence>
-      </Layout>
+      <ApolloProvider client={client}>
+        <AuthProvider>
+          <Layout>
+            <Header />
+            <AnimatePresence exitBeforeEnter>
+              <Component {...pageProps} key={router.route} />
+            </AnimatePresence>
+          </Layout>
+        </AuthProvider>
+      </ApolloProvider>
     </PreferenceProvider>
   );
 }

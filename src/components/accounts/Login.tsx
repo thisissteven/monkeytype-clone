@@ -4,11 +4,16 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { FiLogIn } from 'react-icons/fi';
 import * as yup from 'yup';
 
+import { useAuthState } from '@/context/User/UserContext';
+
 import Input from '../Input';
 import PasswordInput from '../PasswordInput';
 
 const schema = yup.object().shape({
-  email: yup.string().email('Email is invalid').required('Email is required'),
+  identifier: yup
+    .string()
+    .email('Email is invalid')
+    .required('Email is required'),
   password: yup
     .string()
     .required('Password is required')
@@ -16,7 +21,7 @@ const schema = yup.object().shape({
 });
 
 type LoginInput = {
-  email: string;
+  identifier: string;
   password: string;
 };
 
@@ -29,9 +34,11 @@ export default function Login() {
   });
   const { handleSubmit } = methods;
 
+  const { login } = useAuthState();
+
   const onSubmit = (data: LoginInput) => {
     // eslint-disable-next-line no-console
-    console.log(data);
+    login(data);
   };
 
   return (
@@ -43,7 +50,7 @@ export default function Login() {
           className='mt-4 flex flex-col gap-2 sm:gap-4'
         >
           <Input
-            name='email'
+            name='identifier'
             id='login-email'
             placeholder='email'
             autoComplete='off'

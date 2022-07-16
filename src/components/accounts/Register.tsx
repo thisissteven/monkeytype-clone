@@ -4,6 +4,8 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { FaUserPlus } from 'react-icons/fa';
 import * as yup from 'yup';
 
+import { useAuthState } from '@/context/User/UserContext';
+
 import Input from '../Input';
 import PasswordInput from '../PasswordInput';
 
@@ -29,9 +31,11 @@ export default function Register() {
   });
   const { handleSubmit } = methods;
 
+  const { register } = useAuthState();
+
   const onSubmit = (data: RegisterInput) => {
     // eslint-disable-next-line no-console
-    console.log(data);
+    register(data);
   };
 
   return (
