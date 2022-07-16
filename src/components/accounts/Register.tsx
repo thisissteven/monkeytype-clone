@@ -1,62 +1,74 @@
+import { yupResolver } from '@hookform/resolvers/yup';
 import * as React from 'react';
-import { FaEye, FaEyeSlash, FaUserPlus } from 'react-icons/fa';
+import { FormProvider, useForm } from 'react-hook-form';
+import { FaUserPlus } from 'react-icons/fa';
+import * as yup from 'yup';
+
+import Input from '../Input';
+import PasswordInput from '../PasswordInput';
+
+const schema = yup.object().shape({
+  username: yup.string().required('Userame is required'),
+  email: yup.string().email('Email is invalid').required('Email is required'),
+  password: yup
+    .string()
+    .required('Password is required')
+    .min(8, 'Password must be at least 8 characters long'),
+});
+
+type RegisterInput = {
+  username: string;
+  email: string;
+  password: string;
+};
 
 export default function Register() {
-  const [isVisible, setIsVisible] = React.useState(false);
+  const methods = useForm<RegisterInput>({
+    mode: 'onTouched',
+    resolver: yupResolver(schema),
+  });
+  const { handleSubmit } = methods;
+
+  const onSubmit = (data: RegisterInput) => {
+    // eslint-disable-next-line no-console
+    console.log(data);
+  };
 
   return (
     <>
       <h2 className='flex text-left text-xl font-thin'>register</h2>
-      <form
-        onSubmit={(e) => e.preventDefault()}
-        className='mt-4 flex flex-col gap-2 sm:gap-4'
-      >
-        <input
-          type='text'
-          placeholder='username'
-          name='username'
-          className='rounded-lg bg-fg text-bg placeholder:text-bg/70 focus:border-fg focus:outline-fg/50 focus:ring-0'
-          autoComplete='off'
-        />
-        <input
-          type='text'
-          placeholder='email'
-          name='email'
-          className='rounded-lg bg-fg text-bg placeholder:text-bg/70 focus:border-fg focus:outline-fg/50 focus:ring-0'
-          autoComplete='off'
-        />
-        <div className='relative'>
-          <input
-            type={isVisible ? 'text' : 'password'}
-            placeholder='create password'
-            name='password'
-            className='w-full rounded-lg bg-fg text-bg placeholder:text-bg/70 focus:border-fg focus:outline-fg/50 focus:ring-0'
+      <FormProvider {...methods}>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className='mt-4 flex flex-col gap-2 sm:gap-4'
+        >
+          <Input
+            id='username'
+            name='username'
+            placeholder='username'
             autoComplete='off'
           />
-          {isVisible ? (
-            <div
-              className='absolute right-0 top-0 flex h-full w-[42px] transform cursor-pointer items-center justify-center transition-all duration-200 hover:bg-bg/10'
-              onClick={() => setIsVisible(false)}
-            >
-              <FaEye className='text-bg/80' />
-            </div>
-          ) : (
-            <div
-              className='absolute right-0 top-0 flex h-full w-[42px] transform cursor-pointer items-center justify-center transition-all duration-200 hover:bg-bg/10'
-              onClick={() => setIsVisible(true)}
-            >
-              <FaEyeSlash className='text-bg/80' />
-            </div>
-          )}
-        </div>
-        <button
-          type='submit'
-          className='flex items-center justify-center rounded-md bg-font px-4 py-2 text-bg transition-opacity duration-200 hover:opacity-90 active:opacity-70'
-        >
-          <FaUserPlus className='mr-2' />
-          Sign up
-        </button>
-      </form>
+          <Input
+            id='email'
+            name='email'
+            placeholder='email'
+            autoComplete='off'
+          />
+          <PasswordInput
+            id='password'
+            name='password'
+            placeholder='create password'
+            autoComplete='off'
+          />
+          <button
+            type='submit'
+            className='flex items-center justify-center rounded-md bg-font px-4 py-2 text-bg transition-opacity duration-200 hover:opacity-90 active:opacity-70'
+          >
+            <FaUserPlus className='mr-2' />
+            Sign up
+          </button>
+        </form>
+      </FormProvider>
     </>
   );
 }
