@@ -35,7 +35,7 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
         endTime,
       },
       actions: { insertTyping, deleteTyping, resetTyping, endTyping },
-    } = useTyping(text, { skipCurrentWordOnSpace: true, pauseOnError: false });
+    } = useTyping(text, { skipCurrentWordOnSpace: false });
 
     const [margin, setMargin] = useState(0);
     const [value, setValue] = useState('');
@@ -212,7 +212,11 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
                 return (
                   <span
                     key={letter + index}
-                    className={`${color} ${letter === ' ' && ''}`}
+                    className={`${color} ${
+                      state === 0 &&
+                      index < currIndex &&
+                      'border-b-2 border-hl text-hl'
+                    }`}
                   >
                     {letter}
                   </span>
