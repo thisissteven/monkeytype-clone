@@ -2,7 +2,13 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import * as React from 'react';
 import { AiFillBuild } from 'react-icons/ai';
-import { FaCog, FaCrown, FaInfo, FaKeyboard, FaTerminal } from 'react-icons/fa';
+import {
+  FaCrown,
+  FaInfo,
+  FaKeyboard,
+  FaRegUser,
+  FaTerminal,
+} from 'react-icons/fa';
 
 import Tooltip from '@/components/Tooltip';
 
@@ -82,19 +88,19 @@ export default function Header() {
                 </Tooltip>
               </a>
             </Link>
-            <Link href='/settings'>
-              <a className='relative'>
-                <FaCog className='peer cursor-pointer fill-hl/50 text-lg transition-colors duration-200 hover:fill-hl' />
-                <Tooltip className='peer-hover:translate-y-0 peer-hover:opacity-100'>
-                  Settings
-                </Tooltip>
-              </a>
-            </Link>
             <Link href='/components'>
               <a className='relative'>
                 <AiFillBuild className='peer cursor-pointer fill-hl/50 text-lg transition-colors duration-200 hover:fill-hl' />
                 <Tooltip className='peer-hover:translate-y-0 peer-hover:opacity-100'>
                   Components
+                </Tooltip>
+              </a>
+            </Link>
+            <Link href='/account'>
+              <a className='relative'>
+                <FaRegUser className='peer cursor-pointer fill-hl/50 text-lg transition-colors duration-200 hover:fill-hl' />
+                <Tooltip className='peer-hover:translate-y-0 peer-hover:opacity-100'>
+                  Account
                 </Tooltip>
               </a>
             </Link>
