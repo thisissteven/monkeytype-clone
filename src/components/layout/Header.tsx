@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import * as React from 'react';
 import { AiFillBuild } from 'react-icons/ai';
 import {
@@ -30,6 +31,8 @@ export default function Header() {
     state: { authenticated, user },
     logout,
   } = useAuthState();
+
+  const { pathname } = useRouter();
 
   return (
     <header className={clsx('layout bg-transparent font-primary')}>
@@ -113,7 +116,7 @@ export default function Header() {
             </Link>
           </div>
           <div className='hidden flex-col -space-y-1 sm:space-y-1 md:flex'>
-            {authenticated && user ? (
+            {authenticated && user && pathname === '/account' ? (
               <button
                 onClick={logout}
                 className='flex items-center justify-center rounded-md bg-font px-4 py-2 text-sm text-bg transition-opacity duration-200 hover:opacity-90 active:opacity-70'

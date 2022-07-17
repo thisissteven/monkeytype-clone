@@ -82,7 +82,7 @@ const CommandPalette = ({ data }: { data: CommandType[] }) => {
           if (page === 1) dispatch({ type: 'TOGGLE_COMMAND_PALETTE' });
         }}
         className={clsx(
-          'pointer-events-none fixed inset-0 z-50 overflow-y-auto p-4 pt-[25vh]',
+          'pointer-events-none fixed inset-0 z-50 overflow-y-auto p-4 pt-[25vh] font-primary',
           theme,
           fontFamily
         )}

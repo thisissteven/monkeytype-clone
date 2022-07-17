@@ -1,6 +1,7 @@
-/* eslint-disable no-console */
 import { useLazyQuery, useMutation } from '@apollo/client';
 import * as React from 'react';
+import { UseFormReset } from 'react-hook-form';
+import { toast } from 'react-toastify';
 
 import {
   GET_CURRENT_USER_QUERY,
@@ -41,15 +42,26 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
         // save register data to state
         dispatch({ type: 'LOGIN', payload: { email, username } });
+        toast.success('Welcome to the club!', {
+          position: toast.POSITION.TOP_CENTER,
+          toastId: 'register-success',
+        });
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
+        toast.error('Email or username are already taken', {
+          position: toast.POSITION.TOP_CENTER,
+          toastId: 'register-error',
+        });
         dispatch({ type: 'LOGOUT' });
       })
       .finally(() => dispatch({ type: 'SET_LOADING', payload: false }));
   };
 
-  const login = async (data: UserLoginInput, rememberMe: boolean) => {
+  const login = async (
+    data: UserLoginInput,
+    rememberMe: boolean,
+    reset: UseFormReset<UserLoginInput>
+  ) => {
     dispatch({ type: 'SET_LOADING', payload: true });
     loginUser({ variables: { data } })
       .then((res) => {
@@ -72,9 +84,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
         // save login data to state
         dispatch({ type: 'LOGIN', payload: { email, username } });
+        toast.success('Welcome back!', {
+          position: toast.POSITION.TOP_CENTER,
+          toastId: 'login-success',
+        });
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
+        toast.error('Invalid email or password', {
+          position: toast.POSITION.TOP_CENTER,
+          toastId: 'login-error',
+        });
+        reset();
         dispatch({ type: 'LOGOUT' });
       })
       .finally(() => dispatch({ type: 'SET_LOADING', payload: false }));
@@ -82,6 +102,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const logout = async () => {
     dispatch({ type: 'LOGOUT' });
+    toast.success('See you again!', {
+      position: toast.POSITION.TOP_CENTER,
+      toastId: 'logout',
+    });
   };
 
   React.useEffect(() => {
@@ -105,7 +129,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           dispatch({ type: 'LOGIN', payload: { username, email } });
         });
       } catch (err) {
-        console.log(err);
         dispatch({ type: 'LOGOUT' });
       } finally {
         dispatch({ type: 'SET_LOADING', payload: false });

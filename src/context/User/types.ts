@@ -1,3 +1,5 @@
+import { UseFormReset } from 'react-hook-form';
+
 export type User = {
   email: string;
   username: string;
@@ -23,7 +25,11 @@ export type UserLoginInput = {
 export type ProviderState = {
   state: AuthState;
   register: (data: UserRegisterInput) => void;
-  login: (data: UserLoginInput, rememberMe: boolean) => void;
+  login: (
+    data: UserLoginInput,
+    rememberMe: boolean,
+    reset: UseFormReset<UserLoginInput>
+  ) => void;
   logout: () => void;
 };
 

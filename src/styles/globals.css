@@ -81,6 +81,12 @@
     /* 1100px */
     max-width: 68.75rem;
     @apply mx-auto w-11/12;
+    --toastify-color-success: rgb(var(--fg-color));
+    --toastify-color-error: rgb(var(--bg-color));
+    --toastify-color-progress-success: rgb(var(--bg-color));
+    --toastify-icon-color-success: rgb(var(--bg-color));
+    --toastify-color-progress-error: rgb(var(--fg-color));
+    --toastify-icon-color-error: rgb(var(--fg-color));
   }
 
   .caret {

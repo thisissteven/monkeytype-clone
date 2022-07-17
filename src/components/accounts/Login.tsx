@@ -33,7 +33,7 @@ export default function Login() {
     mode: 'onTouched',
     resolver: yupResolver(schema),
   });
-  const { handleSubmit } = methods;
+  const { reset, handleSubmit } = methods;
 
   const {
     state: { loading },
@@ -42,7 +42,7 @@ export default function Login() {
 
   const onSubmit = (data: LoginInput) => {
     // eslint-disable-next-line no-console
-    login(data, isChecked);
+    login(data, isChecked, reset);
   };
 
   return (

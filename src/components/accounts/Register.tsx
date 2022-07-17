@@ -10,7 +10,10 @@ import Input from '../Input';
 import PasswordInput from '../PasswordInput';
 
 const schema = yup.object().shape({
-  username: yup.string().required('Userame is required'),
+  username: yup
+    .string()
+    .required('Userame is required')
+    .min(3, 'Username must at least be 3 characters long'),
   email: yup.string().email('Email is invalid').required('Email is required'),
   password: yup
     .string()
