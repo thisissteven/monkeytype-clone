@@ -34,6 +34,7 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.33.1",
     "react-icons": "^4.4.0",
+    "react-toastify": "^9.0.5",
     "react-typing-game-hook": "^1.3.4",
     "tailwind-merge": "^1.3.0",
     "yup": "^0.32.11",
