@@ -31,7 +31,10 @@ export default function Register() {
   });
   const { handleSubmit } = methods;
 
-  const { register } = useAuthState();
+  const {
+    state: { loading },
+    register,
+  } = useAuthState();
 
   const onSubmit = (data: RegisterInput) => {
     // eslint-disable-next-line no-console
@@ -65,6 +68,7 @@ export default function Register() {
             autoComplete='off'
           />
           <button
+            disabled={loading}
             type='submit'
             className='flex items-center justify-center rounded-md bg-font px-4 py-2 text-bg transition-opacity duration-200 hover:opacity-90 active:opacity-70'
           >

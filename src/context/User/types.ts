@@ -1,6 +1,6 @@
 export type User = {
   email: string;
-  name: string;
+  username: string;
 } | null;
 
 export type AuthState = {
@@ -23,10 +23,11 @@ export type UserLoginInput = {
 export type ProviderState = {
   state: AuthState;
   register: (data: UserRegisterInput) => void;
-  login: (data: UserLoginInput) => void;
+  login: (data: UserLoginInput, rememberMe: boolean) => void;
+  logout: () => void;
 };
 
 export type Action =
   | { type: 'LOGIN'; payload: User }
   | { type: 'LOGOUT' }
-  | { type: 'STOP_LOADING' };
+  | { type: 'SET_LOADING'; payload: boolean };

@@ -1,8 +1,12 @@
 /* eslint-disable no-console */
-import { useMutation } from '@apollo/client';
+import { useLazyQuery, useMutation } from '@apollo/client';
 import * as React from 'react';
 
-import { LOGIN_MUTATION, REGISTER_MUTATION } from './queries';
+import {
+  GET_CURRENT_USER_QUERY,
+  LOGIN_MUTATION,
+  REGISTER_MUTATION,
+} from './queries';
 import reducer from './reducer';
 import { ProviderState, UserLoginInput, UserRegisterInput } from './types';
 
@@ -15,48 +19,96 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     loading: false,
   });
 
+  const [getCurrentUser] = useLazyQuery(GET_CURRENT_USER_QUERY);
   const [registerUser] = useMutation(REGISTER_MUTATION);
   const [loginUser] = useMutation(LOGIN_MUTATION);
 
   const register = async (data: UserRegisterInput) => {
     registerUser({ variables: { data } })
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err))
-      .finally(() => dispatch({ type: 'STOP_LOADING' }));
+      .then((res) => {
+        // extract jwt, username, and email from response
+        const {
+          data: {
+            register: {
+              jwt,
+              user: { username, email },
+            },
+          },
+        } = res;
+
+        // default rememberMe === false
+        sessionStorage.setItem('token', jwt);
+
+        // save register data to state
+        dispatch({ type: 'LOGIN', payload: { email, username } });
+      })
+      .catch((err) => {
+        console.log(err);
+        dispatch({ type: 'LOGOUT' });
+      })
+      .finally(() => dispatch({ type: 'SET_LOADING', payload: false }));
   };
 
-  const login = async (data: UserLoginInput) => {
+  const login = async (data: UserLoginInput, rememberMe: boolean) => {
+    dispatch({ type: 'SET_LOADING', payload: true });
     loginUser({ variables: { data } })
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err))
-      .finally(() => dispatch({ type: 'STOP_LOADING' }));
+      .then((res) => {
+        // extract jwt, username, and email from response
+        const {
+          data: {
+            login: {
+              jwt,
+              user: { username, email },
+            },
+          },
+        } = res;
+
+        // if rememberMe => set token to localstorage, else sessionstorage
+        if (rememberMe) {
+          localStorage.setItem('token', jwt);
+        } else {
+          sessionStorage.setItem('token', jwt);
+        }
+
+        // save login data to state
+        dispatch({ type: 'LOGIN', payload: { email, username } });
+      })
+      .catch((err) => {
+        console.log(err);
+        dispatch({ type: 'LOGOUT' });
+      })
+      .finally(() => dispatch({ type: 'SET_LOADING', payload: false }));
   };
 
-  // eslint-disable-next-line unused-imports/no-unused-vars
   const logout = async () => {
-    localStorage.removeItem('token');
+    dispatch({ type: 'LOGOUT' });
   };
 
   React.useEffect(() => {
     const loadUser = async () => {
       try {
-        const token = localStorage.getItem('token');
+        dispatch({ type: 'SET_LOADING', payload: true });
+        let token = localStorage.getItem('token');
+        if (!token) {
+          token = sessionStorage.getItem('token');
+        }
         if (token === null || token === undefined) {
+          dispatch({ type: 'SET_LOADING', payload: false });
           return;
         }
-        // const res = await axios.get('/profile', {
-        //   headers: {
-        //     'Content-Type': 'application/json',
-        //     Authorization: `Bearer ${token}`,
-        //   },
-        // });
-        // dispatch({ type: 'LOGIN', payload: user });
+        await getCurrentUser().then((res) => {
+          const {
+            data: {
+              me: { username, email },
+            },
+          } = res;
+          dispatch({ type: 'LOGIN', payload: { username, email } });
+        });
       } catch (err) {
-        // eslint-disable-next-line no-console
         console.log(err);
-        localStorage.removeItem('token');
+        dispatch({ type: 'LOGOUT' });
       } finally {
-        // dispatch({ type: 'STOP_LOADING' });
+        dispatch({ type: 'SET_LOADING', payload: false });
       }
     };
 
@@ -65,7 +117,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   return (
-    <UserContext.Provider value={{ state, register, login }}>
+    <UserContext.Provider value={{ state, register, login, logout }}>
       {children}
     </UserContext.Provider>
   );

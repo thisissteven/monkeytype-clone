@@ -9,16 +9,17 @@ const reducer = (state: AuthState, action: Action): AuthState => {
         user: action.payload,
       };
     case 'LOGOUT':
+      sessionStorage.removeItem('token');
       localStorage.removeItem('token');
       return {
         ...state,
         authenticated: false,
         user: null,
       };
-    case 'STOP_LOADING':
+    case 'SET_LOADING':
       return {
         ...state,
-        loading: false,
+        loading: action.payload,
       };
     default:
       throw new Error('Unknown action type');
