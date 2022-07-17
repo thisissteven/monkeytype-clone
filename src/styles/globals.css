@@ -85,8 +85,8 @@
     --toastify-color-error: rgb(var(--bg-color));
     --toastify-color-progress-success: rgb(var(--bg-color));
     --toastify-icon-color-success: rgb(var(--bg-color));
-    --toastify-color-progress-error: rgb(var(--fg-color));
-    --toastify-icon-color-error: rgb(var(--fg-color));
+    --toastify-color-progress-error: rgb(var(--bg-color));
+    --toastify-icon-color-error: rgb(var(--bg-color));
   }
 
   .caret {

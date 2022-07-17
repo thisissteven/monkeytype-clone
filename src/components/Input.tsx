@@ -51,7 +51,7 @@ export default function Input({
 
         {errors[name] && (
           <div className='pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3'>
-            <HiExclamationCircle className='text-xl text-hl' />
+            <HiExclamationCircle className='text-xl text-bg/80' />
           </div>
         )}
       </div>

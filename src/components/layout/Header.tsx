@@ -10,6 +10,7 @@ import {
   FaRegUser,
   FaSignOutAlt,
   FaTerminal,
+  FaUser,
 } from 'react-icons/fa';
 
 import Tooltip from '@/components/Tooltip';
@@ -76,7 +77,12 @@ export default function Header() {
           <div className='flex space-x-6'>
             <Link href='/'>
               <a className='relative'>
-                <FaKeyboard className='peer cursor-pointer fill-hl/50 text-lg transition-colors duration-200 hover:fill-hl' />
+                <FaKeyboard
+                  className={clsx(
+                    'peer cursor-pointer fill-hl/50 text-lg transition-colors duration-200 hover:fill-hl',
+                    { 'fill-hl': pathname === '/' }
+                  )}
+                />
                 <Tooltip className='peer-hover:translate-y-0 peer-hover:opacity-100'>
                   Home
                 </Tooltip>
@@ -84,7 +90,12 @@ export default function Header() {
             </Link>
             <Link href='/leaderboard'>
               <a className='relative'>
-                <FaCrown className='peer cursor-pointer fill-hl/50 text-lg transition-colors duration-200 hover:fill-hl' />
+                <FaCrown
+                  className={clsx(
+                    'peer cursor-pointer fill-hl/50 text-lg transition-colors duration-200 hover:fill-hl',
+                    { 'fill-hl': pathname === '/leaderboard' }
+                  )}
+                />
                 <Tooltip className='peer-hover:translate-y-0 peer-hover:opacity-100'>
                   Leaderboard
                 </Tooltip>
@@ -92,7 +103,12 @@ export default function Header() {
             </Link>
             <Link href='/about'>
               <a className='relative'>
-                <FaInfo className='peer cursor-pointer fill-hl/50 text-lg transition-colors duration-200 hover:fill-hl' />
+                <FaInfo
+                  className={clsx(
+                    'peer cursor-pointer fill-hl/50 text-lg transition-colors duration-200 hover:fill-hl',
+                    { 'fill-hl': pathname === '/about' }
+                  )}
+                />
                 <Tooltip className='peer-hover:translate-y-0 peer-hover:opacity-100'>
                   About
                 </Tooltip>
@@ -100,7 +116,12 @@ export default function Header() {
             </Link>
             <Link href='/components'>
               <a className='relative'>
-                <AiFillBuild className='peer cursor-pointer fill-hl/50 text-lg transition-colors duration-200 hover:fill-hl' />
+                <AiFillBuild
+                  className={clsx(
+                    'peer cursor-pointer fill-hl/50 text-lg transition-colors duration-200 hover:fill-hl',
+                    { 'fill-hl': pathname === '/components' }
+                  )}
+                />
                 <Tooltip className='peer-hover:translate-y-0 peer-hover:opacity-100'>
                   Components
                 </Tooltip>
@@ -108,7 +129,32 @@ export default function Header() {
             </Link>
             <Link href='/account'>
               <a className='relative'>
-                <FaRegUser className='peer cursor-pointer fill-hl/50 text-lg transition-colors duration-200 hover:fill-hl' />
+                <div className='peer group flex h-full cursor-pointer gap-2 transition-colors duration-200 '>
+                  {user ? (
+                    <FaUser
+                      className={clsx(
+                        'fill-hl/50 text-lg group-hover:fill-hl',
+                        { 'fill-hl': pathname === '/account' }
+                      )}
+                    />
+                  ) : (
+                    <FaRegUser
+                      className={clsx(
+                        'fill-hl/50 text-lg group-hover:fill-hl',
+                        { 'fill-hl': pathname === '/account' }
+                      )}
+                    />
+                  )}
+                  <span
+                    className={clsx(
+                      'relative bottom-[2px] group-hover:text-hl',
+                      { 'text-hl': pathname === '/account' },
+                      { 'text-hl/70': pathname !== '/account' }
+                    )}
+                  >
+                    {user?.username}
+                  </span>
+                </div>
                 <Tooltip className='peer-hover:translate-y-0 peer-hover:opacity-100'>
                   Account
                 </Tooltip>
