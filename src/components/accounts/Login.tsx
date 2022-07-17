@@ -13,12 +13,12 @@ import PasswordInput from '../PasswordInput';
 const schema = yup.object().shape({
   identifier: yup
     .string()
-    .email('Email is invalid')
-    .required('Email is required'),
+    .email('email is invalid')
+    .required('email is required'),
   password: yup
     .string()
-    .required('Password is required')
-    .min(8, 'Password must be at least 8 characters long'),
+    .required('password is required')
+    .min(8, 'password must be at least 8 characters long'),
 });
 
 type LoginInput = {

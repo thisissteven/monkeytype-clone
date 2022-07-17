@@ -15,9 +15,9 @@ export default function LeaderboardPage() {
         <section>
           <div className={clsx('layout min-h-screen py-10')}>
             <ArrowLink direction='left' className='my-4 text-font' href='/'>
-              Back to Home
+              back to home
             </ArrowLink>
-            <h1>Leaderboard</h1>
+            <h1>leaderboard</h1>
           </div>
         </section>
       </main>

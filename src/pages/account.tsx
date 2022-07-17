@@ -24,9 +24,9 @@ export default function AccountPage() {
         <section>
           <div className={clsx('layout min-h-[60vh] py-10 font-primary')}>
             <ArrowLink direction='left' className='my-4 text-font' href='/'>
-              Back to Home
+              back to home
             </ArrowLink>
-            <h1 className='mb-4'>Account</h1>
+            <h1 className='mb-4'>account</h1>
 
             <AnimatePresence exitBeforeEnter>
               {authenticated && user ? (

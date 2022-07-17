@@ -12,13 +12,13 @@ import PasswordInput from '../PasswordInput';
 const schema = yup.object().shape({
   username: yup
     .string()
-    .required('Userame is required')
-    .min(3, 'Username must at least be 3 characters long'),
-  email: yup.string().email('Email is invalid').required('Email is required'),
+    .required('userame is required')
+    .min(3, 'username must at least be 3 characters long'),
+  email: yup.string().email('Email is invalid').required('email is required'),
   password: yup
     .string()
-    .required('Password is required')
-    .min(8, 'Password must be at least 8 characters long'),
+    .required('password is required')
+    .min(8, 'password must be at least 8 characters long'),
 });
 
 type RegisterInput = {

@@ -84,7 +84,7 @@ export default function Header() {
                   )}
                 />
                 <Tooltip className='peer-hover:translate-y-0 peer-hover:opacity-100'>
-                  Home
+                  home
                 </Tooltip>
               </a>
             </Link>
@@ -97,7 +97,7 @@ export default function Header() {
                   )}
                 />
                 <Tooltip className='peer-hover:translate-y-0 peer-hover:opacity-100'>
-                  Leaderboard
+                  leaderboard
                 </Tooltip>
               </a>
             </Link>
@@ -110,7 +110,7 @@ export default function Header() {
                   )}
                 />
                 <Tooltip className='peer-hover:translate-y-0 peer-hover:opacity-100'>
-                  About
+                  about
                 </Tooltip>
               </a>
             </Link>
@@ -123,7 +123,7 @@ export default function Header() {
                   )}
                 />
                 <Tooltip className='peer-hover:translate-y-0 peer-hover:opacity-100'>
-                  Components
+                  components
                 </Tooltip>
               </a>
             </Link>
@@ -156,7 +156,7 @@ export default function Header() {
                   </span>
                 </div>
                 <Tooltip className='peer-hover:translate-y-0 peer-hover:opacity-100'>
-                  Account
+                  account
                 </Tooltip>
               </a>
             </Link>

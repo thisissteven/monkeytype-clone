@@ -13,13 +13,13 @@ export default function Footer() {
           className='flex cursor-pointer items-center space-x-1.5 text-sm text-fg/50 transition-colors duration-200 hover:text-fg'
         >
           <FaCode />
-          <div>GitHub</div>
+          <div>github</div>
         </UnstyledLink>
         <UnstyledLink
           href='https://monkeytype.com'
           className='flex cursor-pointer items-center space-x-1.5 fill-hl/50 text-sm text-fg/50 transition-colors duration-200 hover:fill-hl hover:text-fg'
         >
-          <div>Inspired by</div>
+          <div>inspired by</div>
           <svg
             xmlns='http://www.w3.org/2000/svg'
             viewBox='-680 -1030 300 180'

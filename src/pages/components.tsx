@@ -25,13 +25,13 @@ export default function ComponentsPage() {
         <section>
           <div className={clsx('layout min-h-screen py-10')}>
             <ArrowLink direction='left' className='my-4 text-font' href='/'>
-              Back to Home
+              back to home
             </ArrowLink>
-            <h1>Components</h1>
+            <h1>components</h1>
 
             <ol className='mt-8 space-y-6'>
               <li className='space-y-4'>
-                <h2 className='text-lg md:text-xl'>Color Palette</h2>
+                <h2 className='text-lg md:text-xl'>color palette</h2>
                 <div className='flex flex-wrap gap-2'>
                   <select
                     name='theme'
@@ -81,7 +81,7 @@ export default function ComponentsPage() {
 
             <ol className='mt-8 space-y-6'>
               <li className='space-y-4'>
-                <h2 className='text-lg md:text-xl'>Font Family</h2>
+                <h2 className='text-lg md:text-xl'>font family</h2>
                 <div className='flex flex-wrap gap-2'>
                   <select
                     name='font-family'
