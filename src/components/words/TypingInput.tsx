@@ -277,8 +277,8 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
             </div>
           ) : null}
           <div className='flex gap-4'>
-            <span> Correct Characters: {correctChar}</span>
-            <span> Error Characters: {errorChar}</span>
+            {/* <span> Correct Characters: {correctChar}</span>
+            <span> Error Characters: {errorChar}</span> */}
           </div>
         </div>
       </div>
