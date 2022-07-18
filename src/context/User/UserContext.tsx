@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           data: {
             register: {
               jwt,
-              user: { username, email },
+              user: { username, email, id },
             },
           },
         } = res;
@@ -41,7 +41,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         sessionStorage.setItem('token', jwt);
 
         // save register data to state
-        dispatch({ type: 'LOGIN', payload: { email, username } });
+        dispatch({ type: 'LOGIN', payload: { email, username, id } });
         toast.success('Welcome to the club!', {
           position: toast.POSITION.TOP_CENTER,
           toastId: 'register-success',
@@ -70,7 +70,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           data: {
             login: {
               jwt,
-              user: { username, email },
+              user: { username, email, id },
             },
           },
         } = res;
@@ -83,7 +83,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         }
 
         // save login data to state
-        dispatch({ type: 'LOGIN', payload: { email, username } });
+        dispatch({ type: 'LOGIN', payload: { email, username, id } });
         toast.success('Welcome back!', {
           position: toast.POSITION.TOP_CENTER,
           toastId: 'login-success',
@@ -123,10 +123,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         await getCurrentUser().then((res) => {
           const {
             data: {
-              me: { username, email },
+              me: { username, email, id },
             },
           } = res;
-          dispatch({ type: 'LOGIN', payload: { username, email } });
+          dispatch({ type: 'LOGIN', payload: { username, email, id } });
         });
       } catch (err) {
         dispatch({ type: 'LOGOUT' });

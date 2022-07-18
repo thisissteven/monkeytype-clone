@@ -93,6 +93,8 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
     //set WPM
     useEffect(() => {
       if (phase === 2 && endTime && startTime) {
+        // check if user and authenticated => save data so strapi
+
         setDuration(Math.floor((endTime - startTime) / 1000));
       } else {
         setDuration(0);
@@ -178,7 +180,7 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
           ></div>
           <div
             className={clsx(
-              'absolute bottom-0 z-10 h-8 w-full bg-gradient-to-t from-bg transition-all duration-200',
+              'absolute -bottom-1 z-10 h-8 w-full bg-gradient-to-t from-bg transition-all duration-200',
               { 'opacity-0': !isFocused }
             )}
           ></div>

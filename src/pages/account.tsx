@@ -24,7 +24,7 @@ export default function AccountPage() {
 
       <main>
         <section>
-          <div className={clsx('layout min-h-[60vh] py-10 font-primary')}>
+          <div className={clsx('layout min-h-[65vh] py-10 font-primary')}>
             <ArrowLink direction='left' className='my-4 text-font' href='/'>
               back to home
             </ArrowLink>
@@ -62,7 +62,7 @@ export default function AccountPage() {
             {authenticated && user && (
               <button
                 onClick={logout}
-                className='mt-4 flex items-center justify-center rounded-md bg-font px-3 py-1.5 text-xs text-bg transition-opacity duration-200 hover:opacity-90 active:opacity-70'
+                className='mt-4 flex items-center justify-center rounded-md bg-font px-3 py-1.5 text-sm text-bg transition-opacity duration-200 hover:opacity-90 active:opacity-70'
               >
                 <FaSignOutAlt className='mr-2' />
                 Sign out

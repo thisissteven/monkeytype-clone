@@ -3,6 +3,7 @@ import { UseFormReset } from 'react-hook-form';
 export type User = {
   email: string;
   username: string;
+  id: string;
 } | null;
 
 export type AuthState = {
