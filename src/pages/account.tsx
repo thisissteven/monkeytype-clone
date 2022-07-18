@@ -2,6 +2,7 @@
 import clsx from 'clsx';
 import { AnimatePresence, motion } from 'framer-motion';
 import * as React from 'react';
+import { FaSignOutAlt } from 'react-icons/fa';
 
 import Login from '@/components/accounts/Login';
 import Register from '@/components/accounts/Register';
@@ -14,6 +15,7 @@ import { useAuthState } from '@/context/User/UserContext';
 export default function AccountPage() {
   const {
     state: { authenticated, user },
+    logout,
   } = useAuthState();
 
   return (
@@ -35,8 +37,9 @@ export default function AccountPage() {
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   key='authenticated'
+                  className='text-hl'
                 >
-                  {user?.email}
+                  {user?.username}
                 </motion.div>
               ) : (
                 <motion.div
@@ -55,6 +58,16 @@ export default function AccountPage() {
                 </motion.div>
               )}
             </AnimatePresence>
+
+            {authenticated && user && (
+              <button
+                onClick={logout}
+                className='mt-4 flex items-center justify-center rounded-md bg-font px-3 py-1.5 text-xs text-bg transition-opacity duration-200 hover:opacity-90 active:opacity-70'
+              >
+                <FaSignOutAlt className='mr-2' />
+                Sign out
+              </button>
+            )}
           </div>
         </section>
       </main>

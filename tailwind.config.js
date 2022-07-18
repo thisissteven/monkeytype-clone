@@ -8,6 +8,7 @@ module.exports = {
     extend: {
       screens: {
         xs: '400px',
+        ns: '850px',
       },
       fontFamily: {
         primary: ['var(--font-family)', ...fontFamily.sans],

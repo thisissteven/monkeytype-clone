@@ -8,7 +8,6 @@ import {
   FaInfo,
   FaKeyboard,
   FaRegUser,
-  FaSignOutAlt,
   FaTerminal,
   FaUser,
 } from 'react-icons/fa';
@@ -29,8 +28,7 @@ export default function Header() {
   } = usePreferenceContext();
 
   const {
-    state: { authenticated, user },
-    logout,
+    state: { user },
   } = useAuthState();
 
   const { pathname } = useRouter();
@@ -147,7 +145,7 @@ export default function Header() {
                   )}
                   <span
                     className={clsx(
-                      'relative bottom-[2px] group-hover:text-hl',
+                      'relative bottom-[2px] hidden group-hover:text-hl xs:block',
                       { 'text-hl': pathname === '/account' },
                       { 'text-hl/70': pathname !== '/account' }
                     )}
@@ -161,49 +159,33 @@ export default function Header() {
               </a>
             </Link>
           </div>
-          <div className='hidden flex-col -space-y-1 sm:space-y-1 md:flex'>
-            {authenticated && user && pathname === '/account' ? (
-              <button
-                onClick={logout}
-                className='flex items-center justify-center rounded-md bg-font px-4 py-2 text-sm text-bg transition-opacity duration-200 hover:opacity-90 active:opacity-70'
-              >
-                <FaSignOutAlt className='mr-2' />
-                Sign out
-              </button>
-            ) : (
-              <>
-                <div className='flex cursor-pointer list-none space-x-1.5 text-[10px] font-semibold sm:text-xs'>
-                  {typeList.map((item) => (
-                    <div
-                      onClick={() =>
-                        dispatch({ type: 'SET_TYPE', payload: item })
-                      }
-                      key={item}
-                      className={`${
-                        item === type ? 'text-hl' : 'text-hl/50'
-                      } transition-colors duration-200 hover:text-hl`}
-                    >
-                      {item}
-                    </div>
-                  ))}
+          <div className='hidden flex-col -space-y-1 sm:space-y-1 ns:flex'>
+            <div className='flex cursor-pointer list-none space-x-1.5 text-[10px] font-semibold sm:text-xs'>
+              {typeList.map((item) => (
+                <div
+                  onClick={() => dispatch({ type: 'SET_TYPE', payload: item })}
+                  key={item}
+                  className={`${
+                    item === type ? 'text-hl' : 'text-hl/50'
+                  } transition-colors duration-200 hover:text-hl`}
+                >
+                  {item}
                 </div>
-                <div className='flex cursor-pointer list-none justify-end space-x-2 text-[10px] font-semibold sm:text-xs'>
-                  {timeList.map((item) => (
-                    <div
-                      onClick={() =>
-                        dispatch({ type: 'SET_TIME', payload: item })
-                      }
-                      key={item}
-                      className={`${
-                        item === time ? 'text-hl' : 'text-hl/50'
-                      } transition-colors duration-200 hover:text-hl`}
-                    >
-                      {item}
-                    </div>
-                  ))}
+              ))}
+            </div>
+            <div className='flex cursor-pointer list-none justify-end space-x-2 text-[10px] font-semibold sm:text-xs'>
+              {timeList.map((item) => (
+                <div
+                  onClick={() => dispatch({ type: 'SET_TIME', payload: item })}
+                  key={item}
+                  className={`${
+                    item === time ? 'text-hl' : 'text-hl/50'
+                  } transition-colors duration-200 hover:text-hl`}
+                >
+                  {item}
                 </div>
-              </>
-            )}
+              ))}
+            </div>
           </div>
           <div
             className='rounded-full bg-hl p-2 md:hidden'
