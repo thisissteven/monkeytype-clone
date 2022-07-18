@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { CgSpinner } from 'react-icons/cg';
 import { FaUserPlus } from 'react-icons/fa';
 import * as yup from 'yup';
 
@@ -75,8 +76,14 @@ export default function Register() {
             type='submit'
             className='flex items-center justify-center rounded-md bg-font px-4 py-2 text-bg transition-opacity duration-200 hover:opacity-90 active:opacity-70'
           >
-            <FaUserPlus className='mr-2' />
-            Sign up
+            {loading ? (
+              <CgSpinner className='animate-spin' />
+            ) : (
+              <>
+                <FaUserPlus className='mr-2' />
+                Sign up
+              </>
+            )}
           </button>
         </form>
       </FormProvider>

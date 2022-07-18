@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { CgSpinner } from 'react-icons/cg';
 import { FaCheck } from 'react-icons/fa';
 import { FiLogIn } from 'react-icons/fi';
 import * as yup from 'yup';
@@ -89,8 +90,14 @@ export default function Login() {
             type='submit'
             className='flex items-center justify-center rounded-md bg-font px-4 py-2 text-bg transition-opacity duration-200 hover:opacity-90 active:opacity-70'
           >
-            <FiLogIn className='mr-2' />
-            Sign in
+            {loading ? (
+              <CgSpinner className='animate-spin' />
+            ) : (
+              <>
+                <FiLogIn className='mr-2' />
+                Sign in
+              </>
+            )}
           </button>
         </form>
       </FormProvider>
