@@ -27,7 +27,7 @@ export default function HomePage() {
           <div className='layout flex flex-col items-center pt-28 text-center'>
             <Box />
 
-            <div className='mt-8 flex flex-col items-center justify-center gap-2'>
+            <div className='mt-8 flex flex-col items-center justify-center gap-2 font-primary'>
               <div className='flex items-center space-x-2 text-sm font-light'>
                 <Kbd>tab</Kbd>
                 <span> + </span>

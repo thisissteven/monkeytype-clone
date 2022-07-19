@@ -47,7 +47,7 @@ export default function Box() {
       <div
         onClick={() => dispatch({ type: 'SET_ZEN_MODE', payload: !zenMode })}
         className={clsx(
-          'mb-4 flex cursor-pointer items-center space-x-1.5 transition-colors duration-200 hover:text-fg',
+          'mb-4 flex cursor-pointer items-center space-x-1.5 font-primary transition-colors duration-200 hover:text-fg',
           zenMode ? 'text-fg' : 'text-fg/50'
         )}
       >
