@@ -3,6 +3,7 @@ import { gql } from '@apollo/client';
 export const GET_CURRENT_USER_QUERY = gql`
   query GetCurrentUser {
     me {
+      id
       username
       email
     }
@@ -14,6 +15,7 @@ export const REGISTER_MUTATION = gql`
     register(input: $data) {
       jwt
       user {
+        id
         username
         email
       }
@@ -26,6 +28,7 @@ export const LOGIN_MUTATION = gql`
     login(input: $data) {
       jwt
       user {
+        id
         username
         email
       }

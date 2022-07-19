@@ -1,3 +1,4 @@
+import { useMutation } from '@apollo/client';
 import clsx from 'clsx';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { BsCursorFill } from 'react-icons/bs';
@@ -7,6 +8,9 @@ import useTyping from 'react-typing-game-hook';
 import Tooltip from '@/components/Tooltip';
 
 import { usePreferenceContext } from '@/context/Preference/PreferenceContext';
+import { useAuthState } from '@/context/User/UserContext';
+
+import { CreateLeaderboard } from './queries';
 
 type TypingInputProps = {
   text: string;
@@ -15,10 +19,16 @@ type TypingInputProps = {
 
 const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
   ({ text, time }, ref) => {
-    const [duration, setDuration] = useState(0);
-    const [isFocused, setIsFocused] = useState(false);
+    const [duration, setDuration] = useState(() => 0);
+    const [isFocused, setIsFocused] = useState(() => false);
     const letterElements = useRef<HTMLDivElement>(null);
     const [timeLeft, setTimeLeft] = useState(() => parseInt(time));
+
+    const [createLeaderboard] = useMutation(CreateLeaderboard);
+
+    const {
+      state: { user, authenticated },
+    } = useAuthState();
 
     const {
       preferences: { isOpen, zenMode },
@@ -37,8 +47,8 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
       actions: { insertTyping, deleteTyping, resetTyping, endTyping },
     } = useTyping(text, { skipCurrentWordOnSpace: false });
 
-    const [margin, setMargin] = useState(0);
-    const [value, setValue] = useState('');
+    const [margin, setMargin] = useState(() => 0);
+    const [value, setValue] = useState(() => '');
 
     // set cursor
     const pos = useMemo(() => {
@@ -93,12 +103,25 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
     //set WPM
     useEffect(() => {
       if (phase === 2 && endTime && startTime) {
+        const dur = Math.floor((endTime - startTime) / 1000);
+        setDuration(dur);
         // check if user and authenticated => save data so strapi
-
-        setDuration(Math.floor((endTime - startTime) / 1000));
+        if (user && authenticated) {
+          createLeaderboard({
+            variables: {
+              data: {
+                wpm: Math.round(((60 / dur) * correctChar) / 5),
+                user: user.id,
+                time: parseInt(time),
+                type: localStorage.getItem('type'),
+              },
+            },
+          });
+        }
       } else {
         setDuration(0);
       }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [phase, startTime, endTime, ref]);
 
     //handle key presses
