@@ -213,9 +213,10 @@ export default function LeaderboardPage() {
               <div className='flex flex-wrap justify-end gap-2'>
                 <div className='flex gap-2'>
                   <button
-                    className={clsxm([
-                      !type && !time ? 'text-fg' : 'text-fg/50',
-                    ])}
+                    className={clsxm(
+                      [!type && !time ? 'text-fg' : 'text-fg/50'],
+                      'transition-colors duration-200 hover:text-fg'
+                    )}
                     onClick={() => {
                       setType('');
                       setTime(0);
@@ -224,25 +225,28 @@ export default function LeaderboardPage() {
                     all
                   </button>
                   <button
-                    className={clsxm([
-                      type === 'words' ? 'text-fg' : 'text-fg/50',
-                    ])}
+                    className={clsxm(
+                      [type === 'words' ? 'text-fg' : 'text-fg/50'],
+                      'transition-colors duration-200 hover:text-fg'
+                    )}
                     onClick={() => setType('words')}
                   >
                     words
                   </button>
                   <button
-                    className={clsxm([
-                      type === 'sentences' ? 'text-fg' : 'text-fg/50',
-                    ])}
+                    className={clsxm(
+                      [type === 'sentences' ? 'text-fg' : 'text-fg/50'],
+                      'transition-colors duration-200 hover:text-fg'
+                    )}
                     onClick={() => setType('sentences')}
                   >
                     sentences
                   </button>
                   <button
-                    className={clsxm([
-                      type === 'numbers' ? 'text-fg' : 'text-fg/50',
-                    ])}
+                    className={clsxm(
+                      [type === 'numbers' ? 'text-fg' : 'text-fg/50'],
+                      'transition-colors duration-200 hover:text-fg'
+                    )}
                     onClick={() => setType('numbers')}
                   >
                     numbers
@@ -250,31 +254,46 @@ export default function LeaderboardPage() {
                 </div>
                 <div className='flex gap-2'>
                   <button
-                    className={clsxm([time === 15 ? 'text-fg' : 'text-fg/50'])}
+                    className={clsxm([
+                      time === 15 ? 'text-fg' : 'text-fg/50',
+                      'transition-colors duration-200 hover:text-fg',
+                    ])}
                     onClick={() => setTime(15)}
                   >
                     15
                   </button>
                   <button
-                    className={clsxm([time === 30 ? 'text-fg' : 'text-fg/50'])}
+                    className={clsxm([
+                      time === 30 ? 'text-fg' : 'text-fg/50',
+                      'transition-colors duration-200 hover:text-fg',
+                    ])}
                     onClick={() => setTime(30)}
                   >
                     30
                   </button>
                   <button
-                    className={clsxm([time === 45 ? 'text-fg' : 'text-fg/50'])}
+                    className={clsxm([
+                      time === 45 ? 'text-fg' : 'text-fg/50',
+                      'transition-colors duration-200 hover:text-fg',
+                    ])}
                     onClick={() => setTime(45)}
                   >
                     45
                   </button>
                   <button
-                    className={clsxm([time === 60 ? 'text-fg' : 'text-fg/50'])}
+                    className={clsxm([
+                      time === 60 ? 'text-fg' : 'text-fg/50',
+                      'transition-colors duration-200 hover:text-fg',
+                    ])}
                     onClick={() => setTime(60)}
                   >
                     60
                   </button>
                   <button
-                    className={clsxm([time === 120 ? 'text-fg' : 'text-fg/50'])}
+                    className={clsxm([
+                      time === 120 ? 'text-fg' : 'text-fg/50',
+                      'transition-colors duration-200 hover:text-fg',
+                    ])}
                     onClick={() => setTime(120)}
                   >
                     120
