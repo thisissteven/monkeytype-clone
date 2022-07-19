@@ -3,6 +3,7 @@ import { gql, useQuery } from '@apollo/client';
 import clsx from 'clsx';
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
+import Link from 'next/link';
 import * as React from 'react';
 import { FaCrown, FaUserCircle } from 'react-icons/fa';
 import { VscDebugRestart } from 'react-icons/vsc';
@@ -14,6 +15,8 @@ import AnimateFade from '@/components/layout/AnimateFade';
 import ArrowLink from '@/components/links/ArrowLink';
 import Seo from '@/components/Seo';
 import Tooltip from '@/components/Tooltip';
+
+import { useAuthState } from '@/context/User/UserContext';
 
 // English.
 TimeAgo.addLocale(en);
@@ -77,6 +80,10 @@ export default function LeaderboardPage() {
   const { data, refetch, fetchMore } = useQuery(GetLeaderboards, {
     variables: { page: 1, pageSize: 50 },
   });
+
+  const {
+    state: { user, authenticated },
+  } = useAuthState();
 
   // Create formatter (English).
   const timeAgo = new TimeAgo('en-US');
@@ -181,10 +188,21 @@ export default function LeaderboardPage() {
       <main>
         <section>
           <div className={clsx('layout min-h-screen py-10')}>
-            <ArrowLink direction='left' className='my-4 text-font' href='/'>
-              back to home
-            </ArrowLink>
-            <div className='mb-4 flex items-center justify-between'>
+            <div className='flex flex-wrap items-center justify-between gap-2 xs:whitespace-nowrap'>
+              <ArrowLink direction='left' className='my-4 text-font' href='/'>
+                back to home
+              </ArrowLink>
+              {!user && !authenticated && (
+                <Link href='/account'>
+                  <a>
+                    <span className='hover:text-bg-90 mb-2 rounded-sm bg-fg px-2 py-1 text-xs text-bg transition-colors duration-200 hover:bg-fg/90'>
+                      tip: sign in to see your name in leaderboard
+                    </span>
+                  </a>
+                </Link>
+              )}
+            </div>
+            <div className='mb-2 flex items-center justify-between'>
               <h1>leaderboard</h1>
               <button
                 onClick={() =>
@@ -206,7 +224,7 @@ export default function LeaderboardPage() {
               </button>
             </div>
 
-            <div className='mb-4 flex flex-wrap items-center justify-end gap-4 font-primary sm:justify-between'>
+            <div className='my-4 flex flex-wrap items-center justify-end gap-4 font-primary sm:justify-between'>
               <div className='hidden sm:block'>
                 <p>filter by:</p>
               </div>
