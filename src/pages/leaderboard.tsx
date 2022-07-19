@@ -153,7 +153,7 @@ export default function LeaderboardPage() {
               </button>
             </div>
 
-            <div className='overflow-auto'>
+            <div className='overflow-auto rounded-lg bg-hl/50 p-2'>
               <table className='w-full overflow-hidden rounded-lg font-primary'>
                 <thead>
                   <tr className='bg-hl text-bg'>
