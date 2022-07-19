@@ -98,9 +98,11 @@ export default function AccountPage() {
   const { data } = useQuery(GetProfile, { variables: { id: user?.id } });
   const { data: personalBest } = useQuery(GetPersonalBest, {
     variables: { id: user?.id },
+    pollInterval: 500,
   });
   const { data: recents } = useQuery(GetRecents, {
     variables: { id: user?.id },
+    pollInterval: 500,
   });
 
   return (
