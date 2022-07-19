@@ -208,7 +208,7 @@ export default function AccountPage() {
                       ))}
                     </div>
                   </div>
-                  <div className='h-10'></div>
+                  <div className='h-4'></div>
                   {authenticated && user && (
                     <button
                       onClick={logout}
