@@ -7,12 +7,17 @@ import Footer from '@/components/layout/Footer';
 import Seo from '@/components/Seo';
 
 import { usePreferenceContext } from '@/context/Preference/PreferenceContext';
+import { useAuthState } from '@/context/User/UserContext';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   // Put Header or Footer Here
   const {
     preferences: { theme, fontFamily },
   } = usePreferenceContext();
+
+  const {
+    state: { loading },
+  } = useAuthState();
 
   const [isLoading, setIsLoading] = React.useState(true);
 
@@ -22,7 +27,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   return (
     <>
-      {isLoading ? (
+      {isLoading || loading ? (
         <>
           <Seo title='Monkeytype Clone' />
           <div

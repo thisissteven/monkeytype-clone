@@ -16,7 +16,7 @@ import Seo from '@/components/Seo';
 import Tooltip from '@/components/Tooltip';
 
 // English.
-TimeAgo.addDefaultLocale(en);
+TimeAgo.addLocale(en);
 
 type Leaderboard = {
   id: string;
