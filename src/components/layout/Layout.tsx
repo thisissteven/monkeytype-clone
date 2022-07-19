@@ -43,16 +43,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 />
                 <p className='loading -mt-12'>Preparing the page for you...</p>
               </div>
-              <div className='hidden flex-col xs:flex'>
-                <Image
-                  src='/images/walking-mushroom.gif'
-                  width={180}
-                  height={180}
-                  alt='walking-mushroom'
-                  className='scale-50'
-                />
-                <p className='loading -mt-12'>Preparing the page for you...</p>
-              </div>
             </div>
           </div>
         </>

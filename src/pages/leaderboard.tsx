@@ -36,10 +36,16 @@ type Leaderboard = {
 };
 
 const GetLeaderboards = gql`
-  query GetLeaderboards($page: Int!, $pageSize: Int!) {
+  query GetLeaderboards(
+    $page: Int!
+    $pageSize: Int!
+    $type: String
+    $time: Int
+  ) {
     leaderboards(
       sort: "wpm:desc"
       pagination: { page: $page, pageSize: $pageSize }
+      filters: { type: { eq: $type }, and: { time: { eq: $time } } }
     ) {
       data {
         id
@@ -75,8 +81,49 @@ export default function LeaderboardPage() {
   // Create formatter (English).
   const timeAgo = new TimeAgo('en-US');
 
-  const [page, setPage] = React.useState(() => 1);
+  const [page, setPage] = React.useState(1);
   const [pageCount, setPageCount] = React.useState(() => 0);
+
+  const [type, setType] = React.useState('');
+  const [time, setTime] = React.useState(0);
+
+  React.useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let variables: any = {
+      page: 1,
+      pageSize: 50,
+    };
+    if (type) {
+      variables = {
+        ...variables,
+        type,
+      };
+    }
+    if (time) {
+      variables = {
+        ...variables,
+        time,
+      };
+    }
+    fetchMore({
+      variables,
+      updateQuery: (prev, { fetchMoreResult }) => {
+        if (!fetchMoreResult) {
+          return prev;
+        }
+
+        const currentLeaderboards: { leaderboards: { data: Leaderboard[] } } = {
+          leaderboards: {
+            ...prev.leaderboards,
+            data: [...fetchMoreResult.leaderboards.data],
+          },
+        };
+
+        return currentLeaderboards;
+      },
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [type, time]);
 
   React.useEffect(() => {
     if (page === 1) return;
@@ -140,12 +187,18 @@ export default function LeaderboardPage() {
             <div className='mb-4 flex items-center justify-between'>
               <h1>leaderboard</h1>
               <button
-                onClick={() => refetch()}
-                className='group relative mt-2 flex items-center rounded-lg border-0 px-4 py-2 text-fg/50 outline-none transition-colors duration-200 hover:text-fg'
+                onClick={() =>
+                  refetch().then(() => {
+                    setPage(1);
+                    setType('');
+                    setTime(0);
+                  })
+                }
+                className='relative mt-2 flex items-center rounded-lg border-0 px-4 py-2 outline-none '
               >
-                <VscDebugRestart className='scale-x-[-1] transform text-2xl' />
+                <VscDebugRestart className='peer scale-x-[-1] transform text-2xl text-fg/50  transition-colors duration-200 hover:text-fg' />
                 <Tooltip
-                  className='top-12 bg-fg group-hover:translate-y-0 group-hover:opacity-100'
+                  className='top-12 bg-fg font-primary peer-hover:translate-y-0 peer-hover:opacity-100'
                   triangle='bg-fg'
                 >
                   Refresh data
@@ -153,7 +206,84 @@ export default function LeaderboardPage() {
               </button>
             </div>
 
-            <div className='overflow-auto rounded-lg bg-hl/50 p-2'>
+            <div className='mb-4 flex flex-wrap items-center justify-end gap-4 font-primary sm:justify-between'>
+              <div className='hidden sm:block'>
+                <p>filter by:</p>
+              </div>
+              <div className='flex flex-wrap justify-end gap-2'>
+                <div className='flex gap-2'>
+                  <button
+                    className={clsxm([
+                      !type && !time ? 'text-fg' : 'text-fg/50',
+                    ])}
+                    onClick={() => {
+                      setType('');
+                      setTime(0);
+                    }}
+                  >
+                    all
+                  </button>
+                  <button
+                    className={clsxm([
+                      type === 'words' ? 'text-fg' : 'text-fg/50',
+                    ])}
+                    onClick={() => setType('words')}
+                  >
+                    words
+                  </button>
+                  <button
+                    className={clsxm([
+                      type === 'sentences' ? 'text-fg' : 'text-fg/50',
+                    ])}
+                    onClick={() => setType('sentences')}
+                  >
+                    sentences
+                  </button>
+                  <button
+                    className={clsxm([
+                      type === 'numbers' ? 'text-fg' : 'text-fg/50',
+                    ])}
+                    onClick={() => setType('numbers')}
+                  >
+                    numbers
+                  </button>
+                </div>
+                <div className='flex gap-2'>
+                  <button
+                    className={clsxm([time === 15 ? 'text-fg' : 'text-fg/50'])}
+                    onClick={() => setTime(15)}
+                  >
+                    15
+                  </button>
+                  <button
+                    className={clsxm([time === 30 ? 'text-fg' : 'text-fg/50'])}
+                    onClick={() => setTime(30)}
+                  >
+                    30
+                  </button>
+                  <button
+                    className={clsxm([time === 45 ? 'text-fg' : 'text-fg/50'])}
+                    onClick={() => setTime(45)}
+                  >
+                    45
+                  </button>
+                  <button
+                    className={clsxm([time === 60 ? 'text-fg' : 'text-fg/50'])}
+                    onClick={() => setTime(60)}
+                  >
+                    60
+                  </button>
+                  <button
+                    className={clsxm([time === 120 ? 'text-fg' : 'text-fg/50'])}
+                    onClick={() => setTime(120)}
+                  >
+                    120
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div className='relative overflow-auto rounded-lg bg-hl/50 p-2'>
               <table className='w-full overflow-hidden rounded-lg font-primary'>
                 <thead>
                   <tr className='bg-hl text-bg'>
