@@ -1,9 +1,11 @@
 // !STARTERCONF You can delete this page
 import { gql, useQuery } from '@apollo/client';
 import clsx from 'clsx';
+import TimeAgo from 'javascript-time-ago';
+import en from 'javascript-time-ago/locale/en';
 import * as React from 'react';
 import { FaCrown, FaUserCircle } from 'react-icons/fa';
-import { GiPodiumSecond, GiPodiumThird } from 'react-icons/gi';
+import { VscDebugRestart } from 'react-icons/vsc';
 import { useInView } from 'react-intersection-observer';
 
 import clsxm from '@/lib/clsxm';
@@ -11,6 +13,10 @@ import clsxm from '@/lib/clsxm';
 import AnimateFade from '@/components/layout/AnimateFade';
 import ArrowLink from '@/components/links/ArrowLink';
 import Seo from '@/components/Seo';
+import Tooltip from '@/components/Tooltip';
+
+// English.
+TimeAgo.addDefaultLocale(en);
 
 type Leaderboard = {
   id: string;
@@ -62,9 +68,12 @@ const GetLeaderboards = gql`
 
 export default function LeaderboardPage() {
   const { ref, inView } = useInView();
-  const { data, fetchMore } = useQuery(GetLeaderboards, {
+  const { data, refetch, fetchMore } = useQuery(GetLeaderboards, {
     variables: { page: 1, pageSize: 50 },
   });
+
+  // Create formatter (English).
+  const timeAgo = new TimeAgo('en-US');
 
   const [page, setPage] = React.useState(() => 1);
   const [pageCount, setPageCount] = React.useState(() => 0);
@@ -78,7 +87,7 @@ export default function LeaderboardPage() {
         if (!fetchMoreResult) {
           return prev;
         }
-        const currentLeaderboards = {
+        const currentLeaderboards: { leaderboards: { data: Leaderboard[] } } = {
           leaderboards: {
             ...prev.leaderboards,
             data: [
@@ -128,108 +137,102 @@ export default function LeaderboardPage() {
             <ArrowLink direction='left' className='my-4 text-font' href='/'>
               back to home
             </ArrowLink>
-            <h1 className='mb-4'>leaderboard</h1>
-
-            <div className='flex flex-col gap-2'>
-              {data?.leaderboards?.data?.map(
-                (leaderboard: Leaderboard, index: number) => {
-                  const {
-                    attributes: {
-                      wpm,
-                      time,
-                      type,
-                      createdAt,
-                      user: {
-                        data: {
-                          attributes: { username },
-                        },
-                      },
-                    },
-                  } = leaderboard;
-                  return (
-                    <div
-                      key={index}
-                      className={clsxm('h-10 rounded-md', [
-                        index % 2 === 0 ? 'bg-fg' : 'bg-fg/60',
-                      ])}
-                    >
-                      <div className='flex h-full items-center justify-between px-4'>
-                        {/* first rank */}
-                        {index === 0 ? (
-                          <span className='flex items-center gap-2 text-bg'>
-                            <FaCrown />
-                            <div className='ml-4 flex items-center gap-2'>
-                              <FaUserCircle /> {username}
-                            </div>
-                          </span>
-                        ) : // second rank
-                        index === 1 ? (
-                          <span className='flex items-center gap-2 text-bg'>
-                            <GiPodiumSecond />
-                            <div className='ml-4 flex items-center gap-2'>
-                              <FaUserCircle /> {username}
-                            </div>
-                          </span>
-                        ) : // third rank
-                        index === 2 ? (
-                          <span className='flex items-center gap-2 text-bg'>
-                            <GiPodiumThird />
-                            <div className='ml-4 flex items-center gap-2'>
-                              <FaUserCircle /> {username}
-                            </div>
-                          </span>
-                        ) : (
-                          // any rank lower than third
-                          <span className='flex items-center gap-2 text-bg'>
-                            <span className='text-bg'>{index}</span>
-                            <div className='ml-4 flex items-center gap-2'>
-                              <FaUserCircle /> {username}
-                            </div>
-                          </span>
-                        )}
-
-                        <div className='flex items-center gap-3'>
-                          <p
-                            className={clsxm(
-                              'rounded-md bg-bg px-2 py-1 text-xs text-fg'
-                            )}
-                          >
-                            {wpm}wpm
-                          </p>
-                          <p
-                            className={clsxm('rounded-md px-2 py-1 text-xs', [
-                              index % 2 === 0
-                                ? 'bg-bg/70 text-fg'
-                                : 'bg-fg/70 text-bg',
-                            ])}
-                          >
-                            {type}
-                          </p>
-                          <p
-                            className={clsxm('rounded-md px-2 py-1 text-xs', [
-                              index % 2 === 0
-                                ? 'bg-bg/70 text-fg'
-                                : 'bg-fg/70 text-bg',
-                            ])}
-                          >
-                            {time}
-                          </p>
-                          <p
-                            className={clsxm('rounded-md px-2 py-1 text-xs', [
-                              index % 2 === 0
-                                ? 'bg-bg/70 text-fg'
-                                : 'bg-fg/70 text-bg',
-                            ])}
-                          >
-                            {new Date(createdAt).toLocaleString()}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                }
-              )}
+            <div className='mb-4 flex items-center justify-between'>
+              <h1>leaderboard</h1>
+              <button
+                onClick={() => refetch()}
+                className='group relative mt-2 flex items-center rounded-lg border-0 px-4 py-2 text-fg/50 outline-none transition-colors duration-200 hover:text-fg'
+              >
+                <VscDebugRestart className='scale-x-[-1] transform text-2xl' />
+                <Tooltip
+                  className='top-12 bg-fg group-hover:translate-y-0 group-hover:opacity-100'
+                  triangle='bg-fg'
+                >
+                  Refresh data
+                </Tooltip>
+              </button>
             </div>
+
+            <div className='overflow-auto'>
+              <table className='w-full overflow-hidden rounded-lg font-primary'>
+                <thead>
+                  <tr className='bg-hl text-bg'>
+                    <td className='py-3 pl-4 pr-4 md:pr-0'>#</td>
+                    <td className='px-2 md:px-0'>user</td>
+                    <td className='px-2 md:px-0'>wpm</td>
+                    <td className='px-2 md:px-0'>type</td>
+                    <td className='px-2 md:px-0'>time</td>
+                    <td className='px-2 md:px-0'>date</td>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  {data?.leaderboards?.data?.map(
+                    (leaderboard: Leaderboard, index: number) => {
+                      const {
+                        attributes: {
+                          wpm,
+                          time,
+                          type,
+                          createdAt,
+                          user: {
+                            data: {
+                              attributes: { username },
+                            },
+                          },
+                        },
+                      } = leaderboard;
+                      return (
+                        <tr
+                          key={index}
+                          className={clsxm(
+                            'whitespace-nowrap border-t-4 border-hl',
+                            [index % 2 === 0 ? 'bg-fg' : 'bg-fg/80']
+                          )}
+                        >
+                          <td className='py-3 pl-4'>
+                            <span className='text-bg'>
+                              {/* first rank */}
+                              {index === 0 ? (
+                                <FaCrown className='my-1' />
+                              ) : (
+                                index + 1
+                              )}
+                            </span>
+                          </td>
+
+                          <td className='px-2 md:px-0'>
+                            <div className='flex items-center gap-2 text-bg'>
+                              <FaUserCircle /> {username}
+                            </div>
+                          </td>
+
+                          <td className='px-2 text-bg md:px-0'>
+                            <span
+                              className={clsxm(
+                                'rounded-md bg-bg px-2 py-1 text-xs text-fg'
+                              )}
+                            >
+                              {wpm} wpm
+                            </span>
+                          </td>
+                          <td className='px-2 text-sm text-bg md:px-0'>
+                            {type}
+                          </td>
+                          <td className='px-2 text-sm text-bg md:px-0'>
+                            {time}s
+                          </td>
+                          <td className='px-2 text-sm text-bg md:px-0'>
+                            {timeAgo.format(new Date(createdAt))}
+                          </td>
+                        </tr>
+                      );
+                    }
+                  )}
+                </tbody>
+              </table>
+            </div>
+
             <div ref={ref}></div>
           </div>
         </section>
