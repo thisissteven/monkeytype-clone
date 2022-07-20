@@ -3,7 +3,7 @@
   <p>Made using <a href="https://theodorusclarence.com">Theodorus Clarence</a>'s Next.js + Tailwind CSS + TypeScript <a href="https://github.com/theodorusclarence/ts-nextjs-tailwind-starter">starter pack</a>.</p>
 </div>
 
-![Monkeytype Clone](https://github.com/steven2801/monkeytype-clone/blob/main/public/images/monkeytype.png?raw=true)
+![Monkeytype Clone](https://github.com/steven2801/monkeytype-clone/blob/main/public/images/large-og.png?raw=true)
 
 ## Getting Started
 
@@ -23,7 +23,15 @@ It is encouraged to use **yarn** so the husky hooks can work properly.
 yarn install
 ```
 
-### 3. Run the development server
+### 3. Fill out env variables
+
+Example:
+
+```
+NEXT_PUBLIC_API_URL=http://localhost:1338/graphql
+```
+
+### 4. Run the development server
 
 You can start the server using this command:
 
