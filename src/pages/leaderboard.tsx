@@ -1,6 +1,7 @@
 // !STARTERCONF You can delete this page
 import { gql, useQuery } from '@apollo/client';
 import clsx from 'clsx';
+import { AnimatePresence, motion } from 'framer-motion';
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
 import Link from 'next/link';
@@ -75,10 +76,14 @@ const GetLeaderboards = gql`
   }
 `;
 
+const filterByType = ['words', 'sentences', 'numbers'];
+const filterByTime = [15, 30, 45, 60, 120];
+
 export default function LeaderboardPage() {
   const { ref, inView } = useInView();
   const { data, refetch, fetchMore } = useQuery(GetLeaderboards, {
-    variables: { page: 1, pageSize: 50 },
+    variables: { page: 1, pageSize: 100 },
+    pollInterval: 500,
   });
 
   const {
@@ -94,53 +99,32 @@ export default function LeaderboardPage() {
   const [type, setType] = React.useState('');
   const [time, setTime] = React.useState(0);
 
-  React.useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    let variables: any = {
-      page: 1,
-      pageSize: 50,
-    };
-    if (type) {
-      variables = {
-        ...variables,
-        type,
-      };
-    }
-    if (time) {
-      variables = {
-        ...variables,
-        time,
-      };
-    }
-    fetchMore({
-      variables,
-      updateQuery: (prev, { fetchMoreResult }) => {
-        if (!fetchMoreResult) {
-          return prev;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const filteredData = React.useMemo(
+    () =>
+      data?.leaderboards?.data.filter((item: Leaderboard) => {
+        if (time && !type) {
+          return item.attributes.time === time;
+        } else if (type && !time) {
+          return item.attributes.type === type;
+        } else if (time && type) {
+          return item.attributes.time === time && item.attributes.type === type;
+        } else {
+          return data?.leaderboards?.data;
         }
-
-        const currentLeaderboards: { leaderboards: { data: Leaderboard[] } } = {
-          leaderboards: {
-            ...prev.leaderboards,
-            data: [...fetchMoreResult.leaderboards.data],
-          },
-        };
-
-        return currentLeaderboards;
-      },
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [type, time]);
+      }),
+    [time, type, data]
+  );
 
   React.useEffect(() => {
-    if (page === 1) return;
     if (page > pageCount) return;
     fetchMore({
-      variables: { page: page, pageSize: 50 },
+      variables: { page: page, pageSize: 100 },
       updateQuery: (prev, { fetchMoreResult }) => {
         if (!fetchMoreResult) {
           return prev;
         }
+
         const currentLeaderboards: { leaderboards: { data: Leaderboard[] } } = {
           leaderboards: {
             ...prev.leaderboards,
@@ -153,7 +137,7 @@ export default function LeaderboardPage() {
 
         return currentLeaderboards;
       },
-    });
+    }).then(() => setPage((page) => page + 1));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
@@ -168,10 +152,11 @@ export default function LeaderboardPage() {
       } = data;
       setPageCount(pageCount);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   React.useEffect(() => {
-    if (page === pageCount) return;
+    if (page >= pageCount) return;
     if (inView) {
       setPage((page) => {
         if (page >= pageCount) return page;
@@ -242,80 +227,36 @@ export default function LeaderboardPage() {
                   >
                     all
                   </button>
-                  <button
-                    className={clsxm(
-                      [type === 'words' ? 'text-fg' : 'text-fg/50'],
-                      'transition-colors duration-200 hover:text-fg'
-                    )}
-                    onClick={() => setType('words')}
-                  >
-                    words
-                  </button>
-                  <button
-                    className={clsxm(
-                      [type === 'sentences' ? 'text-fg' : 'text-fg/50'],
-                      'transition-colors duration-200 hover:text-fg'
-                    )}
-                    onClick={() => setType('sentences')}
-                  >
-                    sentences
-                  </button>
-                  <button
-                    className={clsxm(
-                      [type === 'numbers' ? 'text-fg' : 'text-fg/50'],
-                      'transition-colors duration-200 hover:text-fg'
-                    )}
-                    onClick={() => setType('numbers')}
-                  >
-                    numbers
-                  </button>
+                  {filterByType.map((item) => {
+                    return (
+                      <button
+                        key={item}
+                        className={clsxm(
+                          [type === item ? 'text-fg' : 'text-fg/50'],
+                          'transition-colors duration-200 hover:text-fg'
+                        )}
+                        onClick={() => setType(item)}
+                      >
+                        {item}
+                      </button>
+                    );
+                  })}
                 </div>
                 <div className='flex gap-2'>
-                  <button
-                    className={clsxm([
-                      time === 15 ? 'text-fg' : 'text-fg/50',
-                      'transition-colors duration-200 hover:text-fg',
-                    ])}
-                    onClick={() => setTime(15)}
-                  >
-                    15
-                  </button>
-                  <button
-                    className={clsxm([
-                      time === 30 ? 'text-fg' : 'text-fg/50',
-                      'transition-colors duration-200 hover:text-fg',
-                    ])}
-                    onClick={() => setTime(30)}
-                  >
-                    30
-                  </button>
-                  <button
-                    className={clsxm([
-                      time === 45 ? 'text-fg' : 'text-fg/50',
-                      'transition-colors duration-200 hover:text-fg',
-                    ])}
-                    onClick={() => setTime(45)}
-                  >
-                    45
-                  </button>
-                  <button
-                    className={clsxm([
-                      time === 60 ? 'text-fg' : 'text-fg/50',
-                      'transition-colors duration-200 hover:text-fg',
-                    ])}
-                    onClick={() => setTime(60)}
-                  >
-                    60
-                  </button>
-                  <button
-                    className={clsxm([
-                      time === 120 ? 'text-fg' : 'text-fg/50',
-                      'transition-colors duration-200 hover:text-fg',
-                    ])}
-                    onClick={() => setTime(120)}
-                  >
-                    120
-                  </button>
+                  {filterByTime.map((item) => {
+                    return (
+                      <button
+                        key={item}
+                        className={clsxm(
+                          [time === item ? 'text-fg' : 'text-fg/50'],
+                          'transition-colors duration-200 hover:text-fg'
+                        )}
+                        onClick={() => setTime(item)}
+                      >
+                        {item}
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
             </div>
@@ -333,70 +274,78 @@ export default function LeaderboardPage() {
                   </tr>
                 </thead>
 
-                <tbody>
-                  {data?.leaderboards?.data?.map(
-                    (leaderboard: Leaderboard, index: number) => {
-                      const {
-                        attributes: {
-                          wpm,
-                          time,
-                          type,
-                          createdAt,
-                          user: {
-                            data: {
-                              attributes: { username },
+                <AnimatePresence exitBeforeEnter>
+                  <motion.tbody
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    layout
+                    key={time + type}
+                  >
+                    {filteredData?.map(
+                      (leaderboard: Leaderboard, index: number) => {
+                        const {
+                          attributes: {
+                            wpm,
+                            time,
+                            type,
+                            createdAt,
+                            user: {
+                              data: {
+                                attributes: { username },
+                              },
                             },
                           },
-                        },
-                      } = leaderboard;
-                      return (
-                        <tr
-                          key={index}
-                          className={clsxm(
-                            'whitespace-nowrap border-t-4 border-hl',
-                            [index % 2 === 0 ? 'bg-fg' : 'bg-fg/80']
-                          )}
-                        >
-                          <td className='py-3 pl-4'>
-                            <span className='text-bg'>
-                              {/* first rank */}
-                              {index === 0 ? (
-                                <FaCrown className='my-1' />
-                              ) : (
-                                index + 1
-                              )}
-                            </span>
-                          </td>
+                        } = leaderboard;
+                        return (
+                          <tr
+                            key={index}
+                            className={clsxm(
+                              'whitespace-nowrap border-t-4 border-hl',
+                              [index % 2 === 0 ? 'bg-fg' : 'bg-fg/80']
+                            )}
+                          >
+                            <td className='py-3 pl-4'>
+                              <span className='text-bg'>
+                                {/* first rank */}
+                                {index === 0 ? (
+                                  <FaCrown className='my-1' />
+                                ) : (
+                                  index + 1
+                                )}
+                              </span>
+                            </td>
 
-                          <td className='px-2 md:px-0'>
-                            <div className='flex items-center gap-2 text-bg'>
-                              <FaUserCircle /> {username}
-                            </div>
-                          </td>
+                            <td className='px-2 md:px-0'>
+                              <div className='flex items-center gap-2 text-bg'>
+                                <FaUserCircle /> {username}
+                              </div>
+                            </td>
 
-                          <td className='px-2 text-bg md:px-0'>
-                            <span
-                              className={clsxm(
-                                'rounded-md bg-bg px-2 py-1 text-xs text-fg'
-                              )}
-                            >
-                              {wpm} wpm
-                            </span>
-                          </td>
-                          <td className='px-2 text-sm text-bg md:px-0'>
-                            {type}
-                          </td>
-                          <td className='px-2 text-sm text-bg md:px-0'>
-                            {time}s
-                          </td>
-                          <td className='px-2 text-sm text-bg md:px-0'>
-                            {timeAgo.format(new Date(createdAt))}
-                          </td>
-                        </tr>
-                      );
-                    }
-                  )}
-                </tbody>
+                            <td className='px-2 text-bg md:px-0'>
+                              <span
+                                className={clsxm(
+                                  'rounded-md bg-bg px-2 py-1 text-xs text-fg'
+                                )}
+                              >
+                                {wpm} wpm
+                              </span>
+                            </td>
+                            <td className='px-2 text-sm text-bg md:px-0'>
+                              {type}
+                            </td>
+                            <td className='px-2 text-sm text-bg md:px-0'>
+                              {time}s
+                            </td>
+                            <td className='px-2 text-sm text-bg md:px-0'>
+                              {timeAgo.format(new Date(createdAt))}
+                            </td>
+                          </tr>
+                        );
+                      }
+                    )}
+                  </motion.tbody>
+                </AnimatePresence>
               </table>
             </div>
 

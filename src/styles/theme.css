@@ -28,9 +28,9 @@
 
 .vampire {
   --bg-color: 23 23 23;
-  --hl-color: 237 237 237;
   --font-color: 68 68 68;
-  --fg-color: 218 0 55;
+  --hl-color: 218 0 55;
+  --fg-color: 237 237 237;
 }
 
 .taro {
