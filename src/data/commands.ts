@@ -11,9 +11,33 @@ const commands = [
       },
       {
         icon: '',
+        commandName: 'space',
+        contents: [],
+        description: '- black, dark-gray, and yellow',
+      },
+      {
+        icon: '',
         commandName: 'winter',
         contents: [],
         description: '- blue, cyan, and white',
+      },
+      {
+        icon: '',
+        commandName: 'snowy-night',
+        contents: [],
+        description: '- black, dark-gray, and skyblue',
+      },
+      {
+        icon: '',
+        commandName: 'vintage',
+        contents: [],
+        description: '- blue and peach',
+      },
+      {
+        icon: '',
+        commandName: 'vampire',
+        contents: [],
+        description: '- black, red, and white',
       },
       {
         icon: '',

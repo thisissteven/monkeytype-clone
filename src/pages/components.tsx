@@ -143,7 +143,11 @@ export default function ComponentsPage() {
 
 const themeList = [
   'default',
+  'space',
   'winter',
+  'snowy-night',
+  'vintage',
+  'vampire',
   'taro',
   'green-tea',
   'wood',

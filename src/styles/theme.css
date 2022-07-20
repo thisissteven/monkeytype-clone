@@ -1,8 +1,36 @@
+.space {
+  --bg-color: 0 0 0;
+  --font-color: 89 82 96;
+  --hl-color: 178 177 185;
+  --fg-color: 240 165 0;
+}
+
 .winter {
   --bg-color: 21 114 161;
   --font-color: 196 221 255;
   --hl-color: 184 255 249;
   --fg-color: 239 255 253;
+}
+
+.snowy-night {
+  --bg-color: 44 51 51;
+  --font-color: 57 91 100;
+  --hl-color: 165 201 202;
+  --fg-color: 231 246 242;
+}
+
+.vintage {
+  --bg-color: 84 186 185;
+  --font-color: 24 151 143;
+  --hl-color: 233 218 193;
+  --fg-color: 247 236 222;
+}
+
+.vampire {
+  --bg-color: 23 23 23;
+  --hl-color: 237 237 237;
+  --font-color: 68 68 68;
+  --fg-color: 218 0 55;
 }
 
 .taro {
