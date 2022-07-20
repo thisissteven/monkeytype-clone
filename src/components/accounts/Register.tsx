@@ -14,7 +14,8 @@ const schema = yup.object().shape({
   username: yup
     .string()
     .required('userame is required')
-    .min(3, 'username must at least be 3 characters long'),
+    .min(3, 'username must at least be 3 characters long')
+    .max(14, 'username cannot be more than 14 characters'),
   email: yup.string().email('Email is invalid').required('email is required'),
   password: yup
     .string()

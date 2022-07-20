@@ -23,7 +23,7 @@ export default function ComponentsPage() {
 
       <main>
         <section>
-          <div className={clsx('layout min-h-screen py-10')}>
+          <div className={clsx('layout min-h-[60vh] pt-10')}>
             <ArrowLink direction='left' className='my-4 text-font' href='/'>
               back to home
             </ArrowLink>

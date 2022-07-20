@@ -21,7 +21,7 @@ export default function Tooltip({
       )}
       {...rest}
     >
-      <div className='relative z-20'>{children}</div>
+      <div className='relative z-20 font-primary'>{children}</div>
       <div
         className={clsxm(
           'absolute left-1/2 -top-[2px] h-4 w-4 -translate-x-1/2 rotate-45 transform bg-hl',

@@ -187,7 +187,7 @@ export default function LeaderboardPage() {
 
       <main>
         <section>
-          <div className={clsx('layout min-h-screen py-10')}>
+          <div className={clsx('layout min-h-[65vh] pt-10')}>
             <div className='flex flex-wrap items-center justify-between gap-2 xs:whitespace-nowrap'>
               <ArrowLink direction='left' className='my-4 text-font' href='/'>
                 back to home
