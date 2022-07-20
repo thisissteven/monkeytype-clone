@@ -31,7 +31,7 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
     } = useAuthState();
 
     const {
-      preferences: { isOpen, zenMode },
+      preferences: { isOpen, zenMode, type },
     } = usePreferenceContext();
 
     const {
@@ -113,7 +113,7 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
                 wpm: Math.round(((60 / dur) * correctChar) / 5),
                 user: user.id,
                 time: parseInt(time),
-                type: localStorage.getItem('type'),
+                type: type || 'words',
               },
             },
           });

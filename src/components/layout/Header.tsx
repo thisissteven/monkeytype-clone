@@ -74,96 +74,106 @@ export default function Header() {
         <nav className='flex w-full flex-1 items-center justify-between sm:w-auto'>
           <div className='flex space-x-6'>
             <div className='relative'>
-              <Link href='/'>
-                <a>
-                  <FaKeyboard
-                    className={clsx(
-                      'peer cursor-pointer fill-hl/50 text-lg transition-colors duration-200 hover:fill-hl',
-                      { 'fill-hl': pathname === '/' }
-                    )}
-                  />
-                </a>
-              </Link>
+              <div className='peer'>
+                <Link href='/'>
+                  <a>
+                    <FaKeyboard
+                      className={clsx(
+                        'cursor-pointer fill-hl/50 text-lg transition-colors duration-200 hover:fill-hl',
+                        { 'fill-hl': pathname === '/' }
+                      )}
+                    />
+                  </a>
+                </Link>
+              </div>
               <Tooltip className='cursor-default peer-hover:translate-y-0 peer-hover:opacity-100'>
                 home
               </Tooltip>
             </div>
             <div className='relative'>
-              <Link href='/leaderboard'>
-                <a>
-                  <FaCrown
-                    className={clsx(
-                      'peer cursor-pointer fill-hl/50 text-lg transition-colors duration-200 hover:fill-hl',
-                      { 'fill-hl': pathname === '/leaderboard' }
-                    )}
-                  />
-                </a>
-              </Link>
+              <div className='peer'>
+                <Link href='/leaderboard'>
+                  <a>
+                    <FaCrown
+                      className={clsx(
+                        'cursor-pointer fill-hl/50 text-lg transition-colors duration-200 hover:fill-hl',
+                        { 'fill-hl': pathname === '/leaderboard' }
+                      )}
+                    />
+                  </a>
+                </Link>
+              </div>
               <Tooltip className='cursor-default peer-hover:translate-y-0 peer-hover:opacity-100'>
                 leaderboard
               </Tooltip>
             </div>
             <div className='relative'>
-              <Link href='/about'>
-                <a>
-                  <FaInfo
-                    className={clsx(
-                      'peer cursor-pointer fill-hl/50 text-lg transition-colors duration-200 hover:fill-hl',
-                      { 'fill-hl': pathname === '/about' }
-                    )}
-                  />
-                </a>
-              </Link>
+              <div className='peer'>
+                <Link href='/about'>
+                  <a>
+                    <FaInfo
+                      className={clsx(
+                        'cursor-pointer fill-hl/50 text-lg transition-colors duration-200 hover:fill-hl',
+                        { 'fill-hl': pathname === '/about' }
+                      )}
+                    />
+                  </a>
+                </Link>
+              </div>
               <Tooltip className='cursor-default peer-hover:translate-y-0 peer-hover:opacity-100'>
                 about
               </Tooltip>
             </div>
             <div className='relative'>
-              <Link href='/components'>
-                <a>
-                  <AiFillBuild
-                    className={clsx(
-                      'peer cursor-pointer fill-hl/50 text-lg transition-colors duration-200 hover:fill-hl',
-                      { 'fill-hl': pathname === '/components' }
-                    )}
-                  />
-                </a>
-              </Link>
+              <div className='peer'>
+                <Link href='/components'>
+                  <a>
+                    <AiFillBuild
+                      className={clsx(
+                        'cursor-pointer fill-hl/50 text-lg transition-colors duration-200 hover:fill-hl',
+                        { 'fill-hl': pathname === '/components' }
+                      )}
+                    />
+                  </a>
+                </Link>
+              </div>
               <Tooltip className='cursor-default peer-hover:translate-y-0 peer-hover:opacity-100'>
                 components
               </Tooltip>
             </div>
             <div className='relative'>
-              <Link href='/account'>
-                <a>
-                  <div className='peer group flex h-full cursor-pointer gap-2 transition-colors duration-200 '>
-                    {user ? (
-                      <FaUser
-                        className={clsx(
-                          'fill-hl/50 text-lg group-hover:fill-hl',
-                          { 'fill-hl': pathname === '/account' }
-                        )}
-                      />
-                    ) : (
-                      <FaRegUser
-                        className={clsx(
-                          'fill-hl/50 text-lg group-hover:fill-hl',
-                          { 'fill-hl': pathname === '/account' }
-                        )}
-                      />
-                    )}
-                    <span
-                      className={clsx(
-                        'relative bottom-[2px] hidden group-hover:text-hl xs:block',
-                        { 'text-hl': pathname === '/account' },
-                        { 'text-hl/70': pathname !== '/account' }
+              <div className='peer'>
+                <Link href='/account'>
+                  <a>
+                    <div className='group flex h-full cursor-pointer gap-2 transition-colors duration-200 '>
+                      {user ? (
+                        <FaUser
+                          className={clsx(
+                            'fill-hl/50 text-lg group-hover:fill-hl',
+                            { 'fill-hl': pathname === '/account' }
+                          )}
+                        />
+                      ) : (
+                        <FaRegUser
+                          className={clsx(
+                            'fill-hl/50 text-lg group-hover:fill-hl',
+                            { 'fill-hl': pathname === '/account' }
+                          )}
+                        />
                       )}
-                    >
-                      {user?.username}
-                    </span>
-                  </div>
-                </a>
-              </Link>
+                      <span
+                        className={clsx(
+                          'relative bottom-[2px] hidden group-hover:text-hl xs:block',
+                          { 'text-hl': pathname === '/account' },
+                          { 'text-hl/70': pathname !== '/account' }
+                        )}
+                      >
+                        {user?.username}
+                      </span>
+                    </div>
+                  </a>
+                </Link>
+              </div>
               <Tooltip className='cursor-default peer-hover:translate-y-0 peer-hover:opacity-100'>
                 account
               </Tooltip>
