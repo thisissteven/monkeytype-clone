@@ -189,7 +189,7 @@ export default function LeaderboardPage() {
         <section>
           <div className={clsx('layout min-h-[65vh] pt-10')}>
             <div className='flex flex-wrap items-center justify-between gap-2 xs:whitespace-nowrap'>
-              <ArrowLink direction='left' className='my-4 text-font' href='/'>
+              <ArrowLink direction='left' className='my-4 text-hl' href='/'>
                 back to home
               </ArrowLink>
               {!user && !authenticated && (
@@ -203,7 +203,7 @@ export default function LeaderboardPage() {
               )}
             </div>
             <div className='mb-2 flex items-center justify-between'>
-              <h1>leaderboard</h1>
+              <h1 className='text-hl'>leaderboard</h1>
               <button
                 onClick={() =>
                   refetch().then(() => {

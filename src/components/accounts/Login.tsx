@@ -88,7 +88,7 @@ export default function Login() {
           <button
             disabled={loading}
             type='submit'
-            className='flex h-10 items-center justify-center rounded-md bg-font px-4 py-2 text-bg transition-opacity duration-200 hover:opacity-90 active:opacity-70'
+            className='flex h-10 items-center justify-center rounded-md bg-hl px-4 py-2 text-bg transition-opacity duration-200 hover:opacity-90 active:opacity-70'
           >
             {loading ? (
               <CgSpinner className='animate-spin' />

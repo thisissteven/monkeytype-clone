@@ -32,13 +32,13 @@ export default function AboutPage() {
         <section>
           <div className={clsx('layout flex min-h-[65vh] flex-col pt-10')}>
             <div>
-              <ArrowLink direction='left' className='my-4 text-font' href='/'>
-                back to home
+              <ArrowLink direction='left' className='my-4 text-hl' href='/'>
+                <span className='text-hl'>back to home</span>
               </ArrowLink>
             </div>
-            <h1>about</h1>
+            <h1 className='text-hl'>about</h1>
             <div className='mt-4'>
-              <p>
+              <p className='text-hl'>
                 this app is a clone of{' '}
                 <UnderlineLink
                   className='text-fg'
@@ -47,7 +47,7 @@ export default function AboutPage() {
                   monkeytype
                 </UnderlineLink>
               </p>
-              <p className='my-4'>technologies used:</p>
+              <p className='my-4 text-hl'>technologies used:</p>
               <div className='flex gap-4 text-4xl text-hl'>
                 {techs.map((tech) => (
                   <div className='group relative' key={tech.key}>
@@ -59,7 +59,9 @@ export default function AboutPage() {
                 ))}
               </div>
             </div>
-            <p className='flex flex-1 items-end'>- 12th of July, 2022</p>
+            <p className='flex flex-1 items-end text-hl'>
+              - 12th of July, 2022
+            </p>
           </div>
         </section>
       </main>

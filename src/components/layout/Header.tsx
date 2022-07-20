@@ -36,7 +36,7 @@ export default function Header() {
   return (
     <header className={clsx('layout bg-transparent font-primary')}>
       <div className='flex w-full flex-col items-center justify-between space-y-2 pt-12 sm:flex-row sm:space-y-0 sm:space-x-6'>
-        <div className='flex w-full items-center justify-start space-x-6 sm:w-auto'>
+        <div className='group flex w-full items-center justify-start space-x-6 sm:w-auto'>
           <Link href='/'>
             <a>
               <div className='flex space-x-2'>
@@ -45,7 +45,10 @@ export default function Header() {
                   viewBox='-680 -1030 300 180'
                   width={32}
                   height={40}
-                  className='fill-hl'
+                  className={clsx(
+                    'transition-colors duration-200 group-hover:fill-hl',
+                    [pathname === '/' ? 'fill-hl' : 'fill-hl/60']
+                  )}
                 >
                   <g>
                     <path d='M -430 -910 L -430 -910 C -424.481 -910 -420 -905.519 -420 -900 L -420 -900 C -420 -894.481 -424.481 -890 -430 -890 L -430 -890 C -435.519 -890 -440 -894.481 -440 -900 L -440 -900 C -440 -905.519 -435.519 -910 -430 -910 Z'></path>
@@ -61,10 +64,22 @@ export default function Header() {
                 </svg>
 
                 <div className='relative text-3xl font-bold text-fg'>
-                  <div className='absolute -top-3 left-0 text-[8px] text-fg/80'>
+                  <div
+                    className={clsx(
+                      'absolute -top-3 left-0 text-[8px] transition-colors duration-200 group-hover:text-fg',
+                      [pathname === '/' ? 'text-fg' : 'text-fg/60']
+                    )}
+                  >
                     just a clone of
                   </div>
-                  <span>monkeytype</span>
+                  <span
+                    className={clsx(
+                      'transition-colors duration-200 group-hover:text-hl',
+                      [pathname === '/' ? 'text-hl' : 'text-hl/60']
+                    )}
+                  >
+                    monkeytype
+                  </span>
                 </div>
               </div>
             </a>

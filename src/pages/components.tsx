@@ -24,7 +24,7 @@ export default function ComponentsPage() {
       <main>
         <section>
           <div className={clsx('layout min-h-[60vh] pt-10')}>
-            <ArrowLink direction='left' className='my-4 text-font' href='/'>
+            <ArrowLink direction='left' className='my-4 text-hl' href='/'>
               back to home
             </ArrowLink>
             <h1>components</h1>
@@ -39,8 +39,8 @@ export default function ComponentsPage() {
                     value={theme}
                     className={clsx(
                       'block max-w-xs rounded',
-                      'border-none bg-fg text-bg',
-                      'focus:border-bg focus:outline-none focus:ring focus:ring-bg',
+                      'border-none bg-hl text-bg',
+                      'focus:border-bg focus:outline-font focus:ring focus:ring-bg',
                       'font-primary'
                     )}
                     onChange={(e) =>
@@ -89,8 +89,8 @@ export default function ComponentsPage() {
                     value={fontFamily}
                     className={clsx(
                       'block max-w-xs rounded',
-                      'border-none bg-fg text-bg',
-                      'focus:border-bg focus:outline-none focus:ring focus:ring-bg',
+                      'border-none bg-hl text-bg',
+                      'focus:border-bg focus:outline-font focus:ring focus:ring-bg',
                       'font-primary'
                     )}
                     onChange={(e) =>

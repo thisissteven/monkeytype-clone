@@ -30,17 +30,17 @@ export default function HomePage() {
             <div className='mt-8 flex flex-col items-center justify-center gap-2 font-primary'>
               <div className='flex items-center space-x-2 text-sm font-light'>
                 <Kbd>tab</Kbd>
-                <span> + </span>
+                <span className='text-hl'> + </span>
                 <Kbd>enter</Kbd>
-                <span> - restart test </span>
+                <span className='text-hl'> - restart test </span>
               </div>
               <div className='flex items-center space-x-2 text-sm font-light'>
                 <Kbd>ctrl/cmd</Kbd>
-                <span> + </span>
+                <span className='text-hl'> + </span>
                 <Kbd>k</Kbd>
-                <span> or </span>
+                <span className='text-hl'> or </span>
                 <Kbd>p</Kbd>
-                <span> - command palette </span>
+                <span className='text-hl'> - command palette </span>
               </div>
             </div>
           </div>
