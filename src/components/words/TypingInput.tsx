@@ -117,6 +117,17 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
               },
             },
           });
+        } else {
+          createLeaderboard({
+            variables: {
+              data: {
+                wpm: Math.round(((60 / dur) * correctChar) / 5),
+                user: 13,
+                time: parseInt(time),
+                type: type || 'words',
+              },
+            },
+          });
         }
       } else {
         setDuration(0);
