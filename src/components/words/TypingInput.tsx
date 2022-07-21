@@ -122,7 +122,7 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
             variables: {
               data: {
                 wpm: Math.round(((60 / dur) * correctChar) / 5),
-                user: 13,
+                user: process.env.NEXT_PUBLIC_RANDOM_USER_ID,
                 time: parseInt(time),
                 type: type || 'words',
               },

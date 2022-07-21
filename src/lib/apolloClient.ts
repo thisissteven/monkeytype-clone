@@ -15,7 +15,9 @@ const authLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
-      authorization: token ? `Bearer ${token}` : '',
+      authorization: token
+        ? `Bearer ${token}`
+        : `Bearer ${process.env.NEXT_PUBLIC_RANDOM_USER_TOKEN}`,
     },
   };
 });
