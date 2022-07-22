@@ -6,6 +6,9 @@ module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     extend: {
+      boxShadow: {
+        b: '0 4px 0',
+      },
       screens: {
         xs: '400px',
         ns: '850px',
