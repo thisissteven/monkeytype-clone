@@ -6,9 +6,12 @@ import reducer from './reducer';
 import { RoomContextValues } from './types';
 import { useAuthState } from '../User/UserContext';
 
-const socket = io('http://localhost:8080', {
-  autoConnect: false,
-});
+const socket = io(
+  process.env.NEXT_PUBLIC_SOCKET_URL || 'http://localhost:8080',
+  {
+    autoConnect: false,
+  }
+);
 
 const RoomContext = React.createContext({} as RoomContextValues);
 
