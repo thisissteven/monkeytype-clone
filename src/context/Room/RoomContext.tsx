@@ -24,6 +24,7 @@ export const RoomProvider = ({ children }: { children: React.ReactNode }) => {
     roomId: null,
     user: {
       username: user?.username || 'Guest',
+      id: '',
       status: {
         wpm: 0,
         progress: 0,
@@ -31,10 +32,19 @@ export const RoomProvider = ({ children }: { children: React.ReactNode }) => {
     },
     players: [],
     isPlaying: false,
+    isRoomOwner: false,
     socket,
   });
 
   const { pathname } = useRouter();
+
+  socket.on('connect', () => {
+    dispatch({ type: 'SET_USER_ID', payload: socket.id });
+  });
+
+  socket.on('disconnect', () => {
+    dispatch({ type: 'SET_ROOM_OWNER', payload: false });
+  });
 
   React.useEffect(() => {
     if (pathname === '/multiplayer' || pathname === '/multiplayer/[id]') {

@@ -1,8 +1,10 @@
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { FaArrowRight } from 'react-icons/fa';
+import { toast } from 'react-toastify';
+
+import { createRoom } from '@/lib/socket/roomHandler';
 
 import Input from '@/components/Input';
 import Kbd from '@/components/Kbd';
@@ -31,6 +33,7 @@ export default function MultiplayerPage() {
 
   const {
     room: { socket },
+    dispatch,
   } = useRoomContext();
 
   const router = useRouter();
@@ -38,8 +41,23 @@ export default function MultiplayerPage() {
   React.useEffect(() => {
     socket.emit('hi', 'hello');
 
-    // eslint-disable-next-line no-console
-    socket.off('hello').on('hello', (data: string) => console.log(data));
+    // create another room id if already exist
+    socket.off('room already exist').on('room already exist', () => {
+      createRoom(socket);
+    });
+
+    // on create room success, redirect to that room
+    socket
+      .off('create room success')
+      .on('create room success', (roomId: string) => {
+        dispatch({ type: 'SET_ROOM_OWNER', payload: true });
+        toast.success('Room successfully created!', {
+          position: toast.POSITION.TOP_CENTER,
+          toastId: 'create-room',
+        });
+        router.push(`/multiplayer/${roomId}`);
+      });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -74,11 +92,12 @@ export default function MultiplayerPage() {
               </FormProvider>
               <h2>or</h2>
               <div>
-                <Link href='/multiplayer/1'>
-                  <button className='active:bg-hl-80 transform rounded-lg bg-hl px-3 py-2 text-bg shadow-b shadow-font transition-all duration-200 hover:bg-hl/90 focus:outline-0 active:translate-y-[4px] active:shadow-none'>
-                    Create Room
-                  </button>
-                </Link>
+                <button
+                  onClick={() => createRoom(socket)}
+                  className='active:bg-hl-80 transform rounded-lg bg-hl px-3 py-2 text-bg shadow-b shadow-font transition-all duration-200 hover:bg-hl/90 focus:outline-0 active:translate-y-[4px] active:shadow-none'
+                >
+                  Create Room
+                </button>
               </div>
             </div>
             <div className='mt-8 flex items-center space-x-2 text-sm'>

@@ -7,6 +7,14 @@ const reducer = (state: RoomState, action: Action): RoomState => {
         ...state,
         roomId: action.payload,
       };
+    case 'SET_USER_ID':
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          id: action.payload,
+        },
+      };
     case 'SET_STATUS':
       return {
         ...state,
@@ -22,6 +30,11 @@ const reducer = (state: RoomState, action: Action): RoomState => {
       return {
         ...state,
         isPlaying: action.payload,
+      };
+    case 'SET_ROOM_OWNER':
+      return {
+        ...state,
+        isRoomOwner: action.payload,
       };
     case 'ADD_PLAYERS':
       return {
