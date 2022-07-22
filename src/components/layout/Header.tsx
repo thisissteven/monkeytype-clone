@@ -2,7 +2,6 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
-import { AiFillBuild } from 'react-icons/ai';
 import {
   FaCrown,
   FaInfo,
@@ -11,6 +10,7 @@ import {
   FaTerminal,
   FaUser,
 } from 'react-icons/fa';
+import { RiTeamFill } from 'react-icons/ri';
 
 import Tooltip from '@/components/Tooltip';
 
@@ -141,19 +141,19 @@ export default function Header() {
             </div>
             <div className='relative'>
               <div className='peer'>
-                <Link href='/components'>
+                <Link href='/multiplayer'>
                   <a>
-                    <AiFillBuild
+                    <RiTeamFill
                       className={clsx(
                         'cursor-pointer fill-hl/50 text-lg transition-colors duration-200 hover:fill-hl',
-                        { 'fill-hl': pathname === '/components' }
+                        { 'fill-hl': pathname === '/multiplayer' }
                       )}
                     />
                   </a>
                 </Link>
               </div>
               <Tooltip className='cursor-default peer-hover:translate-y-0 peer-hover:opacity-100'>
-                components
+                multiplayer
               </Tooltip>
             </div>
             <div className='relative'>

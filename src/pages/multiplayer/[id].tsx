@@ -1,52 +1,55 @@
-/* eslint-disable no-console */
 import * as React from 'react';
-import { RiAlarmWarningFill } from 'react-icons/ri';
-import io from 'socket.io-client';
 
-import ArrowLink from '@/components/links/ArrowLink';
+import Kbd from '@/components/Kbd';
+import AnimateFade from '@/components/layout/AnimateFade';
+import Multiplayer from '@/components/multiplayer/Multiplayer';
 import Seo from '@/components/Seo';
 
+/**
+ * SVGR Support
+ * Caveat: No React Props Type.
+ *
+ * You can override the next-env if the type is important to you
+ * @see https://stackoverflow.com/questions/68103844/how-to-override-next-js-svg-module-declaration
+ */
+
+// !STARTERCONF -> Select !STARTERCONF and CMD + SHIFT + F
+// Before you begin editing, follow all comments with `STARTERCONF`,
+// to customize the default configuration.
+
 export default function MultiplayerPage() {
-  React.useEffect(() => {
-    fetch('/api/socket').finally(() => {
-      const socket = io();
-
-      socket.on('connect', () => {
-        console.log('connect');
-        socket.emit('hello');
-      });
-
-      socket.on('hello', (data) => {
-        console.log('hello', data);
-      });
-
-      socket.on('a user connected', () => {
-        console.log('a user connected');
-      });
-
-      socket.on('disconnect', () => {
-        console.log('disconnect');
-      });
-    });
-  }, []);
   return (
-    <>
-      <Seo templateTitle='Not Found' />
+    <AnimateFade>
+      <Seo title='Monkeytype Clone' />
 
       <main>
         <section>
-          <div className='layout flex min-h-[80vh] flex-col items-center justify-center text-center'>
-            <RiAlarmWarningFill
-              size={60}
-              className='drop-shadow-glow animate-flicker text-font'
-            />
-            <h1 className='mt-8 text-4xl md:text-6xl'>Multiplayer</h1>
-            <ArrowLink className='mt-4 text-font md:text-lg' href='/'>
-              Back to Home
-            </ArrowLink>
+          <div className='layout flex flex-col items-center pt-28 text-center'>
+            <Multiplayer />
+
+            <div className='mt-8 flex flex-col items-center justify-center gap-2 font-primary'>
+              <div className='flex items-center space-x-2 text-sm'>
+                <Kbd>tab</Kbd>
+                <span className='text-hl'> + </span>
+                <Kbd>enter</Kbd>
+                <span className='text-hl'>
+                  {' '}
+                  - restart test{' '}
+                  <span className='text-xs text-fg'>(owner only)</span>{' '}
+                </span>
+              </div>
+              <div className='flex items-center space-x-2 text-sm'>
+                <Kbd>ctrl/cmd</Kbd>
+                <span className='text-hl'> + </span>
+                <Kbd>k</Kbd>
+                <span className='text-hl'> or </span>
+                <Kbd>p</Kbd>
+                <span className='text-hl'> - command palette </span>
+              </div>
+            </div>
           </div>
         </section>
       </main>
-    </>
+    </AnimateFade>
   );
 }
