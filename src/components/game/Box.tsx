@@ -3,9 +3,9 @@ import * as React from 'react';
 import { FaPeace } from 'react-icons/fa';
 import { VscDebugRestart } from 'react-icons/vsc';
 
+import { shuffleList } from '@/components/game/functions';
+import TypingInput from '@/components/game/TypingInput';
 import Tooltip from '@/components/Tooltip';
-import { shuffleList } from '@/components/words/functions';
-import TypingInput from '@/components/words/TypingInput';
 
 import { usePreferenceContext } from '@/context/Preference/PreferenceContext';
 
