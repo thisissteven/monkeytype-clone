@@ -166,7 +166,7 @@ const commands = [
   },
   {
     icon: '',
-    commandName: 'font-family',
+    commandName: 'font family',
     contents: [
       {
         icon: '',
@@ -194,6 +194,25 @@ const commands = [
       },
     ],
     description: '- choose your own font',
+  },
+  {
+    icon: '',
+    commandName: 'zen mode',
+    contents: [
+      {
+        icon: '',
+        commandName: 'on',
+        contents: [],
+        description: '- turn on zen mode',
+      },
+      {
+        icon: '',
+        commandName: 'off',
+        contents: [],
+        description: '- turn off zen mode',
+      },
+    ],
+    description: '- only show time and words when typing',
   },
   {
     icon: '',

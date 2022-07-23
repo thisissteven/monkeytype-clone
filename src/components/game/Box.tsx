@@ -1,6 +1,4 @@
-import clsx from 'clsx';
 import * as React from 'react';
-import { FaPeace } from 'react-icons/fa';
 import { VscDebugRestart } from 'react-icons/vsc';
 
 import { shuffleList } from '@/components/game/functions';
@@ -14,8 +12,7 @@ export default function Box() {
   const _ = require('lodash');
 
   const {
-    preferences: { type, time, isOpen, zenMode },
-    dispatch,
+    preferences: { type, time, isOpen },
   } = usePreferenceContext();
 
   const [list, setList] = React.useState<string[]>(() => shuffleList(type));
@@ -43,18 +40,6 @@ export default function Box() {
 
   return (
     <>
-      {/* Upper  */}
-      <div
-        onClick={() => dispatch({ type: 'SET_ZEN_MODE', payload: !zenMode })}
-        className={clsx(
-          'mb-4 flex cursor-pointer items-center space-x-1.5 font-primary transition-colors duration-200 hover:text-hl',
-          zenMode ? 'text-hl' : 'text-hl/50'
-        )}
-      >
-        <FaPeace className='text-xl' />
-        <div>zen mode - {zenMode ? 'on' : 'off'}</div>
-      </div>
-
       {/* Box */}
       <TypingInput ref={inputRef} text={list.join(' ')} time={time} />
 

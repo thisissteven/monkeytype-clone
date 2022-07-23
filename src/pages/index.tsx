@@ -24,7 +24,7 @@ export default function HomePage() {
 
       <main>
         <section>
-          <div className='layout flex flex-col items-center pt-28 text-center'>
+          <div className='layout flex flex-col items-center pt-36 text-center'>
             <Box />
 
             <div className='mt-8 flex flex-col items-center justify-center gap-2 font-primary'>

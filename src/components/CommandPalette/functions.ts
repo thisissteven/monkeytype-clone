@@ -21,7 +21,7 @@ export const handleSelect = (
     case 'theme':
       dispatch({ type: 'SET_THEME', payload: value });
       break;
-    case 'font-family':
+    case 'font family':
       dispatch({ type: 'SET_FONT_FAMILY', payload: value });
       break;
     case 'type':
@@ -29,6 +29,11 @@ export const handleSelect = (
       break;
     case 'time':
       dispatch({ type: 'SET_TIME', payload: value });
+      break;
+    case 'zen mode':
+      // eslint-disable-next-line no-case-declarations
+      const payload = value === 'on' ? true : false;
+      dispatch({ type: 'SET_ZEN_MODE', payload });
       break;
     default:
       return false;
