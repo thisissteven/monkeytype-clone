@@ -1,21 +1,25 @@
+import clsx from 'clsx';
 import * as React from 'react';
-import { VscDebugRestart } from 'react-icons/vsc';
 
-import { shuffleList } from '@/components/multiplayer/functions';
 import TypingInput from '@/components/multiplayer/TypingInput';
-import Tooltip from '@/components/Tooltip';
 
 import { usePreferenceContext } from '@/context/Preference/PreferenceContext';
+import { useRoomContext } from '@/context/Room/RoomContext';
 
 export default function Multiplayer() {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const _ = require('lodash');
 
   const {
-    preferences: { type, time, isOpen },
+    preferences: { isOpen },
   } = usePreferenceContext();
 
-  const [list, setList] = React.useState<string[]>(() => shuffleList(type));
+  const {
+    room: {
+      user: { isReady, isPlaying },
+    },
+    dispatch,
+  } = useRoomContext();
 
   React.useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -31,33 +35,33 @@ export default function Multiplayer() {
     return () => window.removeEventListener('keydown', onKeyDown);
   }, [isOpen]);
 
-  React.useEffect(() => {
-    setList(shuffleList(type));
-  }, [type]);
-
   const inputRef = React.useRef() as React.MutableRefObject<HTMLInputElement>;
   const buttonRef = React.useRef() as React.MutableRefObject<HTMLButtonElement>;
 
   return (
     <>
       {/* Multiplayer */}
-      <TypingInput ref={inputRef} text={list.join(' ')} time={time} />
+      <TypingInput ref={inputRef} />
 
-      {/* Restart Button */}
-      <button
-        onClick={() => {
-          inputRef.current.focus();
-          setList(shuffleList(type));
-        }}
-        ref={buttonRef}
-        tabIndex={2}
-        className='group relative mt-2 flex items-center rounded-lg border-0 px-4 py-2 text-fg/50 outline-none transition-colors duration-200 hover:text-fg focus:bg-hl focus:text-bg active:bg-hl active:text-bg'
-      >
-        <VscDebugRestart className='scale-x-[-1] transform text-2xl' />
-        <Tooltip className='top-12 font-primary group-hover:translate-y-0 group-hover:opacity-100 group-focus:top-14 group-focus:translate-y-0 group-focus:opacity-100 group-active:top-14 group-active:translate-y-0 group-active:opacity-100'>
-          Restart Test
-        </Tooltip>
-      </button>
+      <div>
+        <button
+          ref={buttonRef}
+          disabled={isPlaying}
+          tabIndex={2}
+          onClick={() => dispatch({ type: 'SET_IS_READY', payload: !isReady })}
+          className={clsx(
+            'outline-solid mb-8 transform rounded-lg px-3 py-2 font-primary text-bg shadow-b shadow-fg/50 outline-offset-[6px] transition-all duration-200 focus:outline-dashed focus:outline-[3px] active:translate-y-[4px] active:shadow-none',
+            [
+              isReady
+                ? 'active:bg-fg-50 bg-fg/70 hover:bg-fg/60 focus:outline-fg/30 '
+                : 'active:bg-fg-80 bg-fg hover:bg-fg/90 focus:outline-fg/50 ',
+            ],
+            [isPlaying && 'cursor-not-allowed']
+          )}
+        >
+          {isReady ? 'Cancel' : 'Ready'}
+        </button>
+      </div>
     </>
   );
 }

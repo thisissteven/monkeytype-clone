@@ -33,7 +33,6 @@ export default function MultiplayerPage() {
 
   const {
     room: { socket },
-    dispatch,
   } = useRoomContext();
 
   const router = useRouter();
@@ -50,7 +49,6 @@ export default function MultiplayerPage() {
     socket
       .off('create room success')
       .on('create room success', (roomId: string) => {
-        dispatch({ type: 'SET_ROOM_OWNER', payload: true });
         toast.success('Room successfully created!', {
           position: toast.POSITION.TOP_CENTER,
           toastId: 'create-room',

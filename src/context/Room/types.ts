@@ -2,20 +2,21 @@ import { Socket } from 'socket.io-client';
 
 export type Player = {
   username: string;
+  roomId: string | null;
   id: string;
   status: {
     wpm: number;
     progress: number;
   };
+  isPlaying: boolean;
+  isReady: boolean;
 };
 
 export type RoomState = {
-  roomId: string | null;
   user: Player;
+  text: string;
   players: Player[];
   socket: Socket;
-  isPlaying: boolean;
-  isRoomOwner: boolean;
 };
 
 export type RoomContextValues = {
@@ -24,7 +25,8 @@ export type RoomContextValues = {
 };
 
 export type Action =
-  | { type: 'SET_ROOM_ID'; payload: string }
+  | { type: 'SET_ROOM_ID'; payload: string | null }
+  | { type: 'SET_TEXT'; payload: string }
   | { type: 'SET_USER_ID'; payload: string }
   | {
       type: 'SET_STATUS';
@@ -33,6 +35,6 @@ export type Action =
         progress: number;
       };
     }
-  | { type: 'ADD_PLAYERS'; payload: Player }
+  | { type: 'SET_PLAYERS'; payload: Player[] }
   | { type: 'SET_IS_PLAYING'; payload: boolean }
-  | { type: 'SET_ROOM_OWNER'; payload: boolean };
+  | { type: 'SET_IS_READY'; payload: boolean };

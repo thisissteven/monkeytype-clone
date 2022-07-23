@@ -1,6 +1,11 @@
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { io } from 'socket.io-client';
+import {
+  adjectives,
+  animals,
+  uniqueNamesGenerator,
+} from 'unique-names-generator';
 
 import reducer from './reducer';
 import { RoomContextValues } from './types';
@@ -21,18 +26,27 @@ export const RoomProvider = ({ children }: { children: React.ReactNode }) => {
   } = useAuthState();
 
   const [room, dispatch] = React.useReducer(reducer, {
-    roomId: null,
+    text: '',
     user: {
-      username: user?.username || 'Guest',
+      roomId: null,
+      username:
+        user?.username ||
+        uniqueNamesGenerator({
+          dictionaries: [adjectives, animals],
+          style: 'capital',
+          separator: '',
+          length: 2,
+        }),
       id: '',
       status: {
         wpm: 0,
         progress: 0,
       },
+      isPlaying: false,
+      isReady: false,
     },
     players: [],
-    isPlaying: false,
-    isRoomOwner: false,
+
     socket,
   });
 
@@ -43,16 +57,23 @@ export const RoomProvider = ({ children }: { children: React.ReactNode }) => {
   });
 
   socket.on('disconnect', () => {
-    dispatch({ type: 'SET_ROOM_OWNER', payload: false });
+    dispatch({ type: 'SET_IS_READY', payload: false });
+    dispatch({ type: 'SET_ROOM_ID', payload: null });
   });
 
   React.useEffect(() => {
+    if (room.user.id && room.user.roomId) {
+      socket.emit('room update', room.user);
+    }
+    if (pathname === '/multiplayer') {
+      socket.emit('leave room', room.user);
+    }
     if (pathname === '/multiplayer' || pathname === '/multiplayer/[id]') {
       socket.connect();
     } else {
       socket.disconnect();
     }
-  }, [pathname]);
+  }, [pathname, room.user]);
 
   return (
     <RoomContext.Provider value={{ room, dispatch }}>

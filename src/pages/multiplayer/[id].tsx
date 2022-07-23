@@ -8,6 +8,7 @@ import Multiplayer from '@/components/multiplayer/Multiplayer';
 import Seo from '@/components/Seo';
 
 import { useRoomContext } from '@/context/Room/RoomContext';
+import { Player } from '@/context/Room/types';
 
 /**
  * SVGR Support
@@ -23,31 +24,42 @@ import { useRoomContext } from '@/context/Room/RoomContext';
 
 export default function MultiplayerPage() {
   const {
-    room: {
-      socket,
-      user: { username },
-    },
+    room: { socket, user },
     dispatch,
   } = useRoomContext();
 
-  const { query } = useRouter();
+  const router = useRouter();
 
   React.useEffect(() => {
-    socket.emit('join room', { roomId: query?.id, username });
-    dispatch({ type: 'SET_ROOM_ID', payload: query?.id as string });
+    if (user.id) {
+      socket.emit('join room', { roomId: router?.query?.id, user });
+      dispatch({ type: 'SET_ROOM_ID', payload: router?.query?.id as string });
 
-    socket.off('notify').on('notify', (msg: string) => {
-      toast.success(msg, {
-        position: toast.POSITION.TOP_CENTER,
-        toastId: msg,
+      socket.off('room update').on('room update', (players: Player[]) => {
+        dispatch({ type: 'SET_PLAYERS', payload: players });
       });
-    });
 
-    socket.off('set room owner').on('set room owner', () => {
-      dispatch({ type: 'SET_ROOM_OWNER', payload: true });
-    });
+      socket.off('leave room').on('leave room', (username: string) => {
+        toast.success(`${username} left the room.`, {
+          position: toast.POSITION.TOP_CENTER,
+          toastId: `${username} left the room.`,
+        });
+      });
+
+      socket.off('words generated').on('words generated', (text: string) => {
+        dispatch({ type: 'SET_TEXT', payload: text });
+      });
+
+      socket.off('notify').on('notify', (msg: string) => {
+        toast.success(msg, {
+          position: toast.POSITION.TOP_CENTER,
+          toastId: msg,
+        });
+      });
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query]);
+  }, [router.query, user.id]);
 
   return (
     <AnimateFade>
@@ -63,11 +75,7 @@ export default function MultiplayerPage() {
                 <Kbd>tab</Kbd>
                 <span className='text-hl'> + </span>
                 <Kbd>enter</Kbd>
-                <span className='text-hl'>
-                  {' '}
-                  - restart test{' '}
-                  <span className='text-xs text-fg'>(owner only)</span>{' '}
-                </span>
+                <span className='text-hl'> - ready / cancel </span>
               </div>
               <div className='flex items-center space-x-2 text-sm'>
                 <Kbd>ctrl/cmd</Kbd>

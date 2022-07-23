@@ -5,7 +5,10 @@ const reducer = (state: RoomState, action: Action): RoomState => {
     case 'SET_ROOM_ID':
       return {
         ...state,
-        roomId: action.payload,
+        user: {
+          ...state.user,
+          roomId: action.payload,
+        },
       };
     case 'SET_USER_ID':
       return {
@@ -29,17 +32,28 @@ const reducer = (state: RoomState, action: Action): RoomState => {
     case 'SET_IS_PLAYING':
       return {
         ...state,
-        isPlaying: action.payload,
+        user: {
+          ...state.user,
+          isPlaying: action.payload,
+        },
       };
-    case 'SET_ROOM_OWNER':
+    case 'SET_IS_READY':
       return {
         ...state,
-        isRoomOwner: action.payload,
+        user: {
+          ...state.user,
+          isReady: action.payload,
+        },
       };
-    case 'ADD_PLAYERS':
+    case 'SET_PLAYERS':
       return {
         ...state,
-        players: [...state.players, action.payload],
+        players: action.payload,
+      };
+    case 'SET_TEXT':
+      return {
+        ...state,
+        text: action.payload,
       };
     default:
       throw new Error('Unknown action type');

@@ -1,25 +1,25 @@
 import clsx from 'clsx';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { BsCursorFill, BsFlagFill } from 'react-icons/bs';
-import { FaCopy } from 'react-icons/fa';
-import { toast } from 'react-toastify';
+import { BsFlagFill } from 'react-icons/bs';
 import useTyping from 'react-typing-game-hook';
 
 import Tooltip from '@/components/Tooltip';
 
 import { usePreferenceContext } from '@/context/Preference/PreferenceContext';
+import { useRoomContext } from '@/context/Room/RoomContext';
 import { useAuthState } from '@/context/User/UserContext';
 
-type TypingInputProps = {
-  text: string;
-  time: string;
-} & React.ComponentPropsWithRef<'input'>;
+import Players from './Players';
+import Code from './RoomCode';
+
+type TypingInputProps = React.ComponentPropsWithRef<'input'>;
 
 const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
-  ({ text, time }, ref) => {
+  ({ className }, ref) => {
     const [duration, setDuration] = useState(() => 0);
     const [isFocused, setIsFocused] = useState(() => false);
     const letterElements = useRef<HTMLDivElement>(null);
+    // eslint-disable-next-line unused-imports/no-unused-vars
     const [currentTime, setCurrentTime] = useState(() => Date.now());
 
     const {
@@ -30,6 +30,10 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
     const {
       preferences: { isOpen },
     } = usePreferenceContext();
+
+    const {
+      room: { text },
+    } = useRoomContext();
 
     const {
       states: {
@@ -78,7 +82,7 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
       endTyping();
       resetTyping();
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [text, time]);
+    }, [text]);
 
     //set WPM
     useEffect(() => {
@@ -122,96 +126,15 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
 
     return (
       <>
-        <div className='relative bottom-[5.5rem] flex w-full max-w-[950px] flex-col items-end'>
-          <span className='rounded-l-md rounded-tr-md bg-hl px-4 py-2 text-bg'>
-            share this code with your friends
-          </span>
-          <span
-            onClick={() =>
-              navigator.clipboard.writeText('Kv78eWq').then(() =>
-                toast.success('Copied successfully!', {
-                  position: toast.POSITION.TOP_CENTER,
-                  toastId: 'copy-success',
-                })
-              )
-            }
-            className='flex cursor-pointer items-center rounded-b-md bg-hl px-4 pb-2 text-3xl font-bold text-bg'
-          >
-            Kv78eWq{' '}
-            <FaCopy className='ml-2 text-2xl text-bg/80 transition-colors duration-200 hover:text-bg active:text-bg' />
-          </span>
-        </div>
-        {/* Upper  */}
-        <div
-          className={clsx(
-            'z-20 -mt-16 mb-24 flex w-full max-w-[950px] flex-wrap items-center gap-x-8 gap-y-4 font-primary transition-colors duration-200 hover:text-hl'
-          )}
-        >
-          <div className='flex flex-1 flex-col items-start gap-2'>
-            <div className='flex w-full items-center justify-between'>
-              <span className='text-fg'>
-                you <span className='text-xs'>(owner)</span>
-              </span>
-              <span className='text-sm text-fg'>
-                {duration === 0
-                  ? Math.round(((60 / currentTime) * correctChar) / 5)
-                  : Math.round(((60 / duration) * correctChar) / 5)}
-                {' wpm'}
-              </span>
-            </div>
-            <div className='h-2 w-full min-w-[250px] overflow-hidden rounded-lg bg-hl/40 xs:min-w-[350px]'>
-              <div
-                className='h-full rounded-lg bg-fg transition-all duration-500'
-                style={{
-                  width: `${Math.floor(
-                    ((currIndex + 1) / text.length) * 100
-                  )}%`,
-                }}
-              ></div>
-            </div>
-          </div>
-          <div className='flex flex-1 flex-col items-start gap-2'>
-            <div className='flex w-full items-center justify-between'>
-              <span className='text-fg/50'>cookieninja</span>
-              <span className='text-sm text-fg/50'>200 wpm</span>
-            </div>
-            <div className='h-2 w-full min-w-[250px] overflow-hidden rounded-lg bg-hl/20 xs:min-w-[350px]'>
-              <div
-                className='h-full rounded-lg bg-fg/60'
-                style={{ width: '85%' }}
-              ></div>
-            </div>
-          </div>
-          <div className='flex flex-1 flex-col items-start gap-2'>
-            <div className='flex w-full items-center justify-between'>
-              <span className='text-fg/50'>proplayer</span>
-              <span className='text-sm text-fg/50'>180 wpm</span>
-            </div>
-            <div className='h-2 w-full min-w-[250px] overflow-hidden rounded-lg bg-hl/20 xs:min-w-[350px]'>
-              <div
-                className='h-full rounded-lg bg-fg/60'
-                style={{ width: '75%' }}
-              ></div>
-            </div>
-          </div>
-          <div className='flex flex-1 flex-col items-start gap-2'>
-            <div className='flex w-full items-center justify-between'>
-              <span className='text-fg/50'>coolguy123</span>
-              <span className='text-sm text-fg/50'>80 wpm</span>
-            </div>
-            <div className='h-2 w-full min-w-[250px] overflow-hidden rounded-lg bg-hl/20 xs:min-w-[350px]'>
-              <div
-                className='h-full rounded-lg bg-fg/60'
-                style={{ width: '25%' }}
-              ></div>
-            </div>
-          </div>
-        </div>
+        <Code />
+        <Players />
+
         <div className='relative w-full max-w-[950px]'>
           <div
             className={clsx(
               'pointer-events-none fixed inset-0 h-screen w-screen bg-bg transition-opacity duration-200',
-              { 'opacity-0': !isFocused }
+              { 'opacity-0': !isFocused },
+              className
             )}
           ></div>
           <span className='absolute left-0 -top-[4rem] text-4xl text-fg/80'>
@@ -280,9 +203,7 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
                 { 'text-fg opacity-100 ': !isFocused }
               )}
             >
-              Click
-              <BsCursorFill className='mx-2 scale-x-[-1]' />
-              or press any key to focus
+              Game will start when everyone is ready
             </span>
             <div
               className={clsx(
