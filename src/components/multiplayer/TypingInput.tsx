@@ -7,7 +7,6 @@ import Tooltip from '@/components/Tooltip';
 
 import { usePreferenceContext } from '@/context/Preference/PreferenceContext';
 import { useRoomContext } from '@/context/Room/RoomContext';
-import { useAuthState } from '@/context/User/UserContext';
 
 import Players from './Players';
 import Code from './RoomCode';
@@ -23,17 +22,24 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
     const [currentTime, setCurrentTime] = useState(() => Date.now());
 
     const {
-      // eslint-disable-next-line unused-imports/no-unused-vars
-      state: { user, authenticated },
-    } = useAuthState();
-
-    const {
       preferences: { isOpen },
     } = usePreferenceContext();
 
     const {
       room: { text },
+      dispatch,
     } = useRoomContext();
+
+    React.useEffect(() => {
+      const progress = Math.floor(((currIndex + 1) / text.length) * 100);
+      const wpm =
+        duration === 0
+          ? Math.round(((60 / currentTime) * correctChar) / 5)
+          : Math.round(((60 / duration) * correctChar) / 5);
+
+      dispatch({ type: 'SET_STATUS', payload: { wpm, progress } });
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currentTime]);
 
     const {
       states: {

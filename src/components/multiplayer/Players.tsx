@@ -32,21 +32,13 @@ export default function Players() {
                   </span>
                 </span>
                 <span className='text-sm text-fg'>{player.status.wpm} wpm</span>
-                {/* <span className='text-sm text-fg'>
-              {duration === 0
-                ? Math.round(((60 / currentTime) * correctChar) / 5)
-                : Math.round(((60 / duration) * correctChar) / 5)}
-              {' wpm'}
-            </span> */}
               </div>
               <div className='h-2 w-full min-w-[250px] overflow-hidden rounded-lg bg-hl/40 xs:min-w-[350px]'>
                 <div
                   className='h-full rounded-lg bg-fg transition-all duration-500'
-                  //   style={{
-                  //     width: `${Math.floor(
-                  //       ((currIndex + 1) / text.length) * 100
-                  //     )}%`,
-                  //   }}
+                  style={{
+                    width: `${player.status.progress}%`,
+                  }}
                 ></div>
               </div>
             </div>
@@ -68,8 +60,10 @@ export default function Players() {
               </div>
               <div className='h-2 w-full min-w-[250px] overflow-hidden rounded-lg bg-hl/20 xs:min-w-[350px]'>
                 <div
-                  className='h-full rounded-lg bg-fg/60'
-                  style={{ width: '85%' }}
+                  className='h-full rounded-lg bg-fg/60 transition-all duration-500'
+                  style={{
+                    width: `${player.status.progress}%`,
+                  }}
                 ></div>
               </div>
             </div>
