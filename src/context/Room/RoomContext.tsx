@@ -85,15 +85,20 @@ export const RoomProvider = ({ children }: { children: React.ReactNode }) => {
     if (room.user.id && room.user.roomId) {
       socket.emit('room update', room.user);
     }
-    if (pathname === '/multiplayer' && room.user.roomId && room.user.id) {
+
+    if (pathname === '/multiplayer' && room.user.isReady) {
       dispatch({ type: 'SET_STATUS', payload: { progress: 0, wpm: 0 } });
       dispatch({ type: 'SET_IS_READY', payload: false });
       dispatch({ type: 'SET_IS_PLAYING', payload: false });
       dispatch({ type: 'SET_IS_FINISHED', payload: false });
       dispatch({ type: 'SET_WINNER', payload: null });
       resetTime(5);
+    }
+
+    if (pathname === '/multiplayer' && room.user.roomId && room.user.id) {
       socket.emit('leave room', room.user);
     }
+
     if (pathname === '/multiplayer' || pathname === '/multiplayer/[id]') {
       socket.connect();
     } else {
