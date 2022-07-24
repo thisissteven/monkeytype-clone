@@ -189,7 +189,7 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
             <input
               type='text'
               className='absolute left-0 top-0 z-20 h-full w-full cursor-default opacity-0'
-              tabIndex={1}
+              tabIndex={isPlaying ? 1 : -1}
               ref={ref}
               onFocus={() => setIsFocused(true)}
               onBlur={() => setIsFocused(false)}
