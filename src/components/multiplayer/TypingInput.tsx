@@ -143,11 +143,16 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
               className
             )}
           ></div>
-          <span className='absolute left-0 -top-[4rem] text-4xl text-fg/80'>
+          <span className='absolute left-0 -top-[4rem] flex items-center gap-2 text-4xl text-fg/80'>
             <span className='inline-block w-20 rounded-sm bg-font/40 px-2 py-1 text-left'>
               {currIndex + 1}
             </span>{' '}
-            / {text.length}
+            /{' '}
+            {!text.length ? (
+              <div className='inline-block h-10 w-16 animate-pulse bg-fg/50'></div>
+            ) : (
+              text.length
+            )}
           </span>
 
           <div

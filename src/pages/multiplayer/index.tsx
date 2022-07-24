@@ -1,8 +1,10 @@
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { FaArrowRight } from 'react-icons/fa';
 import { toast } from 'react-toastify';
+import * as yup from 'yup';
 
 import { createRoom } from '@/lib/socket/roomHandler';
 
@@ -13,21 +15,17 @@ import Seo from '@/components/Seo';
 
 import { useRoomContext } from '@/context/Room/RoomContext';
 
-/**
- * SVGR Support
- * Caveat: No React Props Type.
- *
- * You can override the next-env if the type is important to you
- * @see https://stackoverflow.com/questions/68103844/how-to-override-next-js-svg-module-declaration
- */
-
-// !STARTERCONF -> Select !STARTERCONF and CMD + SHIFT + F
-// Before you begin editing, follow all comments with `STARTERCONF`,
-// to customize the default configuration.
+const schema = yup.object().shape({
+  code: yup
+    .string()
+    .required('code is required')
+    .length(6, 'code must be 6 characters long'),
+});
 
 export default function MultiplayerPage() {
   const methods = useForm<{ code: string }>({
     mode: 'onTouched',
+    resolver: yupResolver(schema),
   });
   const { handleSubmit } = methods;
 
@@ -52,6 +50,7 @@ export default function MultiplayerPage() {
         toast.success('Room successfully created!', {
           position: toast.POSITION.TOP_CENTER,
           toastId: 'create-room',
+          autoClose: 3000,
         });
         router.push(`/multiplayer/${roomId}`);
       });
@@ -73,26 +72,29 @@ export default function MultiplayerPage() {
             <div className='flex h-[40vh] flex-col gap-4'>
               <h1 className='mb-2'>multiplayer mode</h1>
               <FormProvider {...methods}>
-                <form onSubmit={handleSubmit(onSubmit)} className='relative'>
-                  <Input
-                    name='code'
-                    id='code'
-                    autoComplete='off'
-                    placeholder='enter room code'
-                  />
-                  <button
-                    type='submit'
-                    className='active:bg-bg-/20 absolute right-0 top-0 grid h-[42px] w-12 place-items-center rounded-r-lg bg-font/0 transition-colors duration-200 hover:bg-bg/20 active:bg-bg/30'
-                  >
-                    <FaArrowRight className='text-bg' />
-                  </button>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                  <div className='flex w-full justify-center gap-2'>
+                    <Input
+                      name='code'
+                      id='code'
+                      autoComplete='off'
+                      placeholder='enter room code'
+                      className='flex-1 rounded-r-none'
+                    />
+                    <button
+                      type='submit'
+                      className='grid h-[42px] w-12 place-items-center rounded-r-lg bg-fg transition-colors duration-200 hover:bg-fg/90 active:bg-fg/80'
+                    >
+                      <FaArrowRight className='text-bg' />
+                    </button>
+                  </div>
                 </form>
               </FormProvider>
               <h2>or</h2>
               <div>
                 <button
                   onClick={() => createRoom(socket)}
-                  className='active:bg-hl-80 transform rounded-lg bg-hl px-3 py-2 text-bg shadow-b shadow-font transition-all duration-200 hover:bg-hl/90 focus:outline-0 active:translate-y-[4px] active:shadow-none'
+                  className='outline-solid active:bg-fg-80 mb-8 transform rounded-lg bg-fg px-3 py-2 font-primary text-bg shadow-b shadow-fg/50 outline-offset-[6px] transition-all duration-200 hover:bg-fg/90 focus:outline-dashed focus:outline-[3px] focus:outline-fg/50 active:translate-y-[4px] active:shadow-none '
                 >
                   Create Room
                 </button>

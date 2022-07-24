@@ -3,6 +3,8 @@ import * as React from 'react';
 
 import { useRoomContext } from '@/context/Room/RoomContext';
 
+import Skeleton from './Skeleton';
+
 export default function Players() {
   const {
     room: {
@@ -18,6 +20,12 @@ export default function Players() {
           'z-20 -mt-16 mb-24 flex w-full max-w-[950px] flex-wrap items-center gap-x-8 gap-y-4 font-primary transition-colors duration-200 hover:text-hl'
         )}
       >
+        {players.length === 0 && (
+          <>
+            <Skeleton />
+            <Skeleton />
+          </>
+        )}
         {players.map((player) =>
           player.id === id ? (
             <div

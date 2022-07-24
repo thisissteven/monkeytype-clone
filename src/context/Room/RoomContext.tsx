@@ -65,7 +65,7 @@ export const RoomProvider = ({ children }: { children: React.ReactNode }) => {
     if (room.user.id && room.user.roomId) {
       socket.emit('room update', room.user);
     }
-    if (pathname === '/multiplayer') {
+    if (pathname === '/multiplayer' && room.user.roomId && room.user.id) {
       socket.emit('leave room', room.user);
     }
     if (pathname === '/multiplayer' || pathname === '/multiplayer/[id]') {

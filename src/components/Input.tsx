@@ -20,6 +20,7 @@ export default function Input({
   type = 'text',
   readOnly = false,
   validation,
+  className,
   ...rest
 }: InputProps) {
   const {
@@ -43,7 +44,8 @@ export default function Input({
               : errors[name]
               ? 'border-hl focus:border-hl focus:outline-hl/50 focus:ring-0'
               : 'focus:border-fg focus:outline-fg/50 focus:ring-0',
-            'w-full rounded-lg bg-fg text-bg placeholder:text-bg/70'
+            'w-full rounded-lg bg-fg text-bg placeholder:text-bg/70',
+            className
           )}
           placeholder={placeholder}
           aria-describedby={name}
@@ -55,7 +57,7 @@ export default function Input({
           </div>
         )}
       </div>
-      <div className='mt-1'>
+      <div className='mt-1 text-left'>
         {helperText && <p className='text-xs text-gray-500'>{helperText}</p>}
         {errors[name] && (
           <span className='text-sm text-hl'>

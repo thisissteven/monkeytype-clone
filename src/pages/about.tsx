@@ -73,7 +73,7 @@ export default function AboutPage() {
                   </div>
                 </div>
                 <p className='mt-4 mb-2 text-hl'>pages:</p>
-                <ul>
+                <ul className='space-y-1'>
                   <li>
                     <UnderlineLink className='text-fg' href='/'>
                       home
@@ -87,6 +87,11 @@ export default function AboutPage() {
                   <li>
                     <UnderlineLink className='text-fg' href='/account'>
                       account
+                    </UnderlineLink>
+                  </li>
+                  <li>
+                    <UnderlineLink className='text-fg' href='/multiplayer'>
+                      multiplayer
                     </UnderlineLink>
                   </li>
                 </ul>
@@ -122,7 +127,7 @@ export default function AboutPage() {
                         id='theme'
                         value={theme}
                         className={clsx(
-                          'block max-w-xs rounded',
+                          'block max-w-xs rounded text-sm',
                           'border-none bg-hl text-bg',
                           'focus:border-bg focus:outline-font focus:ring focus:ring-bg',
                           'font-primary'
@@ -172,7 +177,7 @@ export default function AboutPage() {
                         id='font-family'
                         value={fontFamily}
                         className={clsx(
-                          'block max-w-xs rounded',
+                          'block max-w-xs rounded text-sm',
                           'border-none bg-hl text-bg',
                           'focus:border-bg focus:outline-font focus:ring focus:ring-bg',
                           'font-primary'

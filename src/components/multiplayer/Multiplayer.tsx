@@ -53,7 +53,7 @@ export default function Multiplayer() {
             'outline-solid mb-8 transform rounded-lg px-3 py-2 font-primary text-bg shadow-b shadow-fg/50 outline-offset-[6px] transition-all duration-200 focus:outline-dashed focus:outline-[3px] active:translate-y-[4px] active:shadow-none',
             [
               isReady
-                ? 'active:bg-fg-50 bg-fg/70 hover:bg-fg/60 focus:outline-fg/30 '
+                ? 'active:bg-fg-50 bg-fg/70 hover:bg-fg/60 focus:outline-fg/30'
                 : 'active:bg-fg-80 bg-fg hover:bg-fg/90 focus:outline-fg/50 ',
             ],
             [isPlaying && 'cursor-not-allowed']

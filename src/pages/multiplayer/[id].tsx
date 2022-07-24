@@ -31,7 +31,7 @@ export default function MultiplayerPage() {
   const router = useRouter();
 
   React.useEffect(() => {
-    if (user.id) {
+    if (user.id && router?.query?.id) {
       socket.emit('join room', { roomId: router?.query?.id, user });
       dispatch({ type: 'SET_ROOM_ID', payload: router?.query?.id as string });
 
@@ -39,10 +39,20 @@ export default function MultiplayerPage() {
         dispatch({ type: 'SET_PLAYERS', payload: players });
       });
 
-      socket.off('leave room').on('leave room', (username: string) => {
-        toast.success(`${username} left the room.`, {
+      socket.off('room invalid').on('room invalid', () => {
+        toast.error("Room doesn't exist", {
           position: toast.POSITION.TOP_CENTER,
-          toastId: `${username} left the room.`,
+          toastId: "Room doesn't exist",
+          autoClose: 3000,
+        });
+        router.push('/multiplayer');
+      });
+
+      socket.off('leave room').on('leave room', (username: string) => {
+        toast.success(`${username} left.`, {
+          position: toast.POSITION.TOP_CENTER,
+          toastId: `${username} left.`,
+          autoClose: 3000,
         });
       });
 
@@ -54,6 +64,7 @@ export default function MultiplayerPage() {
         toast.success(msg, {
           position: toast.POSITION.TOP_CENTER,
           toastId: msg,
+          autoClose: 3000,
         });
       });
     }
