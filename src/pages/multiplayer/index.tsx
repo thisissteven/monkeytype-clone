@@ -2,6 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { CgSpinner } from 'react-icons/cg';
 import { FaArrowRight } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import * as yup from 'yup';
@@ -35,6 +36,9 @@ export default function MultiplayerPage() {
 
   const router = useRouter();
 
+  const [isCreatingRoom, setIsCreatingRoom] = React.useState(false);
+  const [isJoiningRoom, setIsJoiningRoom] = React.useState(false);
+
   React.useEffect(() => {
     socket.emit('hi', 'hello');
 
@@ -52,6 +56,7 @@ export default function MultiplayerPage() {
           toastId: 'create-room',
           autoClose: 3000,
         });
+        setIsCreatingRoom(false);
         router.push(`/multiplayer/${roomId}`);
       });
 
@@ -59,6 +64,7 @@ export default function MultiplayerPage() {
   }, []);
 
   const onSubmit = ({ code }: { code: string }) => {
+    setIsJoiningRoom(true);
     router.push(`/multiplayer/${code}`);
   };
 
@@ -69,7 +75,7 @@ export default function MultiplayerPage() {
       <main>
         <section>
           <div className='layout flex min-h-[65vh] flex-col items-center pt-28 text-center font-primary'>
-            <div className='flex h-[40vh] flex-col gap-4'>
+            <div className='h-20rem flex flex-col gap-4'>
               <h1 className='mb-2'>multiplayer mode</h1>
               <FormProvider {...methods}>
                 <form onSubmit={handleSubmit(onSubmit)}>
@@ -82,8 +88,11 @@ export default function MultiplayerPage() {
                       className='flex-1 rounded-r-none'
                     />
                     <button
+                      disabled={isJoiningRoom}
                       type='submit'
-                      className='grid h-[42px] w-12 place-items-center rounded-r-lg bg-fg transition-colors duration-200 hover:bg-fg/90 active:bg-fg/80'
+                      className={`grid h-[42px] w-12 place-items-center rounded-r-lg bg-fg transition-colors duration-200 hover:bg-fg/90 active:bg-fg/80 ${
+                        isJoiningRoom && 'cursor-not-allowed'
+                      }`}
                     >
                       <FaArrowRight className='text-bg' />
                     </button>
@@ -93,10 +102,23 @@ export default function MultiplayerPage() {
               <h2>or</h2>
               <div>
                 <button
-                  onClick={() => createRoom(socket)}
-                  className='outline-solid active:bg-fg-80 mb-8 transform rounded-lg bg-fg px-3 py-2 font-primary text-bg shadow-b shadow-fg/50 outline-offset-[6px] transition-all duration-200 hover:bg-fg/90 focus:outline-dashed focus:outline-[3px] focus:outline-fg/50 active:translate-y-[4px] active:shadow-none '
+                  onClick={() => {
+                    setIsCreatingRoom(true);
+                    createRoom(socket);
+                  }}
+                  disabled={isCreatingRoom}
+                  className={`outline-solid active:bg-fg-80 mb-8 transform rounded-lg bg-fg px-3 py-2 font-primary text-bg shadow-b shadow-fg/50 outline-offset-[6px] transition-all duration-200 hover:bg-fg/90 focus:outline-dashed focus:outline-[3px] focus:outline-fg/50 active:translate-y-[4px] active:shadow-none ${
+                    isCreatingRoom && 'cursor-not-allowed'
+                  }`}
                 >
-                  Create Room
+                  {isCreatingRoom ? (
+                    <span className='flex items-center text-bg'>
+                      Creating room
+                      <CgSpinner className='ml-2 animate-spin' />
+                    </span>
+                  ) : (
+                    'Create Room'
+                  )}
                 </button>
               </div>
             </div>
