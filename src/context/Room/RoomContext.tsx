@@ -27,6 +27,9 @@ export const RoomProvider = ({ children }: { children: React.ReactNode }) => {
 
   const [room, dispatch] = React.useReducer(reducer, {
     text: '',
+    isPlaying: false,
+    isFinished: false,
+    winner: null,
     user: {
       roomId: null,
       username:
@@ -42,13 +45,30 @@ export const RoomProvider = ({ children }: { children: React.ReactNode }) => {
         wpm: 0,
         progress: 0,
       },
-      isPlaying: false,
       isReady: false,
     },
     players: [],
-
     socket,
   });
+
+  const [timeBeforeRestart, setTimeBeforeRestart] = React.useState(() => 5);
+
+  const resetTime = (time: number) => setTimeBeforeRestart(time);
+
+  React.useEffect(() => {
+    const restartInterval = setInterval(() => {
+      if (room.winner) {
+        setTimeBeforeRestart((previousTime) => {
+          if (previousTime === 0) {
+            clearInterval(restartInterval);
+          }
+          return previousTime - 1;
+        });
+      }
+    }, 1000);
+
+    return () => clearInterval(restartInterval);
+  }, [room.winner]);
 
   const { pathname } = useRouter();
 
@@ -76,7 +96,9 @@ export const RoomProvider = ({ children }: { children: React.ReactNode }) => {
   }, [pathname, room.user]);
 
   return (
-    <RoomContext.Provider value={{ room, dispatch }}>
+    <RoomContext.Provider
+      value={{ room, dispatch, timeBeforeRestart, resetTime }}
+    >
       {children}
     </RoomContext.Provider>
   );

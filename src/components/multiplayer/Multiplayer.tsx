@@ -16,24 +16,30 @@ export default function Multiplayer() {
 
   const {
     room: {
-      user: { isReady, isPlaying },
+      isPlaying,
+      winner,
+      user: { isReady, id, roomId },
     },
     dispatch,
+    timeBeforeRestart,
   } = useRoomContext();
 
   React.useEffect(() => {
+    isPlaying && inputRef.current.focus();
+    !isPlaying && inputRef.current.blur();
+
     const onKeyDown = (event: KeyboardEvent) => {
       if (isOpen) return;
       if (event.key === 'tab') {
         buttonRef.current.focus();
-      } else if (event.key !== 'Enter' && !event.ctrlKey) {
+      } else if (event.key !== 'Enter' && !event.ctrlKey && isPlaying) {
         inputRef.current.focus();
       }
     };
 
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
-  }, [isOpen]);
+  }, [isOpen, isPlaying]);
 
   const inputRef = React.useRef() as React.MutableRefObject<HTMLInputElement>;
   const buttonRef = React.useRef() as React.MutableRefObject<HTMLButtonElement>;
@@ -48,7 +54,11 @@ export default function Multiplayer() {
           ref={buttonRef}
           disabled={isPlaying}
           tabIndex={2}
-          onClick={() => dispatch({ type: 'SET_IS_READY', payload: !isReady })}
+          onClick={() =>
+            id &&
+            roomId &&
+            dispatch({ type: 'SET_IS_READY', payload: !isReady })
+          }
           className={clsx(
             'outline-solid mb-8 transform rounded-lg px-3 py-2 font-primary text-bg shadow-b shadow-fg/50 outline-offset-[6px] transition-all duration-200 focus:outline-dashed focus:outline-[3px] active:translate-y-[4px] active:shadow-none',
             [
@@ -59,7 +69,13 @@ export default function Multiplayer() {
             [isPlaying && 'cursor-not-allowed']
           )}
         >
-          {isReady ? 'Cancel' : 'Ready'}
+          {timeBeforeRestart && winner
+            ? `Restarting in ${timeBeforeRestart}`
+            : isPlaying
+            ? 'In Game'
+            : isReady
+            ? 'Cancel'
+            : 'Ready'}
         </button>
       </div>
     </>

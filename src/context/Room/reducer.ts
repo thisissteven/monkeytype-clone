@@ -32,10 +32,17 @@ const reducer = (state: RoomState, action: Action): RoomState => {
     case 'SET_IS_PLAYING':
       return {
         ...state,
-        user: {
-          ...state.user,
-          isPlaying: action.payload,
-        },
+        isPlaying: action.payload,
+      };
+    case 'SET_IS_FINISHED':
+      return {
+        ...state,
+        isFinished: action.payload,
+      };
+    case 'SET_WINNER':
+      return {
+        ...state,
+        winner: action.payload,
       };
     case 'SET_IS_READY':
       return {

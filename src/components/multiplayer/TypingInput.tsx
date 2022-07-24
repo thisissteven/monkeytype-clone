@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { BsFlagFill } from 'react-icons/bs';
+import { BsCursorFill, BsFlagFill } from 'react-icons/bs';
 import useTyping from 'react-typing-game-hook';
 
 import Tooltip from '@/components/Tooltip';
@@ -26,20 +26,32 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
     } = usePreferenceContext();
 
     const {
-      room: { text },
+      room: {
+        text,
+        isPlaying,
+        isFinished,
+        socket,
+        winner,
+        user: { roomId, id },
+      },
       dispatch,
     } = useRoomContext();
 
     React.useEffect(() => {
-      const progress = Math.floor(((currIndex + 1) / text.length) * 100);
+      let progress = Math.floor(((currIndex + 1) / text.length) * 100);
       const wpm =
         duration === 0
-          ? Math.round(((60 / currentTime) * correctChar) / 5)
-          : Math.round(((60 / duration) * correctChar) / 5);
+          ? Math.ceil(((60 / currentTime) * correctChar) / 5)
+          : Math.ceil(((60 / duration) * correctChar) / 5);
+
+      if (isFinished) {
+        progress = 100;
+        !winner && socket.emit('end game', roomId);
+      }
 
       dispatch({ type: 'SET_STATUS', payload: { wpm, progress } });
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currentTime]);
+    }, [currentTime, isFinished]);
 
     const {
       states: {
@@ -59,6 +71,9 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
 
     // set cursor
     const pos = useMemo(() => {
+      if (text.length !== 0 && currIndex + 1 === text.length) {
+        dispatch({ type: 'SET_IS_FINISHED', payload: true });
+      }
       if (currIndex !== -1 && letterElements.current) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const spanref: any = letterElements.current.children[currIndex];
@@ -79,16 +94,22 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
           top: 2,
         };
       }
-    }, [currIndex]);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currIndex, text.length]);
 
     useEffect(() => {
-      setValue('');
-      setMargin(0);
-      setCurrentTime(Date.now());
-      endTyping();
-      resetTyping();
+      if (id && roomId) {
+        socket.off('words generated').on('words generated', (text: string) => {
+          dispatch({ type: 'SET_TEXT', payload: text });
+          setValue('');
+          setMargin(0);
+          setCurrentTime(Date.now());
+          endTyping();
+          resetTyping();
+        });
+      }
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [text]);
+    }, [id, roomId]);
 
     //set WPM
     useEffect(() => {
@@ -158,10 +179,11 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
           <div
             className={clsx('relative h-[140px] w-full text-2xl outline-none')}
             onClick={() => {
+              if (!isPlaying) return;
               if (ref != null && typeof ref !== 'function') {
                 ref?.current?.focus();
+                setIsFocused(true);
               }
-              setIsFocused(true);
             }}
           >
             <input
@@ -208,14 +230,29 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
                 { 'opacity-0': !isFocused }
               )}
             ></div>
-            <span
-              className={clsx(
-                'absolute z-20 flex h-full w-full cursor-default items-center justify-center text-base opacity-0 transition-all duration-200',
-                { 'text-fg opacity-100 ': !isFocused }
-              )}
-            >
-              Game will start when everyone is ready
-            </span>
+
+            {isPlaying ? (
+              <span
+                className={clsx(
+                  'absolute z-20 flex h-full w-full cursor-default items-center justify-center text-base opacity-0 transition-all duration-200',
+                  { 'text-fg opacity-100 ': !isFocused }
+                )}
+              >
+                Click
+                <BsCursorFill className='mx-2 scale-x-[-1]' />
+                or press any key to focus
+              </span>
+            ) : (
+              <span
+                className={clsx(
+                  'absolute z-20 flex h-full w-full cursor-default items-center justify-center text-base opacity-0 transition-all duration-200',
+                  { 'text-fg opacity-100 ': !isFocused }
+                )}
+              >
+                {' '}
+                Game will start when everyone is ready
+              </span>
+            )}
             <div
               className={clsx(
                 'absolute top-0 left-0 mb-4 h-full w-full overflow-hidden text-justify leading-relaxed tracking-wide transition-all duration-200',
@@ -288,7 +325,7 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
             {phase === 2 && startTime && endTime ? (
               <div className='grid grid-rows-3 items-center gap-4 rounded-lg px-4 py-1 text-xl font-bold sm:flex'>
                 <span>
-                  WPM: {Math.round(((60 / duration) * correctChar) / 5)}
+                  WPM: {Math.ceil(((60 / duration) * correctChar) / 5)}
                 </span>
                 <span>
                   Accuracy:{' '}
@@ -301,10 +338,7 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
                 <span>Duration: {duration}s</span>
               </div>
             ) : null}
-            <div className='flex gap-4'>
-              {/* <span> Correct Characters: {correctChar}</span>
-            <span> Error Characters: {errorChar}</span> */}
-            </div>
+            <div className='flex gap-4'></div>
           </div>
         </div>
       </>

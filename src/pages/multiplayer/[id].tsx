@@ -10,22 +10,11 @@ import Seo from '@/components/Seo';
 import { useRoomContext } from '@/context/Room/RoomContext';
 import { Player } from '@/context/Room/types';
 
-/**
- * SVGR Support
- * Caveat: No React Props Type.
- *
- * You can override the next-env if the type is important to you
- * @see https://stackoverflow.com/questions/68103844/how-to-override-next-js-svg-module-declaration
- */
-
-// !STARTERCONF -> Select !STARTERCONF and CMD + SHIFT + F
-// Before you begin editing, follow all comments with `STARTERCONF`,
-// to customize the default configuration.
-
 export default function MultiplayerPage() {
   const {
     room: { socket, user },
     dispatch,
+    resetTime,
   } = useRoomContext();
 
   const router = useRouter();
@@ -39,10 +28,40 @@ export default function MultiplayerPage() {
         dispatch({ type: 'SET_PLAYERS', payload: players });
       });
 
+      socket
+        .off('start game')
+        .on('start game', () =>
+          dispatch({ type: 'SET_IS_PLAYING', payload: true })
+        );
+
+      socket
+        .off('winner')
+        .on('winner', (playerId: string) =>
+          dispatch({ type: 'SET_WINNER', payload: playerId })
+        );
+
+      socket.off('end game').on('end game', () => {
+        dispatch({ type: 'SET_STATUS', payload: { progress: 0, wpm: 0 } });
+        dispatch({ type: 'SET_IS_READY', payload: false });
+        dispatch({ type: 'SET_IS_PLAYING', payload: false });
+        dispatch({ type: 'SET_IS_FINISHED', payload: false });
+        dispatch({ type: 'SET_WINNER', payload: null });
+        resetTime(5);
+      });
+
       socket.off('room invalid').on('room invalid', () => {
-        toast.error("Room doesn't exist", {
+        toast.error("Room doesn't exist.", {
           position: toast.POSITION.TOP_CENTER,
-          toastId: "Room doesn't exist",
+          toastId: "Room doesn't exist.",
+          autoClose: 3000,
+        });
+        router.push('/multiplayer');
+      });
+
+      socket.off('room in game').on('room in game', () => {
+        toast.error('Room is currently in game.', {
+          position: toast.POSITION.TOP_CENTER,
+          toastId: 'Room is currently in game.',
           autoClose: 3000,
         });
         router.push('/multiplayer');
