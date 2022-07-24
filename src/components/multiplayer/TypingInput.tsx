@@ -170,7 +170,10 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
             </span>{' '}
             /{' '}
             {!text.length ? (
-              <div className='inline-block h-10 w-16 animate-pulse bg-fg/50'></div>
+              <div className='flex flex-col gap-1'>
+                <span className='inline-block h-3 w-12 animate-pulse rounded-lg bg-fg/50'></span>
+                <span className='inline-block h-3 w-16 animate-pulse rounded-lg bg-fg/50'></span>
+              </div>
             ) : (
               text.length
             )}
