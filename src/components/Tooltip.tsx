@@ -15,7 +15,7 @@ export default function Tooltip({
   return (
     <div
       className={clsxm(
-        'absolute top-10 right-1/2 flex translate-x-1/2 -translate-y-2 transform whitespace-nowrap rounded-md bg-hl px-2 py-1 text-center text-sm text-bg opacity-0 transition-all duration-200',
+        'absolute top-10 right-1/2 z-10 flex translate-x-1/2 -translate-y-2 transform whitespace-nowrap rounded-md bg-hl px-2 py-1 text-center text-sm text-bg opacity-0 transition-all duration-200',
 
         className
       )}

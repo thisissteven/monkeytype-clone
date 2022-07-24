@@ -17,6 +17,7 @@ import Header from '@/components/layout/Header';
 import Layout from '@/components/layout/Layout';
 
 import PreferenceProvider from '@/context/Preference/PreferenceContext';
+import { RoomProvider } from '@/context/Room/RoomContext';
 import { AuthProvider } from '@/context/User/UserContext';
 
 /**
@@ -43,9 +44,11 @@ function MyApp({ Component, pageProps, router }: AppProps) {
               )}
             />
             <Header />
-            <AnimatePresence exitBeforeEnter>
-              <Component {...pageProps} key={router.route} />
-            </AnimatePresence>
+            <RoomProvider>
+              <AnimatePresence exitBeforeEnter>
+                <Component {...pageProps} key={router.route} />
+              </AnimatePresence>
+            </RoomProvider>
           </Layout>
         </AuthProvider>
       </ApolloProvider>

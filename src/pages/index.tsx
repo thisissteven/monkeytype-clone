@@ -1,9 +1,9 @@
 import * as React from 'react';
 
+import Box from '@/components/game/Box';
 import Kbd from '@/components/Kbd';
 import AnimateFade from '@/components/layout/AnimateFade';
 import Seo from '@/components/Seo';
-import Box from '@/components/words/Box';
 
 /**
  * SVGR Support
@@ -24,17 +24,17 @@ export default function HomePage() {
 
       <main>
         <section>
-          <div className='layout flex flex-col items-center pt-28 text-center'>
+          <div className='layout flex flex-col items-center pt-36 text-center'>
             <Box />
 
             <div className='mt-8 flex flex-col items-center justify-center gap-2 font-primary'>
-              <div className='flex items-center space-x-2 text-sm font-light'>
+              <div className='flex items-center space-x-2 text-sm'>
                 <Kbd>tab</Kbd>
                 <span className='text-hl'> + </span>
                 <Kbd>enter</Kbd>
                 <span className='text-hl'> - restart test </span>
               </div>
-              <div className='flex items-center space-x-2 text-sm font-light'>
+              <div className='flex items-center space-x-2 text-sm'>
                 <Kbd>ctrl/cmd</Kbd>
                 <span className='text-hl'> + </span>
                 <Kbd>k</Kbd>

@@ -86,19 +86,23 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
     // handle timer
     useEffect(() => {
       const timerInterval = setInterval(() => {
-        if (phase === 1) {
+        if (startTime) {
           setTimeLeft((timeLeft) => {
             if (timeLeft === 1) {
               clearInterval(timerInterval);
               endTyping();
             }
-            return timeLeft - 1;
+            return parseInt(time) - Math.floor((Date.now() - startTime) / 1000);
           });
         }
       }, 1000);
+      if (phase === 2) {
+        clearInterval(timerInterval);
+      }
 
       return () => clearInterval(timerInterval);
-    }, [endTyping, phase]);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [startTime, phase]);
 
     //set WPM
     useEffect(() => {

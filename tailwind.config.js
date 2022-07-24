@@ -6,6 +6,9 @@ module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     extend: {
+      boxShadow: {
+        b: '0 4px 0',
+      },
       screens: {
         xs: '400px',
         ns: '850px',
@@ -39,18 +42,9 @@ module.exports = {
             filter: 'none',
           },
         },
-        shimmer: {
-          '0%': {
-            backgroundPosition: '-700px 0',
-          },
-          '100%': {
-            backgroundPosition: '700px 0',
-          },
-        },
       },
       animation: {
         flicker: 'flicker 3s linear infinite',
-        shimmer: 'shimmer 1.3s linear infinite',
         blink: 'blink 1.5s infinite 1s',
       },
     },
