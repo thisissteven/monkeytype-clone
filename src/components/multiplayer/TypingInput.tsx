@@ -277,7 +277,7 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
                 {text.split('').map((letter, index) => {
                   const state = charsState[index];
                   const color =
-                    state === 0
+                    state === 0 || index > currIndex
                       ? 'text-font'
                       : state === 1
                       ? 'text-fg'
