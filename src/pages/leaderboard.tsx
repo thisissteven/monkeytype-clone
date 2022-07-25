@@ -91,13 +91,17 @@ export default function LeaderboardPage() {
     pollInterval: 500,
   });
 
-  const { data: dailyData, loading: dailyLoading } = useQuery(
-    GetLeaderboardsDaily,
-    {
-      variables: { page: 1, pageSize: 100, today },
-      pollInterval: 500,
-    }
-  );
+  const {
+    data: dailyData,
+    loading: dailyLoading,
+    error,
+  } = useQuery(GetLeaderboardsDaily, {
+    variables: { page: 1, pageSize: 100, today },
+    pollInterval: 500,
+  });
+
+  // eslint-disable-next-line no-console
+  console.log(dailyData, loading, error);
 
   const {
     state: { user, authenticated },
