@@ -46,13 +46,7 @@ const GetRecents = gql`
           type
           time
           createdAt
-          user {
-            data {
-              attributes {
-                username
-              }
-            }
-          }
+          name
         }
       }
     }
@@ -73,13 +67,7 @@ const GetPersonalBest = gql`
           type
           time
           createdAt
-          user {
-            data {
-              attributes {
-                username
-              }
-            }
-          }
+          name
         }
       }
     }

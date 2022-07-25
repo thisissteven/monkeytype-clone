@@ -2,7 +2,7 @@ import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 
 const httpLink = createHttpLink({
-  uri: process.env.NEXT_PUBLIC_API_URL,
+  uri: process.env.NEXT_PUBLIC_GRAPHQL_URL,
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -15,9 +15,7 @@ const authLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
-      authorization: token
-        ? `Bearer ${token}`
-        : `Bearer ${process.env.NEXT_PUBLIC_RANDOM_USER_TOKEN}`,
+      authorization: token ? `Bearer ${token}` : '',
     },
   };
 });

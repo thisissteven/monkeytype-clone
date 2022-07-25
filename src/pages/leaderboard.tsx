@@ -24,13 +24,7 @@ type Leaderboard = {
     type: 'words' | 'sentences' | 'numbers';
     time: 15 | 30 | 45 | 60 | 120;
     createdAt: string;
-    user: {
-      data: {
-        attributes: {
-          username: string;
-        };
-      };
-    };
+    name: string;
   };
 };
 
@@ -47,13 +41,7 @@ const GetLeaderboards = gql`
           type
           time
           createdAt
-          user {
-            data {
-              attributes {
-                username
-              }
-            }
-          }
+          name
         }
       }
       meta {
@@ -73,17 +61,12 @@ const GetLeaderboardsDaily = gql`
       filters: { createdAt: { gte: $today } }
     ) {
       data {
+        id
         attributes {
           wpm
           type
           time
-          user {
-            data {
-              attributes {
-                username
-              }
-            }
-          }
+          name
           createdAt
         }
       }
@@ -189,17 +172,7 @@ export default function LeaderboardPage() {
                       (leaderboard: Leaderboard, index: number) => {
                         const {
                           id,
-                          attributes: {
-                            wpm,
-                            time,
-                            type,
-                            createdAt,
-                            user: {
-                              data: {
-                                attributes: { username },
-                              },
-                            },
-                          },
+                          attributes: { wpm, time, type, createdAt, name },
                         } = leaderboard;
                         const date = timeAgo.format(new Date(createdAt));
                         return (
@@ -210,7 +183,7 @@ export default function LeaderboardPage() {
                             time={time}
                             wpm={wpm}
                             type={type}
-                            username={username}
+                            username={name}
                           />
                         );
                       }
@@ -220,17 +193,7 @@ export default function LeaderboardPage() {
                       (leaderboard: Leaderboard, index: number) => {
                         const {
                           id,
-                          attributes: {
-                            wpm,
-                            time,
-                            type,
-                            createdAt,
-                            user: {
-                              data: {
-                                attributes: { username },
-                              },
-                            },
-                          },
+                          attributes: { wpm, time, type, createdAt, name },
                         } = leaderboard;
                         const date = timeAgo.format(new Date(createdAt));
                         return (
@@ -241,7 +204,7 @@ export default function LeaderboardPage() {
                             time={time}
                             wpm={wpm}
                             type={type}
-                            username={username}
+                            username={name}
                           />
                         );
                       }

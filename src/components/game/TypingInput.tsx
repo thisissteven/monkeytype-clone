@@ -114,6 +114,7 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
           createLeaderboard({
             variables: {
               data: {
+                name: user.username,
                 wpm: Math.round(((60 / dur) * correctChar) / 5),
                 user: user.id,
                 time: parseInt(time),
@@ -122,15 +123,19 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
             },
           });
         } else {
-          createLeaderboard({
-            variables: {
+          fetch(`${process.env.NEXT_PUBLIC_API_URL}/leaderboards`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
               data: {
+                name: 'guest',
                 wpm: Math.round(((60 / dur) * correctChar) / 5),
-                user: process.env.NEXT_PUBLIC_RANDOM_USER_ID,
                 time: parseInt(time),
                 type: type || 'words',
               },
-            },
+            }),
           });
         }
       } else {
