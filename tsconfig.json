@@ -24,8 +24,9 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
+    "src/**/*",
     "src/pages/api/socket.js"
   ],
   "exclude": ["node_modules"],
-  "moduleResolution": ["node_modules", ".next", "node"]
+  "moduleResolution": ["node_modules", ".next", "node", "src/**/*.spec.ts"]
 }
