@@ -5,11 +5,9 @@ import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
 import Link from 'next/link';
 import * as React from 'react';
-import { FaCrown, FaUserCircle } from 'react-icons/fa';
-
-import clsxm from '@/lib/clsxm';
 
 import AnimateFade from '@/components/Layout/AnimateFade';
+import TableRow from '@/components/Leaderboard/TableRow';
 import TableSkeleton from '@/components/Leaderboard/TableSkeleton';
 import ArrowLink from '@/components/Link/ArrowLink';
 import Seo from '@/components/Seo';
@@ -67,11 +65,56 @@ const GetLeaderboards = gql`
   }
 `;
 
+const GetLeaderboardsDaily = gql`
+  query GetLeaderboardsDaily($page: Int!, $pageSize: Int!, $today: DateTime) {
+    leaderboards(
+      sort: "wpm:desc"
+      pagination: { page: $page, pageSize: $pageSize }
+      filters: { createdAt: { gte: $today } }
+    ) {
+      data {
+        attributes {
+          wpm
+          type
+          time
+          user {
+            data {
+              attributes {
+                username
+              }
+            }
+          }
+          createdAt
+        }
+      }
+      meta {
+        pagination {
+          page
+          pageCount
+        }
+      }
+    }
+  }
+`;
+
+const today = new Date();
+today.setHours(0);
+today.setMinutes(0);
+today.setSeconds(0);
+
 export default function LeaderboardPage() {
   const { data, loading } = useQuery(GetLeaderboards, {
     variables: { page: 1, pageSize: 100 },
     pollInterval: 500,
   });
+
+  const { data: dailyData, loading: dailyLoading } = useQuery(
+    GetLeaderboardsDaily,
+    {
+      variables: { page: 1, pageSize: 100, today },
+      pollInterval: 500,
+    }
+  );
 
   const {
     state: { user, authenticated },
@@ -79,6 +122,8 @@ export default function LeaderboardPage() {
 
   // Create formatter (English).
   const timeAgo = new TimeAgo('en-US');
+
+  const [selected, setSelected] = React.useState('daily');
 
   return (
     <AnimateFade>
@@ -102,6 +147,26 @@ export default function LeaderboardPage() {
               )}
             </div>
             <h1 className='my-4 text-hl'>top 100 leaderboard</h1>
+            <div className='mb-4 flex space-x-2 font-primary'>
+              <button
+                onClick={() => setSelected('daily')}
+                className={clsx(
+                  'rounded-lg px-2 py-1 transition-colors duration-200',
+                  [selected === 'daily' ? 'bg-hl text-bg' : 'text-hl']
+                )}
+              >
+                daily
+              </button>
+              <button
+                onClick={() => setSelected('all time')}
+                className={clsx(
+                  'rounded-lg px-2 py-1 transition-colors duration-200',
+                  [selected === 'all time' ? 'bg-hl text-bg' : 'text-hl']
+                )}
+              >
+                all time
+              </button>
+            </div>
 
             <div className='relative overflow-auto rounded-lg bg-hl/50 p-2'>
               <table className='w-full overflow-hidden rounded-lg font-primary'>
@@ -116,71 +181,71 @@ export default function LeaderboardPage() {
                   </tr>
                 </thead>
 
-                {loading && <TableSkeleton />}
+                {loading && selected === 'all time' && <TableSkeleton />}
+                {dailyLoading && selected === 'daily' && <TableSkeleton />}
                 <tbody>
-                  {data?.leaderboards?.data?.map(
-                    (leaderboard: Leaderboard, index: number) => {
-                      const {
-                        attributes: {
-                          wpm,
-                          time,
-                          type,
-                          createdAt,
-                          user: {
-                            data: {
-                              attributes: { username },
+                  {selected === 'all time' &&
+                    data?.leaderboards?.data?.map(
+                      (leaderboard: Leaderboard, index: number) => {
+                        const {
+                          id,
+                          attributes: {
+                            wpm,
+                            time,
+                            type,
+                            createdAt,
+                            user: {
+                              data: {
+                                attributes: { username },
+                              },
                             },
                           },
-                        },
-                      } = leaderboard;
-                      return (
-                        <tr
-                          key={index}
-                          className={clsxm(
-                            'whitespace-nowrap border-t-4 border-hl',
-                            [index % 2 === 0 ? 'bg-fg' : 'bg-fg/80']
-                          )}
-                        >
-                          <td className='py-3 pl-4'>
-                            <span className='text-bg'>
-                              {/* first rank */}
-                              {index === 0 ? (
-                                <FaCrown className='my-1' />
-                              ) : (
-                                index + 1
-                              )}
-                            </span>
-                          </td>
-
-                          <td className='px-2 md:px-0'>
-                            <div className='flex items-center gap-2 text-bg'>
-                              <FaUserCircle /> {username}
-                            </div>
-                          </td>
-
-                          <td className='px-2 text-bg md:px-0'>
-                            <span
-                              className={clsxm(
-                                'rounded-md bg-bg px-2 py-1 text-xs text-fg'
-                              )}
-                            >
-                              {wpm} wpm
-                            </span>
-                          </td>
-
-                          <td className='hidden px-2 text-sm text-bg sm:table-cell md:px-0'>
-                            {type}
-                          </td>
-                          <td className='hidden px-2 text-sm text-bg sm:table-cell md:px-0'>
-                            {time}s
-                          </td>
-                          <td className='px-2 text-sm text-bg md:px-0'>
-                            {timeAgo.format(new Date(createdAt))}
-                          </td>
-                        </tr>
-                      );
-                    }
-                  )}
+                        } = leaderboard;
+                        const date = timeAgo.format(new Date(createdAt));
+                        return (
+                          <TableRow
+                            key={id}
+                            date={date}
+                            index={index}
+                            time={time}
+                            wpm={wpm}
+                            type={type}
+                            username={username}
+                          />
+                        );
+                      }
+                    )}
+                  {selected === 'daily' &&
+                    dailyData?.leaderboards?.data?.map(
+                      (leaderboard: Leaderboard, index: number) => {
+                        const {
+                          id,
+                          attributes: {
+                            wpm,
+                            time,
+                            type,
+                            createdAt,
+                            user: {
+                              data: {
+                                attributes: { username },
+                              },
+                            },
+                          },
+                        } = leaderboard;
+                        const date = timeAgo.format(new Date(createdAt));
+                        return (
+                          <TableRow
+                            key={id}
+                            date={date}
+                            index={index}
+                            time={time}
+                            wpm={wpm}
+                            type={type}
+                            username={username}
+                          />
+                        );
+                      }
+                    )}
                 </tbody>
               </table>
             </div>
