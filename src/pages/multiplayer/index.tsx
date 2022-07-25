@@ -47,7 +47,6 @@ export default function MultiplayerPage() {
       createRoom(socket);
     });
 
-    // on create room success, redirect to that room
     socket
       .off('create room success')
       .on('create room success', (roomId: string) => {
