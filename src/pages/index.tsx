@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import Box from '@/components/game/Box';
 import Kbd from '@/components/Kbd';
-import AnimateFade from '@/components/Layout/AnimateFade';
+import AnimateFade from '@/components/layout/AnimateFade';
 import Seo from '@/components/Seo';
 
 /**

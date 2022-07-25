@@ -3,7 +3,7 @@ import Image from 'next/image';
 import NextNProgress from 'nextjs-progressbar';
 import * as React from 'react';
 
-import Footer from '@/components/Layout/Footer';
+import Footer from '@/components/layout/Footer';
 import Seo from '@/components/Seo';
 
 import { usePreferenceContext } from '@/context/Preference/PreferenceContext';

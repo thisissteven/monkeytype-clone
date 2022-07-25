@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import * as React from 'react';
 import { FaCode } from 'react-icons/fa';
 
-import UnstyledLink from '@/components/Link/UnstyledLink';
+import UnstyledLink from '@/components/link/UnstyledLink';
 
 export default function Footer() {
   return (

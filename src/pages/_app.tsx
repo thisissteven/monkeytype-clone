@@ -13,8 +13,8 @@ import client from '@/lib/apolloClient';
 import commands from '@/data/commands';
 
 import CommandPalette from '@/components/CommandPalette/CommandPalette';
-import Header from '@/components/Layout/Header';
-import Layout from '@/components/Layout/Layout';
+import Header from '@/components/layout/Header';
+import Layout from '@/components/layout/Layout';
 
 import PreferenceProvider from '@/context/Preference/PreferenceContext';
 import { RoomProvider } from '@/context/Room/RoomContext';
