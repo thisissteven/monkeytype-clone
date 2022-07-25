@@ -10,6 +10,7 @@ import { FaCrown, FaUserCircle } from 'react-icons/fa';
 import clsxm from '@/lib/clsxm';
 
 import AnimateFade from '@/components/Layout/AnimateFade';
+import TableSkeleton from '@/components/Leaderboard/TableSkeleton';
 import ArrowLink from '@/components/Link/ArrowLink';
 import Seo from '@/components/Seo';
 
@@ -67,7 +68,7 @@ const GetLeaderboards = gql`
 `;
 
 export default function LeaderboardPage() {
-  const { data } = useQuery(GetLeaderboards, {
+  const { data, loading } = useQuery(GetLeaderboards, {
     variables: { page: 1, pageSize: 100 },
     pollInterval: 500,
   });
@@ -93,9 +94,9 @@ export default function LeaderboardPage() {
               {!user && !authenticated && (
                 <Link href='/account'>
                   <a>
-                    <span className='hover:text-bg-90 mb-2 rounded-sm bg-fg px-2 py-1 text-xs text-bg transition-colors duration-200 hover:bg-fg/90'>
+                    <div className='hover:text-bg-90 rounded-sm bg-fg px-2 py-1 font-primary text-xs leading-5 text-bg transition-colors duration-200 hover:bg-fg/90'>
                       tip: sign in to see your name in leaderboard
-                    </span>
+                    </div>
                   </a>
                 </Link>
               )}
@@ -109,110 +110,78 @@ export default function LeaderboardPage() {
                     <td className='py-3 pl-4 pr-4 md:pr-0'>#</td>
                     <td className='px-2 md:px-0'>user</td>
                     <td className='px-2 md:px-0'>wpm</td>
-                    <td className='px-2 md:px-0'>type</td>
-                    <td className='px-2 md:px-0'>time</td>
+                    <td className='hidden px-2 sm:table-cell md:px-0'>type</td>
+                    <td className='hidden px-2 sm:table-cell md:px-0'>time</td>
                     <td className='px-2 md:px-0'>date</td>
                   </tr>
                 </thead>
 
-                {!data?.leaderboards?.data && (
-                  <>
-                    <tbody>
-                      <tr className='h-14 w-full animate-pulse border-t-4 border-hl'>
-                        <td className='bg-fg'></td>
-                        <td className='bg-fg'></td>
-                        <td className='bg-fg'></td>
-                        <td className='bg-fg'></td>
-                        <td className='bg-fg'></td>
-                        <td className='bg-fg'></td>
-                      </tr>
-                      <tr className='h-14 w-full animate-pulse border-t-4 border-hl'>
-                        <td className='bg-fg/80'></td>
-                        <td className='bg-fg/80'></td>
-                        <td className='bg-fg/80'></td>
-                        <td className='bg-fg/80'></td>
-                        <td className='bg-fg/80'></td>
-                        <td className='bg-fg/80'></td>
-                      </tr>
-                      <tr className='h-14 w-full animate-pulse border-t-4 border-hl'>
-                        <td className='bg-fg'></td>
-                        <td className='bg-fg'></td>
-                        <td className='bg-fg'></td>
-                        <td className='bg-fg'></td>
-                        <td className='bg-fg'></td>
-                        <td className='bg-fg'></td>
-                      </tr>
-                      <tr className='h-14 w-full animate-pulse border-t-4 border-hl'>
-                        <td className='bg-fg/80'></td>
-                        <td className='bg-fg/80'></td>
-                        <td className='bg-fg/80'></td>
-                        <td className='bg-fg/80'></td>
-                        <td className='bg-fg/80'></td>
-                        <td className='bg-fg/80'></td>
-                      </tr>
-                    </tbody>
-                  </>
-                )}
-                {data?.leaderboards?.data?.map(
-                  (leaderboard: Leaderboard, index: number) => {
-                    const {
-                      attributes: {
-                        wpm,
-                        time,
-                        type,
-                        createdAt,
-                        user: {
-                          data: {
-                            attributes: { username },
+                {loading && <TableSkeleton />}
+                <tbody>
+                  {data?.leaderboards?.data?.map(
+                    (leaderboard: Leaderboard, index: number) => {
+                      const {
+                        attributes: {
+                          wpm,
+                          time,
+                          type,
+                          createdAt,
+                          user: {
+                            data: {
+                              attributes: { username },
+                            },
                           },
                         },
-                      },
-                    } = leaderboard;
-                    return (
-                      <tr
-                        key={index}
-                        className={clsxm(
-                          'whitespace-nowrap border-t-4 border-hl',
-                          [index % 2 === 0 ? 'bg-fg' : 'bg-fg/80']
-                        )}
-                      >
-                        <td className='py-3 pl-4'>
-                          <span className='text-bg'>
-                            {/* first rank */}
-                            {index === 0 ? (
-                              <FaCrown className='my-1' />
-                            ) : (
-                              index + 1
-                            )}
-                          </span>
-                        </td>
+                      } = leaderboard;
+                      return (
+                        <tr
+                          key={index}
+                          className={clsxm(
+                            'whitespace-nowrap border-t-4 border-hl',
+                            [index % 2 === 0 ? 'bg-fg' : 'bg-fg/80']
+                          )}
+                        >
+                          <td className='py-3 pl-4'>
+                            <span className='text-bg'>
+                              {/* first rank */}
+                              {index === 0 ? (
+                                <FaCrown className='my-1' />
+                              ) : (
+                                index + 1
+                              )}
+                            </span>
+                          </td>
 
-                        <td className='px-2 md:px-0'>
-                          <div className='flex items-center gap-2 text-bg'>
-                            <FaUserCircle /> {username}
-                          </div>
-                        </td>
+                          <td className='px-2 md:px-0'>
+                            <div className='flex items-center gap-2 text-bg'>
+                              <FaUserCircle /> {username}
+                            </div>
+                          </td>
 
-                        <td className='px-2 text-bg md:px-0'>
-                          <span
-                            className={clsxm(
-                              'rounded-md bg-bg px-2 py-1 text-xs text-fg'
-                            )}
-                          >
-                            {wpm} wpm
-                          </span>
-                        </td>
-                        <td className='px-2 text-sm text-bg md:px-0'>{type}</td>
-                        <td className='px-2 text-sm text-bg md:px-0'>
-                          {time}s
-                        </td>
-                        <td className='px-2 text-sm text-bg md:px-0'>
-                          {timeAgo.format(new Date(createdAt))}
-                        </td>
-                      </tr>
-                    );
-                  }
-                )}
+                          <td className='px-2 text-bg md:px-0'>
+                            <span
+                              className={clsxm(
+                                'rounded-md bg-bg px-2 py-1 text-xs text-fg'
+                              )}
+                            >
+                              {wpm} wpm
+                            </span>
+                          </td>
+
+                          <td className='hidden px-2 text-sm text-bg sm:table-cell md:px-0'>
+                            {type}
+                          </td>
+                          <td className='hidden px-2 text-sm text-bg sm:table-cell md:px-0'>
+                            {time}s
+                          </td>
+                          <td className='px-2 text-sm text-bg md:px-0'>
+                            {timeAgo.format(new Date(createdAt))}
+                          </td>
+                        </tr>
+                      );
+                    }
+                  )}
+                </tbody>
               </table>
             </div>
           </div>
