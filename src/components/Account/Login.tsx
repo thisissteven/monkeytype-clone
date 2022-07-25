@@ -67,7 +67,7 @@ export default function Login() {
             autoComplete='off'
           />
           <div className='flex items-center gap-2'>
-            <div className='relative flex h-4 w-4 items-center justify-center overflow-hidden rounded-sm bg-fg'>
+            <div className='relative flex h-4 w-4 items-center justify-center overflow-hidden rounded-sm bg-hl'>
               <input
                 type='checkbox'
                 id='remember'
@@ -77,18 +77,18 @@ export default function Login() {
               />
               <FaCheck
                 className={`h-3 w-3 transition-colors duration-200 ${
-                  isChecked ? 'text-bg' : 'text-fg'
+                  isChecked ? 'text-bg' : 'text-hl'
                 }`}
               />
             </div>
-            <label htmlFor='remember' className='text-fg'>
+            <label htmlFor='remember' className='text-hl'>
               remember me
             </label>
           </div>
           <button
             disabled={loading}
             type='submit'
-            className='flex h-10 items-center justify-center rounded-md bg-hl px-4 py-2 text-bg transition-opacity duration-200 hover:opacity-90 active:opacity-70'
+            className='flex h-10 items-center justify-center rounded-md bg-fg px-4 py-2 text-bg transition-opacity duration-200 hover:opacity-90 active:opacity-70'
           >
             {loading ? (
               <CgSpinner className='animate-spin' />

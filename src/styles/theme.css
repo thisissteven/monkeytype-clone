@@ -1,8 +1,8 @@
-.space {
-  --bg-color: 0 0 0;
-  --font-color: 89 82 96;
-  --hl-color: 178 177 185;
-  --fg-color: 240 165 0;
+.plain {
+  --bg-color: 238 238 238; /* background color */
+  --font-color: 127 132 135; /* font color */
+  --hl-color: 65 63 66; /* caret, wrong characters, timer, selected and onhover colors */
+  --fg-color: 75 75 75; /* correctly typed characters */
 }
 
 .winter {
@@ -20,59 +20,59 @@
 }
 
 .vintage {
-  --bg-color: 84 186 185;
-  --font-color: 24 151 143;
-  --hl-color: 233 218 193;
-  --fg-color: 247 236 222;
+  --bg-color: 55 125 113;
+  --font-color: 148 180 159;
+  --hl-color: 247 236 222;
+  --fg-color: 233 218 193;
 }
 
 .vampire {
-  --bg-color: 23 23 23;
-  --font-color: 68 68 68;
-  --hl-color: 218 0 55;
-  --fg-color: 237 237 237;
+  --bg-color: 28 28 28;
+  --font-color: 76 76 76;
+  --hl-color: 200 200 200;
+  --fg-color: 179 48 48;
 }
 
-.taro {
-  --bg-color: 137 138 166;
-  --font-color: 201 187 207;
-  --hl-color: 214 239 237;
-  --fg-color: 183 211 223;
+.bubblegum {
+  --bg-color: 77 76 125;
+  --font-color: 200 182 226;
+  --hl-color: 233 213 218;
+  --fg-color: 193 255 207;
 }
 
 .green-tea {
   --bg-color: 85 124 85;
-  --font-color: 227 243 172;
+  --font-color: 166 207 152;
   --hl-color: 242 255 233;
-  --fg-color: 166 207 152;
+  --fg-color: 227 243 172;
 }
 
 .wood {
-  --bg-color: 44 54 57;
-  --font-color: 160 147 125;
-  --hl-color: 162 123 92;
-  --fg-color: 208 201 192;
+  --bg-color: 74 64 58;
+  --font-color: 104 94 88;
+  --hl-color: 208 201 192;
+  --fg-color: 160 147 125;
 }
 
 .beach {
   --bg-color: 0 120 170;
-  --font-color: 242 223 58;
+  --font-color: 58 180 242;
   --hl-color: 246 246 246;
-  --fg-color: 58 180 242;
+  --fg-color: 242 223 58;
 }
 
 .halloween {
-  --bg-color: 6 17 60;
-  --font-color: 255 140 50;
-  --hl-color: 221 221 221;
-  --fg-color: 238 238 238;
+  --bg-color: 27 26 23;
+  --font-color: 74 69 76;
+  --hl-color: 201 201 201;
+  --fg-color: 245 136 64;
 }
 
-.spring {
-  --bg-color: 101 193 140;
-  --font-color: 249 255 164;
-  --hl-color: 221 255 188;
-  --fg-color: 255 220 174;
+.botanical {
+  --bg-color: 75 134 115;
+  --font-color: 130 162 132;
+  --hl-color: 201 235 168;
+  --fg-color: 242 240 233;
 }
 
 .eye-pain {

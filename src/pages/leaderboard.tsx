@@ -139,7 +139,7 @@ export default function LeaderboardPage() {
                 onClick={() => setSelected('daily')}
                 className={clsx(
                   'rounded-lg px-2 py-1 transition-colors duration-200',
-                  [selected === 'daily' ? 'bg-hl text-bg' : 'text-hl']
+                  [selected === 'daily' ? 'bg-fg text-bg' : 'text-hl']
                 )}
               >
                 daily
@@ -148,7 +148,7 @@ export default function LeaderboardPage() {
                 onClick={() => setSelected('all time')}
                 className={clsx(
                   'rounded-lg px-2 py-1 transition-colors duration-200',
-                  [selected === 'all time' ? 'bg-hl text-bg' : 'text-hl']
+                  [selected === 'all time' ? 'bg-fg text-bg' : 'text-hl']
                 )}
               >
                 all time
@@ -158,7 +158,7 @@ export default function LeaderboardPage() {
             <div className='relative overflow-auto rounded-lg bg-hl/50 p-2'>
               <table className='w-full overflow-hidden rounded-lg font-primary'>
                 <thead>
-                  <tr className='bg-hl text-bg'>
+                  <tr className='bg-hl/80 text-bg'>
                     <td className='py-3 pl-4 pr-4 md:pr-0'>#</td>
                     <td className='px-2 md:px-0'>user</td>
                     <td className='px-2 md:px-0'>wpm</td>

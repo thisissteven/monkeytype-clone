@@ -44,7 +44,7 @@ export default function Input({
               : errors[name]
               ? 'border-hl focus:border-hl focus:outline-hl/50 focus:ring-0'
               : 'focus:border-fg focus:outline-fg/50 focus:ring-0',
-            'w-full rounded-lg bg-fg text-bg placeholder:text-bg/70',
+            'w-full rounded-lg bg-hl text-bg placeholder:text-bg/70',
             className
           )}
           placeholder={placeholder}

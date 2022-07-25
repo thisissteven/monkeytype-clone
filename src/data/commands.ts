@@ -7,13 +7,13 @@ const commands = [
         icon: '',
         commandName: 'default',
         contents: [],
-        description: '- black, gray, and white',
+        description: '- black, light-gray, and blue',
       },
       {
         icon: '',
-        commandName: 'space',
+        commandName: 'plain',
         contents: [],
-        description: '- black, dark-gray, and yellow',
+        description: '- black, gray, and white',
       },
       {
         icon: '',
@@ -31,7 +31,7 @@ const commands = [
         icon: '',
         commandName: 'vintage',
         contents: [],
-        description: '- blue and peach',
+        description: '- green and peach',
       },
       {
         icon: '',
@@ -41,7 +41,7 @@ const commands = [
       },
       {
         icon: '',
-        commandName: 'taro',
+        commandName: 'bubblegum',
         contents: [],
         description: '- lightblue, pink, and purple',
       },
@@ -67,11 +67,11 @@ const commands = [
         icon: '',
         commandName: 'halloween',
         contents: [],
-        description: '- darkblue, orange, and white',
+        description: '- black, orange, and white',
       },
       {
         icon: '',
-        commandName: 'spring',
+        commandName: 'botanical',
         contents: [],
         description: '- light-green, green, and peach',
       },

@@ -8,11 +8,11 @@
 :root {
   /* #region  /**=========== Default Color =========== */
 
-  --bg-color: 238 238 238; /* background color */
-  --font-color: 127 132 135; /* font color */
-  --hl-color: 65 63 66; /* caret, wrong characters, timer, selected and onhover colors */
-  --fg-color: 63 78 79; /* correctly typed characters */
-  --font-family: 'Chakra Petch';
+  --bg-color: 20 20 20;
+  --font-color: 82 82 82;
+  --hl-color: 178 177 185;
+  --fg-color: 58 163 193;
+  --font-family: 'Poppins';
 
   /* #endregion  /**======== Default Color =========== */
 }
@@ -35,10 +35,10 @@
   }
 
   .default {
-    --bg-color: 238 238 238; /* background color */
-    --font-color: 127 132 135; /* font color */
-    --hl-color: 65 63 66; /* caret, wrong characters, timer, selected and onhover colors */
-    --fg-color: 63 78 79; /* correctly typed characters */
+    --bg-color: 20 20 20;
+    --font-color: 82 82 82;
+    --hl-color: 178 177 185;
+    --fg-color: 58 163 193;
   }
 
   /* #region  /**=========== Typography =========== */

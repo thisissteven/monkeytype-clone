@@ -22,8 +22,8 @@ const TableRow: React.FC<TableRowProps> = ({
 }) => {
   return (
     <tr
-      className={clsxm('whitespace-nowrap border-t-4 border-hl', [
-        index % 2 === 0 ? 'bg-fg' : 'bg-fg/80',
+      className={clsxm('whitespace-nowrap border-t-4 border-font/80', [
+        index % 2 === 0 ? 'bg-hl' : 'bg-hl/80',
       ])}
     >
       <td className='py-3 pl-4'>
@@ -40,7 +40,7 @@ const TableRow: React.FC<TableRowProps> = ({
       </td>
 
       <td className='px-2 text-bg md:px-0'>
-        <span className={clsxm('rounded-md bg-bg px-2 py-1 text-xs text-fg')}>
+        <span className={clsxm('rounded-md bg-bg px-2 py-1 text-xs text-hl')}>
           {wpm} wpm
         </span>
       </td>

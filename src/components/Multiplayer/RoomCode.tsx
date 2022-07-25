@@ -20,10 +20,17 @@ export default function Code() {
         }
         className='relative flex cursor-pointer items-center rounded-md bg-hl px-4 pt-5 text-3xl font-bold text-bg'
       >
-        <span className='absolute top-0 left-0 px-4 pt-1 text-xs text-bg'>
+        <span className='absolute top-0 left-0 whitespace-nowrap px-4 pt-1 text-xs text-bg'>
           copy and share
         </span>
-        {query?.id}{' '}
+        {query?.id ? (
+          query?.id + ' '
+        ) : (
+          <div className='flex animate-pulse flex-col'>
+            <div className='mb-1 mt-1 h-2 w-12 rounded-lg bg-bg/80'></div>
+            <div className='mb-2 h-2 w-28 rounded-lg bg-bg/80'></div>
+          </div>
+        )}
         <FaCopy className='ml-2 text-2xl text-bg/80 transition-colors duration-200 hover:text-bg active:text-bg' />
       </span>
     </div>

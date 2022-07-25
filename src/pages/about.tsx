@@ -244,17 +244,17 @@ export default function AboutPage() {
 
 const themeList = [
   'default',
-  'space',
+  'plain',
   'winter',
   'snowy-night',
   'vintage',
   'vampire',
-  'taro',
+  'bubblegum',
   'green-tea',
   'wood',
   'beach',
   'halloween',
-  'spring',
+  'botanical',
   'eye-pain',
 ] as const;
 

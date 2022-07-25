@@ -202,7 +202,7 @@ export default function AccountPage() {
                   {authenticated && user && (
                     <button
                       onClick={logout}
-                      className='mt-4 flex items-center justify-center rounded-md bg-hl px-3 py-1.5 text-sm text-bg transition-opacity duration-200 hover:opacity-90 active:opacity-80'
+                      className='mt-4 flex items-center justify-center rounded-md bg-fg px-3 py-1.5 text-sm text-bg transition-opacity duration-200 hover:opacity-90 active:opacity-80'
                     >
                       <FaSignOutAlt className='mr-2' />
                       Sign out
