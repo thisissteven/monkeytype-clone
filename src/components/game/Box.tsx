@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { VscDebugRestart } from 'react-icons/vsc';
 
-import { shuffleList } from '@/components/Game/functions';
-import TypingInput from '@/components/Game/TypingInput';
+import { shuffleList } from '@/components/game/functions';
+import TypingInput from '@/components/game/TypingInput';
 import Tooltip from '@/components/Tooltip';
 
 import { usePreferenceContext } from '@/context/Preference/PreferenceContext';
