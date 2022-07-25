@@ -3,8 +3,8 @@ import * as React from 'react';
 import { toast } from 'react-toastify';
 
 import Kbd from '@/components/Kbd';
-import AnimateFade from '@/components/layout/AnimateFade';
-import Multiplayer from '@/components/multiplayer/Multiplayer';
+import AnimateFade from '@/components/Layout/AnimateFade';
+import Multiplayer from '@/components/Multiplayer/Multiplayer';
 import Seo from '@/components/Seo';
 
 import { useRoomContext } from '@/context/Room/RoomContext';

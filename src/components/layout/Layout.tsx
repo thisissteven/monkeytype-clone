@@ -3,7 +3,7 @@ import Image from 'next/image';
 import NextNProgress from 'nextjs-progressbar';
 import * as React from 'react';
 
-import Footer from '@/components/layout/Footer';
+import Footer from '@/components/Layout/Footer';
 import Seo from '@/components/Seo';
 
 import { usePreferenceContext } from '@/context/Preference/PreferenceContext';
@@ -40,13 +40,18 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <div className='flex max-w-[500px] flex-wrap items-center justify-center gap-x-8'>
               <div className='flex flex-col'>
                 <Image
-                  src='/images/walking-mushroom.gif'
+                  src='/images/monkeytype-clone.gif'
                   width={180}
                   height={180}
-                  alt='walking-mushroom'
+                  alt='Monkeytype Clone - Typeracer App based on Monkeytype'
                   className='scale-50'
                 />
-                <p className='loading -mt-12'>Preparing the page for you...</p>
+                <p className='hidden'>
+                  Monkeytype Clone - Typeracer App based on Monkeytype
+                </p>
+                <div className='loading -mt-12 font-primary'>
+                  Preparing the page for you...
+                </div>
               </div>
             </div>
           </div>

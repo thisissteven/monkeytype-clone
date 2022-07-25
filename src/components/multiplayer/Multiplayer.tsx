@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import * as React from 'react';
 
-import TypingInput from '@/components/multiplayer/TypingInput';
+import TypingInput from '@/components/Multiplayer/TypingInput';
 
 import { usePreferenceContext } from '@/context/Preference/PreferenceContext';
 import { useRoomContext } from '@/context/Room/RoomContext';

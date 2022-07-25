@@ -8,10 +8,10 @@ import en from 'javascript-time-ago/locale/en';
 import * as React from 'react';
 import { FaSignOutAlt, FaUserCircle } from 'react-icons/fa';
 
-import Login from '@/components/accounts/Login';
-import Register from '@/components/accounts/Register';
-import AnimateFade from '@/components/layout/AnimateFade';
-import ArrowLink from '@/components/links/ArrowLink';
+import Login from '@/components/Account/Login';
+import Register from '@/components/Account/Register';
+import AnimateFade from '@/components/Layout/AnimateFade';
+import ArrowLink from '@/components/Link/ArrowLink';
 import Seo from '@/components/Seo';
 
 import { useAuthState } from '@/context/User/UserContext';

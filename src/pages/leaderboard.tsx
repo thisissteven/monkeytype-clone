@@ -9,8 +9,8 @@ import { FaCrown, FaUserCircle } from 'react-icons/fa';
 
 import clsxm from '@/lib/clsxm';
 
-import AnimateFade from '@/components/layout/AnimateFade';
-import ArrowLink from '@/components/links/ArrowLink';
+import AnimateFade from '@/components/Layout/AnimateFade';
+import ArrowLink from '@/components/Link/ArrowLink';
 import Seo from '@/components/Seo';
 
 import { useAuthState } from '@/context/User/UserContext';
@@ -100,7 +100,7 @@ export default function LeaderboardPage() {
                 </Link>
               )}
             </div>
-            <h1 className='mb-4 text-hl'>top 100 leaderboard</h1>
+            <h1 className='my-4 text-hl'>top 100 leaderboard</h1>
 
             <div className='relative overflow-auto rounded-lg bg-hl/50 p-2'>
               <table className='w-full overflow-hidden rounded-lg font-primary'>
@@ -117,38 +117,40 @@ export default function LeaderboardPage() {
 
                 {!data?.leaderboards?.data && (
                   <>
-                    <tr className='h-14 w-full animate-pulse border-t-4 border-hl'>
-                      <td className='bg-fg'></td>
-                      <td className='bg-fg'></td>
-                      <td className='bg-fg'></td>
-                      <td className='bg-fg'></td>
-                      <td className='bg-fg'></td>
-                      <td className='bg-fg'></td>
-                    </tr>
-                    <tr className='h-14 w-full animate-pulse border-t-4 border-hl'>
-                      <td className='bg-fg/80'></td>
-                      <td className='bg-fg/80'></td>
-                      <td className='bg-fg/80'></td>
-                      <td className='bg-fg/80'></td>
-                      <td className='bg-fg/80'></td>
-                      <td className='bg-fg/80'></td>
-                    </tr>
-                    <tr className='h-14 w-full animate-pulse border-t-4 border-hl'>
-                      <td className='bg-fg'></td>
-                      <td className='bg-fg'></td>
-                      <td className='bg-fg'></td>
-                      <td className='bg-fg'></td>
-                      <td className='bg-fg'></td>
-                      <td className='bg-fg'></td>
-                    </tr>
-                    <tr className='h-14 w-full animate-pulse border-t-4 border-hl'>
-                      <td className='bg-fg/80'></td>
-                      <td className='bg-fg/80'></td>
-                      <td className='bg-fg/80'></td>
-                      <td className='bg-fg/80'></td>
-                      <td className='bg-fg/80'></td>
-                      <td className='bg-fg/80'></td>
-                    </tr>
+                    <tbody>
+                      <tr className='h-14 w-full animate-pulse border-t-4 border-hl'>
+                        <td className='bg-fg'></td>
+                        <td className='bg-fg'></td>
+                        <td className='bg-fg'></td>
+                        <td className='bg-fg'></td>
+                        <td className='bg-fg'></td>
+                        <td className='bg-fg'></td>
+                      </tr>
+                      <tr className='h-14 w-full animate-pulse border-t-4 border-hl'>
+                        <td className='bg-fg/80'></td>
+                        <td className='bg-fg/80'></td>
+                        <td className='bg-fg/80'></td>
+                        <td className='bg-fg/80'></td>
+                        <td className='bg-fg/80'></td>
+                        <td className='bg-fg/80'></td>
+                      </tr>
+                      <tr className='h-14 w-full animate-pulse border-t-4 border-hl'>
+                        <td className='bg-fg'></td>
+                        <td className='bg-fg'></td>
+                        <td className='bg-fg'></td>
+                        <td className='bg-fg'></td>
+                        <td className='bg-fg'></td>
+                        <td className='bg-fg'></td>
+                      </tr>
+                      <tr className='h-14 w-full animate-pulse border-t-4 border-hl'>
+                        <td className='bg-fg/80'></td>
+                        <td className='bg-fg/80'></td>
+                        <td className='bg-fg/80'></td>
+                        <td className='bg-fg/80'></td>
+                        <td className='bg-fg/80'></td>
+                        <td className='bg-fg/80'></td>
+                      </tr>
+                    </tbody>
                   </>
                 )}
                 {data?.leaderboards?.data?.map(
