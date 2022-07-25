@@ -17,6 +17,7 @@ export const shuffleList = (type: string) => {
       sentencesArray = sentencesArray.join(' ').split(' ');
       return sentencesArray;
     default:
+      //
       return _.shuffle(words);
   }
 };
