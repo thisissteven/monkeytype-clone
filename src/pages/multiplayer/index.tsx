@@ -11,7 +11,7 @@ import { createRoom } from '@/lib/socket/roomHandler';
 
 import Input from '@/components/Input';
 import Kbd from '@/components/Kbd';
-import AnimateFade from '@/components/layout/AnimateFade';
+import AnimateFade from '@/components/Layout/AnimateFade';
 import Seo from '@/components/Seo';
 
 import { useRoomContext } from '@/context/Room/RoomContext';

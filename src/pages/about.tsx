@@ -10,9 +10,9 @@ import {
 } from 'react-icons/si';
 
 import Kbd from '@/components/Kbd';
-import AnimateFade from '@/components/layout/AnimateFade';
-import ArrowLink from '@/components/link/ArrowLink';
-import UnderlineLink from '@/components/link/UnderlineLink';
+import AnimateFade from '@/components/Layout/AnimateFade';
+import ArrowLink from '@/components/Link/ArrowLink';
+import UnderlineLink from '@/components/Link/UnderlineLink';
 import Seo from '@/components/Seo';
 import Tooltip from '@/components/Tooltip';
 

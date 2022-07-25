@@ -6,10 +6,10 @@ import en from 'javascript-time-ago/locale/en';
 import Link from 'next/link';
 import * as React from 'react';
 
-import AnimateFade from '@/components/layout/AnimateFade';
+import AnimateFade from '@/components/Layout/AnimateFade';
 import TableRow from '@/components/Leaderboard/TableRow';
 import TableSkeleton from '@/components/Leaderboard/TableSkeleton';
-import ArrowLink from '@/components/link/ArrowLink';
+import ArrowLink from '@/components/Link/ArrowLink';
 import Seo from '@/components/Seo';
 
 import { useAuthState } from '@/context/User/UserContext';

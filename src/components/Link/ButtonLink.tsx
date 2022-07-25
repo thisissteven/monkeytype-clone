@@ -4,7 +4,7 @@ import clsxm from '@/lib/clsxm';
 
 import UnstyledLink, {
   UnstyledLinkProps,
-} from '@/components/link/UnstyledLink';
+} from '@/components/Link/UnstyledLink';
 
 enum ButtonVariant {
   'primary',

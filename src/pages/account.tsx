@@ -10,8 +10,8 @@ import { FaSignOutAlt, FaUserCircle } from 'react-icons/fa';
 
 import Login from '@/components/account/Login';
 import Register from '@/components/account/Register';
-import AnimateFade from '@/components/layout/AnimateFade';
-import ArrowLink from '@/components/link/ArrowLink';
+import AnimateFade from '@/components/Layout/AnimateFade';
+import ArrowLink from '@/components/Link/ArrowLink';
 import Seo from '@/components/Seo';
 
 import { useAuthState } from '@/context/User/UserContext';
