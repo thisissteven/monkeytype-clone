@@ -2,6 +2,7 @@ export type Chat = {
   username: string;
   value: string;
   id: string;
+  type: 'notification' | 'message';
 };
 
 export type ChatState = {

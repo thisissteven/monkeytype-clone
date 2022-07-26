@@ -30,18 +30,22 @@ export default function ChatBox({
     dispatch: chatDispatch,
   } = useChatContext();
 
+  const [showNotification, setShowNotification] = React.useState(false);
+
   const divRef = React.useRef() as React.MutableRefObject<HTMLDivElement>;
 
   React.useEffect(() => {
+    isChatOpen && setShowNotification(false);
     socket
       .off('receive chat')
-      .on('receive chat', ({ id, username, value }: Chat) => {
+      .on('receive chat', ({ id, username, value, type }: Chat) => {
         chatDispatch({
           type: 'ADD_ROOM_CHAT',
-          payload: { id, username, value },
+          payload: { id, username, value, type },
         });
+        if (!isChatOpen) setShowNotification(true);
       });
-  }, [chatDispatch, socket]);
+  }, [chatDispatch, isChatOpen, socket]);
 
   React.useEffect(() => {
     if (divRef.current && isChatOpen) {
@@ -58,9 +62,11 @@ export default function ChatBox({
         <GiDiscussion />
         <span className='mr-2 text-sm'>{label}</span>
       </div>
-      {/* <div className='absolute -right-2 -top-2 z-50 h-4 w-4 rounded-full bg-fg text-xs text-bg'>
-        !
-      </div> */}
+      {showNotification && (
+        <div className='absolute -right-2 -top-2 h-4 w-4 animate-bounce rounded-full bg-fg text-xs text-bg'>
+          !
+        </div>
+      )}
       <div
         className={`pointer-events-none absolute -bottom-[26rem] -right-4 z-30 flex h-[24.5rem] gap-4 rounded-lg bg-bg/80 opacity-0 transition-opacity duration-300 ${
           isChatOpen && 'opacity-100'
@@ -82,9 +88,15 @@ export default function ChatBox({
               >
                 {roomChat.map((chat, index) =>
                   chat.id === id ? (
-                    <Bubble key={index} isYou value={chat.value} />
+                    <Bubble
+                      type={chat.type}
+                      key={index}
+                      isYou
+                      value={chat.value}
+                    />
                   ) : (
                     <Bubble
+                      type={chat.type}
                       key={index}
                       username={chat.username}
                       value={chat.value}
