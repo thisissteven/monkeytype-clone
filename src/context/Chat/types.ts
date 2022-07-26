@@ -3,6 +3,7 @@ export type Chat = {
   value: string;
   id: string;
   type: 'notification' | 'message';
+  roomId: 'public' | string;
 };
 
 export type ChatState = {

@@ -28,10 +28,10 @@ export default function HomePage() {
       <main>
         <section>
           <div className='layout flex flex-col items-center gap-8 pt-20 text-center'>
-            <div className='pointer-events-none aspect-video w-full max-w-[450px] overflow-hidden rounded-lg ring-4 ring-fg ring-offset-4 ring-offset-bg'>
+            <div className='aspect-video w-full max-w-[450px] overflow-hidden rounded-lg ring-4 ring-fg ring-offset-4 ring-offset-bg'>
               <iframe
                 src='https://www.youtube.com/embed/nnM9h7twXg8?autoplay=1&mute=1&loop=1&color=white&controls=0&modestbranding=1&playsinline=1&rel=0&enablejsapi=1&playlist=nnM9h7twXg8'
-                title='YouTube video player'
+                title='Monkeytype Clone'
                 frameBorder='0'
                 allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
                 allowFullScreen
@@ -39,6 +39,7 @@ export default function HomePage() {
                   width: '300%',
                   height: '100%',
                   marginLeft: '-100%',
+                  zIndex: 50,
                 }}
               ></iframe>
             </div>

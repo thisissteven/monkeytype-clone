@@ -3,7 +3,7 @@ import { IoMdSend } from 'react-icons/io';
 
 import { useRoomContext } from '@/context/Room/RoomContext';
 
-const ChatInput = () => {
+const ChatInput = ({ isPublic }: { isPublic: boolean }) => {
   const {
     room: {
       socket,
@@ -19,6 +19,10 @@ const ChatInput = () => {
         const { value } = e.target[0];
         if (!value) return;
         e.target[0].value = '';
+        if (isPublic) {
+          socket.emit('send chat', { username, value, roomId: 'public', id });
+          return;
+        }
         socket.emit('send chat', { username, value, roomId, id });
       }}
       className='relative mx-auto w-full xs:pr-4'
