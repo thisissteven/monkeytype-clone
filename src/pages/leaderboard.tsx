@@ -156,9 +156,9 @@ export default function LeaderboardPage() {
             </div>
 
             <div className='relative overflow-auto rounded-lg bg-hl/50 p-2'>
-              <table className='w-full overflow-hidden rounded-lg font-primary'>
+              <table className='w-full overflow-hidden rounded-lg bg-hl/80 font-primary'>
                 <thead>
-                  <tr className='bg-hl/80 text-bg'>
+                  <tr className='text-bg'>
                     <td className='py-3 pl-4 pr-4 md:pr-0'>#</td>
                     <td className='px-2 md:px-0'>user</td>
                     <td className='px-2 md:px-0'>wpm</td>
