@@ -6,7 +6,7 @@ const ChatInput = () => {
   const {
     room: {
       socket,
-      user: { username, roomId },
+      user: { username, roomId, id },
     },
   } = useRoomContext();
 
@@ -17,7 +17,8 @@ const ChatInput = () => {
         e.preventDefault();
         const { value } = e.target[0];
         if (!value) return;
-        socket.emit('send chat', { username, value, roomId });
+        e.target[0].value = '';
+        socket.emit('send chat', { username, value, roomId, id });
       }}
       className='relative mx-auto w-full xs:pr-4'
     >

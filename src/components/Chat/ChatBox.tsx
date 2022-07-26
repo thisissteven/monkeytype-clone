@@ -3,6 +3,7 @@ import * as React from 'react';
 import { BsChatLeftTextFill } from 'react-icons/bs';
 
 import { useChatContext } from '@/context/Chat/ChatContext';
+import { Chat } from '@/context/Chat/types';
 import { useRoomContext } from '@/context/Room/RoomContext';
 
 import Bubble from './Bubble';
@@ -13,13 +14,34 @@ export default function ChatBox() {
     room: {
       isChatOpen,
       user: { id },
+      socket,
     },
     dispatch,
   } = useRoomContext();
 
   const {
     chat: { roomChat },
+    dispatch: chatDispatch,
   } = useChatContext();
+
+  const divRef = React.useRef() as React.MutableRefObject<HTMLDivElement>;
+
+  React.useEffect(() => {
+    socket
+      .off('receive chat')
+      .on('receive chat', ({ id, username, value }: Chat) => {
+        chatDispatch({
+          type: 'ADD_ROOM_CHAT',
+          payload: { id, username, value },
+        });
+      });
+  }, [chatDispatch, socket]);
+
+  React.useEffect(() => {
+    if (divRef.current) {
+      divRef.current.scrollTop = divRef.current.scrollHeight;
+    }
+  }, [roomChat]);
 
   return (
     <span className='absolute flex w-full cursor-pointer items-center justify-end text-3xl font-bold text-bg'>
@@ -45,7 +67,10 @@ export default function ChatBox() {
             className='absolute -bottom-[26rem] -right-4 z-40 flex h-[24.5rem] w-[calc(100%+2rem)] cursor-auto justify-between gap-4 rounded-lg bg-bg/30 p-4 ring ring-fg/60 ring-offset-2 ring-offset-bg'
           >
             <div className='flex h-full w-full flex-col justify-between'>
-              <div className='xs:scrollbar mx-auto flex h-full w-full flex-col overflow-y-scroll break-words xs:pr-2'>
+              <div
+                ref={divRef}
+                className='xs:scrollbar mx-auto flex h-full w-full flex-col overflow-y-scroll break-words xs:pr-2'
+              >
                 {roomChat.map((chat, index) =>
                   chat.id === id ? (
                     <Bubble key={index} isYou value={chat.value} />
