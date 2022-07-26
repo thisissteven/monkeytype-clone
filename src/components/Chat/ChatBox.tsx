@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import * as React from 'react';
-import { BsChatLeftTextFill } from 'react-icons/bs';
+import { GiDiscussion } from 'react-icons/gi';
 
 import { useChatContext } from '@/context/Chat/ChatContext';
 import { Chat } from '@/context/Chat/types';
@@ -9,7 +9,13 @@ import { useRoomContext } from '@/context/Room/RoomContext';
 import Bubble from './Bubble';
 import ChatInput from './ChatInput';
 
-export default function ChatBox() {
+export default function ChatBox({
+  className,
+  label,
+}: {
+  className: string;
+  label: string;
+}) {
   const {
     room: {
       isChatOpen,
@@ -45,17 +51,20 @@ export default function ChatBox() {
 
   return (
     <span className='z-1 absolute flex w-full cursor-pointer items-center justify-end text-3xl font-bold text-bg'>
-      <BsChatLeftTextFill
+      <div
         onClick={() => dispatch({ type: 'TOGGLE_CHAT' })}
-        className='active:text-fg/-80 text-3xl text-fg transition-colors duration-200 hover:text-fg/90'
-      />
+        className='active:text-fg/-80 flex flex-col items-center gap-1 text-3xl text-fg transition-colors duration-200 hover:text-fg/90'
+      >
+        <GiDiscussion />
+        <span className='mr-2 text-sm'>{label}</span>
+      </div>
       {/* <div className='absolute -right-2 -top-2 z-50 h-4 w-4 rounded-full bg-fg text-xs text-bg'>
         !
       </div> */}
       <div
-        className={`pointer-events-none absolute -bottom-[26rem] -right-4 z-30 flex h-[24.5rem] w-[calc(100%+2rem)] gap-4 rounded-lg bg-bg/80 opacity-0 transition-opacity duration-300 ${
+        className={`pointer-events-none absolute -bottom-[26rem] -right-4 z-30 flex h-[24.5rem] gap-4 rounded-lg bg-bg/80 opacity-0 transition-opacity duration-300 ${
           isChatOpen && 'opacity-100'
-        }`}
+        } ${className}`}
       ></div>
       <AnimatePresence exitBeforeEnter>
         {isChatOpen && (
@@ -64,7 +73,7 @@ export default function ChatBox() {
             animate={{ opacity: 1, y: 0, x: 0, scale: 1 }}
             exit={{ opacity: 0 }}
             key='chat-box'
-            className='absolute -bottom-[26rem] -right-4 z-40 flex h-[24.5rem] w-[calc(100%+2rem)] cursor-auto justify-between gap-4 rounded-lg bg-bg/30 p-4 ring ring-fg/60 ring-offset-2 ring-offset-bg'
+            className={`absolute -bottom-[26rem] -right-4 z-40 flex h-[24.5rem] cursor-auto justify-between gap-4 rounded-lg bg-bg/30 p-4 ring ring-fg/60 ring-offset-2 ring-offset-bg ${className}`}
           >
             <div className='flex h-full w-full flex-col justify-between'>
               <div

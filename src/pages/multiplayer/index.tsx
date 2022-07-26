@@ -4,14 +4,15 @@ import * as React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { CgSpinner } from 'react-icons/cg';
 import { FaArrowRight } from 'react-icons/fa';
+import { RiTeamFill } from 'react-icons/ri';
 import { toast } from 'react-toastify';
 import * as yup from 'yup';
 
 import { createRoom } from '@/lib/socket/roomHandler';
 
 import Button from '@/components/Button/Button';
+import ChatBox from '@/components/Chat/ChatBox';
 import Input from '@/components/Input';
-import Kbd from '@/components/Kbd';
 import AnimateFade from '@/components/Layout/AnimateFade';
 import Seo from '@/components/Seo';
 
@@ -75,12 +76,19 @@ export default function MultiplayerPage() {
 
       <main>
         <section>
-          <div className='layout flex min-h-[65vh] flex-col items-center pt-28 text-center font-primary'>
-            <div className='h-20rem flex flex-col gap-4'>
+          <div className='layout flex min-h-[65vh] w-full flex-col items-center pt-10 text-center font-primary'>
+            <div className='relative mb-8 flex h-8 w-full max-w-[800px] items-center justify-between'>
+              <ChatBox
+                className='-right-0 w-[calc(100%)]'
+                label='public chat'
+              />
+            </div>
+            <div className='h-20rem flex w-full flex-col gap-4'>
+              <RiTeamFill className='self-center text-[5rem]' />
               <h1 className='mb-2'>multiplayer mode</h1>
               <FormProvider {...methods}>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                  <div className='flex w-full justify-center gap-2'>
+                  <div className='-mb-2 flex w-full justify-center gap-2'>
                     <Input
                       name='code'
                       id='code'
@@ -100,15 +108,16 @@ export default function MultiplayerPage() {
                   </div>
                 </form>
               </FormProvider>
-              <h2>or</h2>
-              <div>
+
+              <span className='mb-4 text-3xl font-bold'>or</span>
+              <div className='flex items-center justify-center space-x-4'>
                 <Button
                   onClick={() => {
                     setIsCreatingRoom(true);
                     createRoom(socket);
                   }}
                   disabled={isCreatingRoom}
-                  className={`${isCreatingRoom && 'cursor-not-allowed'}`}
+                  className={`${isCreatingRoom && 'cursor-not-allowed'} mb-0`}
                 >
                   {isCreatingRoom ? (
                     <span className='flex items-center text-bg'>
@@ -116,18 +125,10 @@ export default function MultiplayerPage() {
                       <CgSpinner className='ml-2 animate-spin' />
                     </span>
                   ) : (
-                    'Create Room'
+                    'Create New Room'
                   )}
                 </Button>
               </div>
-            </div>
-            <div className='mt-8 flex items-center space-x-2 text-sm'>
-              <Kbd>ctrl/cmd</Kbd>
-              <span className='text-hl'> + </span>
-              <Kbd>k</Kbd>
-              <span className='text-hl'> or </span>
-              <Kbd>p</Kbd>
-              <span className='text-hl'> - command palette </span>
             </div>
           </div>
         </section>
