@@ -1,11 +1,7 @@
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { io } from 'socket.io-client';
-import {
-  adjectives,
-  animals,
-  uniqueNamesGenerator,
-} from 'unique-names-generator';
+import { animals, uniqueNamesGenerator } from 'unique-names-generator';
 
 import reducer from './reducer';
 import { RoomContextValues } from './types';
@@ -34,12 +30,11 @@ export const RoomProvider = ({ children }: { children: React.ReactNode }) => {
     user: {
       roomId: null,
       username:
+        localStorage?.getItem('nickname') ||
         user?.username ||
         uniqueNamesGenerator({
-          dictionaries: [adjectives, animals],
-          style: 'capital',
-          separator: '',
-          length: 2,
+          dictionaries: [animals],
+          style: 'lowerCase',
         }),
       id: '',
       status: {

@@ -64,7 +64,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             'sm:scrollbar h-screen w-full overflow-y-scroll bg-bg transition-colors duration-300'
           )}
         >
-          <div className='layout bg-transparent'>
+          <div className='layout flex h-full flex-col bg-transparent'>
             <NextNProgress
               color={`rgb(${progressColors[theme as ProgressColorType]})`}
               startPosition={0.3}

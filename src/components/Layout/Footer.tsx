@@ -6,7 +6,11 @@ import UnstyledLink from '@/components/Link/UnstyledLink';
 
 export default function Footer() {
   return (
-    <footer className={clsx('layout mt-12 mb-8 flex h-full bg-transparent')}>
+    <footer
+      className={clsx(
+        'layout flex h-full justify-self-end bg-transparent pt-12 pb-8'
+      )}
+    >
       <div className='flex w-full items-center justify-between font-primary'>
         <UnstyledLink
           href='https://github.com/steven2801/monkeytype-clone'

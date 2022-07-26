@@ -23,6 +23,15 @@ const reducer = (state: RoomState, action: Action): RoomState => {
           id: action.payload,
         },
       };
+    case 'SET_NICKNAME':
+      localStorage.setItem('nickname', action.payload);
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          username: action.payload,
+        },
+      };
     case 'SET_STATUS':
       return {
         ...state,

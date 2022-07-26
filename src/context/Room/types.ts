@@ -40,6 +40,7 @@ export type Action =
         progress: number;
       };
     }
+  | { type: 'SET_NICKNAME'; payload: string }
   | { type: 'SET_PLAYERS'; payload: Player[] }
   | { type: 'SET_WINNER'; payload: string | null }
   | { type: 'SET_IS_PLAYING'; payload: boolean }

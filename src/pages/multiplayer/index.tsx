@@ -84,7 +84,7 @@ export default function MultiplayerPage() {
               />
             </div>
             <div className='h-20rem flex w-full flex-col gap-4'>
-              <RiTeamFill className='self-center text-[5rem]' />
+              <RiTeamFill className='self-center text-[5rem] text-fg' />
               <h1 className='mb-2'>multiplayer mode</h1>
               <FormProvider {...methods}>
                 <form onSubmit={handleSubmit(onSubmit)}>

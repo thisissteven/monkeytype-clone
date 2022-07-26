@@ -130,7 +130,7 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
             },
             body: JSON.stringify({
               data: {
-                name: 'guest',
+                name: localStorage?.getItem('nickname') || 'guest',
                 wpm: Math.round(((60 / dur) * correctChar) / 5),
                 time: parseInt(time),
                 type: type || 'words',

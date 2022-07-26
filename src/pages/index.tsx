@@ -1,32 +1,76 @@
+import { useRouter } from 'next/router';
 import * as React from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
+import { IoMdPerson } from 'react-icons/io';
+import { RiTeamFill } from 'react-icons/ri';
 
-import Box from '@/components/Game/Box';
+import Button from '@/components/Button/Button';
+import Input from '@/components/Input';
 import Kbd from '@/components/Kbd';
 import AnimateFade from '@/components/Layout/AnimateFade';
 import Seo from '@/components/Seo';
 
-/**
- * SVGR Support
- * Caveat: No React Props Type.
- *
- * You can override the next-env if the type is important to you
- * @see https://stackoverflow.com/questions/68103844/how-to-override-next-js-svg-module-declaration
- */
-
-// !STARTERCONF -> Select !STARTERCONF and CMD + SHIFT + F
-// Before you begin editing, follow all comments with `STARTERCONF`,
-// to customize the default configuration.
+import { useRoomContext } from '@/context/Room/RoomContext';
 
 export default function HomePage() {
+  const router = useRouter();
+
+  const methods = useForm<{ code: string }>({
+    mode: 'onTouched',
+  });
+
+  const { dispatch } = useRoomContext();
+
   return (
     <AnimateFade>
       <Seo title='Monkeytype Clone' />
 
       <main>
         <section>
-          <div className='layout flex flex-col items-center pt-36 text-center'>
-            <Box />
-
+          <div className='layout flex flex-col items-center gap-8 pt-20 text-center'>
+            <div className='pointer-events-none aspect-video w-full max-w-[450px] overflow-hidden rounded-lg ring-4 ring-fg ring-offset-4 ring-offset-bg'>
+              <iframe
+                src='https://www.youtube.com/embed/nnM9h7twXg8?autoplay=1&mute=1&loop=1&color=white&controls=0&modestbranding=1&playsinline=1&rel=0&enablejsapi=1&playlist=nnM9h7twXg8'
+                title='YouTube video player'
+                frameBorder='0'
+                allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+                allowFullScreen
+                style={{
+                  width: '300%',
+                  height: '100%',
+                  marginLeft: '-100%',
+                }}
+              ></iframe>
+            </div>
+            <FormProvider {...methods}>
+              <Input
+                placeholder='enter your nickname'
+                autoComplete='off'
+                name='nickname'
+                id='nickname'
+                defaultValue={localStorage?.getItem('nickname') || ''}
+                onBlur={(e) => {
+                  if (!e.target.value) return;
+                  dispatch({ type: 'SET_NICKNAME', payload: e.target.value });
+                }}
+              />
+            </FormProvider>
+            <div className='flex items-center gap-4'>
+              <Button
+                onClick={() => router.push('/solo')}
+                className='flex items-center'
+              >
+                <IoMdPerson className='mr-1' />
+                Play Solo
+              </Button>
+              <Button
+                onClick={() => router.push('/multiplayer')}
+                className='flex items-center'
+              >
+                <RiTeamFill className='mr-1' />
+                Multiplayer
+              </Button>
+            </div>
             <div className='mt-8 flex flex-col items-center justify-center gap-2 font-primary'>
               <div className='flex items-center space-x-2 text-sm'>
                 <Kbd>tab</Kbd>
