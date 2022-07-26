@@ -8,9 +8,9 @@ import Tooltip from '@/components/Tooltip';
 import { usePreferenceContext } from '@/context/Preference/PreferenceContext';
 import { useRoomContext } from '@/context/Room/RoomContext';
 
-import Chat from './Chat';
 import Players from './Players';
 import Code from './RoomCode';
+import ChatBox from '../Chat/ChatBox';
 
 type TypingInputProps = React.ComponentPropsWithRef<'input'>;
 
@@ -157,7 +157,7 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
       <>
         <div className='relative bottom-[5.5rem] flex w-full max-w-[950px] items-center justify-between'>
           <Code />
-          <Chat />
+          <ChatBox />
         </div>
         <Players />
 

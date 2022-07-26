@@ -18,4 +18,4 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export const useRoomContext = () => React.useContext(ChatContext);
+export const useChatContext = () => React.useContext(ChatContext);

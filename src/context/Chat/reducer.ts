@@ -12,6 +12,11 @@ const reducer = (state: ChatState, action: Action): ChatState => {
         ...state,
         roomChat: [...state.roomChat, action.payload],
       };
+    case 'CLEAR_ROOM_CHAT':
+      return {
+        ...state,
+        roomChat: [],
+      };
     default:
       throw new Error('Unknown action type');
   }
