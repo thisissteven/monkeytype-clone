@@ -38,13 +38,13 @@ export default function ChatBox() {
   }, [chatDispatch, socket]);
 
   React.useEffect(() => {
-    if (divRef.current) {
+    if (divRef.current && isChatOpen) {
       divRef.current.scrollTop = divRef.current.scrollHeight;
     }
-  }, [roomChat]);
+  }, [roomChat, isChatOpen]);
 
   return (
-    <span className='absolute flex w-full cursor-pointer items-center justify-end text-3xl font-bold text-bg'>
+    <span className='z-1 absolute flex w-full cursor-pointer items-center justify-end text-3xl font-bold text-bg'>
       <BsChatLeftTextFill
         onClick={() => dispatch({ type: 'TOGGLE_CHAT' })}
         className='active:text-fg/-80 text-3xl text-fg transition-colors duration-200 hover:text-fg/90'
@@ -69,7 +69,7 @@ export default function ChatBox() {
             <div className='flex h-full w-full flex-col justify-between'>
               <div
                 ref={divRef}
-                className='xs:scrollbar mx-auto flex h-full w-full flex-col overflow-y-scroll break-words xs:pr-2'
+                className='xs:scrollbar mx-auto flex h-full w-full flex-col overflow-y-scroll break-words py-2 pr-4 xs:pr-2'
               >
                 {roomChat.map((chat, index) =>
                   chat.id === id ? (

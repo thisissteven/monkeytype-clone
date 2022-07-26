@@ -17,7 +17,7 @@ export default function Code() {
           })
         )
       }
-      className='relative flex cursor-pointer items-center rounded-md bg-hl px-4 pt-5 text-3xl font-bold text-bg'
+      className='relative z-10 flex cursor-pointer items-center rounded-md bg-hl px-4 pt-5 text-3xl font-bold text-bg'
     >
       <span className='absolute top-0 left-0 whitespace-nowrap px-4 pt-1 text-xs text-bg'>
         copy and share

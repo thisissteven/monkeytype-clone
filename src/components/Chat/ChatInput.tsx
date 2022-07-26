@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { IoMdSend } from 'react-icons/io';
 
 import { useRoomContext } from '@/context/Room/RoomContext';
 
@@ -28,10 +29,12 @@ const ChatInput = () => {
         className='w-full border-x-0 border-b border-t-0 border-fg bg-transparent font-normal text-fg focus:border-fg focus:outline-0 focus:ring-0'
       />
       <button
-        className='absolute right-0 h-full text-sm font-normal text-fg transition-opacity duration-200 hover:opacity-80 active:opacity-70 xs:right-4'
+        className='absolute right-0 h-full border-b border-fg bg-bg px-2 text-sm font-normal xs:right-4'
         type='submit'
       >
-        Send
+        <span className='flex items-center text-fg transition-opacity duration-200 hover:text-opacity-80 active:text-opacity-70'>
+          Send <IoMdSend className='ml-1' />
+        </span>
       </button>
     </form>
   );
