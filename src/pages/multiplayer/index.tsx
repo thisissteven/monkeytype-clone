@@ -9,6 +9,7 @@ import * as yup from 'yup';
 
 import { createRoom } from '@/lib/socket/roomHandler';
 
+import Button from '@/components/Button/Button';
 import Input from '@/components/Input';
 import Kbd from '@/components/Kbd';
 import AnimateFade from '@/components/Layout/AnimateFade';
@@ -87,29 +88,27 @@ export default function MultiplayerPage() {
                       placeholder='enter room code'
                       className='flex-1 rounded-r-none'
                     />
-                    <button
+                    <Button
                       disabled={isJoiningRoom}
                       type='submit'
-                      className={`grid h-[42px] w-12 place-items-center rounded-r-lg bg-fg transition-colors duration-200 hover:bg-fg/90 active:bg-fg/80 ${
+                      className={`grid h-[42px] w-12 place-items-center rounded-l-none ${
                         isJoiningRoom && 'cursor-not-allowed'
                       }`}
                     >
                       <FaArrowRight className='text-bg' />
-                    </button>
+                    </Button>
                   </div>
                 </form>
               </FormProvider>
               <h2>or</h2>
               <div>
-                <button
+                <Button
                   onClick={() => {
                     setIsCreatingRoom(true);
                     createRoom(socket);
                   }}
                   disabled={isCreatingRoom}
-                  className={`outline-solid active:bg-fg-80 mb-8 transform rounded-lg bg-fg px-3 py-2 font-primary text-bg shadow-b shadow-fg/50 outline-offset-[6px] transition-all duration-200 hover:bg-fg/90 focus:outline-dashed focus:outline-[3px] focus:outline-fg/50 active:translate-y-[4px] active:shadow-none ${
-                    isCreatingRoom && 'cursor-not-allowed'
-                  }`}
+                  className={`${isCreatingRoom && 'cursor-not-allowed'}`}
                 >
                   {isCreatingRoom ? (
                     <span className='flex items-center text-bg'>
@@ -119,7 +118,7 @@ export default function MultiplayerPage() {
                   ) : (
                     'Create Room'
                   )}
-                </button>
+                </Button>
               </div>
             </div>
             <div className='mt-8 flex items-center space-x-2 text-sm'>

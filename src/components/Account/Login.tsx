@@ -8,6 +8,7 @@ import * as yup from 'yup';
 
 import { useAuthState } from '@/context/User/UserContext';
 
+import Button from '../Button/Button';
 import Input from '../Input';
 import PasswordInput from '../PasswordInput';
 
@@ -85,10 +86,10 @@ export default function Login() {
               remember me
             </label>
           </div>
-          <button
+          <Button
             disabled={loading}
             type='submit'
-            className='flex h-10 items-center justify-center rounded-md bg-fg px-4 py-2 text-bg transition-opacity duration-200 hover:opacity-90 active:opacity-70'
+            className='flex items-center justify-center'
           >
             {loading ? (
               <CgSpinner className='animate-spin' />
@@ -98,7 +99,7 @@ export default function Login() {
                 Sign in
               </>
             )}
-          </button>
+          </Button>
         </form>
       </FormProvider>
     </>

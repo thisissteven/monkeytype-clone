@@ -7,6 +7,7 @@ import * as yup from 'yup';
 
 import { useAuthState } from '@/context/User/UserContext';
 
+import Button from '../Button/Button';
 import Input from '../Input';
 import PasswordInput from '../PasswordInput';
 
@@ -72,10 +73,10 @@ export default function Register() {
             placeholder='create password'
             autoComplete='off'
           />
-          <button
-            disabled={loading}
+          <Button
             type='submit'
-            className='flex h-10 items-center justify-center rounded-md bg-fg px-4 py-2 text-bg transition-opacity duration-200 hover:opacity-90 active:opacity-70'
+            disabled={loading}
+            className='flex items-center justify-center'
           >
             {loading ? (
               <CgSpinner className='animate-spin' />
@@ -85,7 +86,7 @@ export default function Register() {
                 Sign up
               </>
             )}
-          </button>
+          </Button>
         </form>
       </FormProvider>
     </>
