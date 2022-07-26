@@ -29,6 +29,7 @@ export const RoomProvider = ({ children }: { children: React.ReactNode }) => {
     text: '',
     isPlaying: false,
     isFinished: false,
+    isChatOpen: false,
     winner: null,
     user: {
       roomId: null,

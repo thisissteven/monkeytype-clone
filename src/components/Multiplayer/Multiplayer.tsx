@@ -18,6 +18,7 @@ export default function Multiplayer() {
     room: {
       isPlaying,
       winner,
+      isChatOpen,
       user: { isReady, id, roomId },
     },
     dispatch,
@@ -25,21 +26,27 @@ export default function Multiplayer() {
   } = useRoomContext();
 
   React.useEffect(() => {
+    isChatOpen && inputRef.current.blur();
+  }, [isChatOpen]);
+
+  React.useEffect(() => {
     isPlaying && inputRef.current.focus();
     !isPlaying && inputRef.current.blur();
+  }, [isPlaying]);
 
+  React.useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
-      if (isOpen) return;
+      if (isOpen || isChatOpen) return;
       if (event.key === 'tab') {
         buttonRef.current.focus();
-      } else if (event.key !== 'Enter' && !event.ctrlKey && isPlaying) {
+      } else if (event.key !== 'Enter' && !event.ctrlKey) {
         inputRef.current.focus();
       }
     };
 
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
-  }, [isOpen, isPlaying]);
+  }, [isOpen, isChatOpen]);
 
   const inputRef = React.useRef() as React.MutableRefObject<HTMLInputElement>;
   const buttonRef = React.useRef() as React.MutableRefObject<HTMLButtonElement>;

@@ -16,6 +16,7 @@ import CommandPalette from '@/components/CommandPalette/CommandPalette';
 import Header from '@/components/Layout/Header';
 import Layout from '@/components/Layout/Layout';
 
+import { ChatProvider } from '@/context/Chat/ChatContext';
 import PreferenceProvider from '@/context/Preference/PreferenceContext';
 import { RoomProvider } from '@/context/Room/RoomContext';
 import { AuthProvider } from '@/context/User/UserContext';
@@ -45,9 +46,11 @@ function MyApp({ Component, pageProps, router }: AppProps) {
             />
             <Header />
             <RoomProvider>
-              <AnimatePresence exitBeforeEnter>
-                <Component {...pageProps} key={router.route} />
-              </AnimatePresence>
+              <ChatProvider>
+                <AnimatePresence exitBeforeEnter>
+                  <Component {...pageProps} key={router.route} />
+                </AnimatePresence>
+              </ChatProvider>
             </RoomProvider>
           </Layout>
         </AuthProvider>

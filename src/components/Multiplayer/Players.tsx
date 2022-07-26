@@ -50,7 +50,7 @@ export default function Players() {
               </span>
               <span className='text-sm text-fg'>{player.status.wpm} wpm</span>
             </div>
-            <div className='h-2 w-full min-w-[250px] overflow-hidden rounded-lg bg-hl/40 xs:min-w-[350px]'>
+            <div className='h-2 w-full min-w-[230px] overflow-hidden rounded-lg bg-hl/40 xs:min-w-[350px]'>
               <div
                 className='h-full rounded-lg bg-fg transition-all duration-500'
                 style={{

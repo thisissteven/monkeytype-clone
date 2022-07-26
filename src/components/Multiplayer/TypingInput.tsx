@@ -8,6 +8,7 @@ import Tooltip from '@/components/Tooltip';
 import { usePreferenceContext } from '@/context/Preference/PreferenceContext';
 import { useRoomContext } from '@/context/Room/RoomContext';
 
+import Chat from './Chat';
 import Players from './Players';
 import Code from './RoomCode';
 
@@ -30,6 +31,7 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
         text,
         isPlaying,
         isFinished,
+        isChatOpen,
         socket,
         winner,
         user: { roomId, id },
@@ -153,7 +155,10 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
 
     return (
       <>
-        <Code />
+        <div className='relative bottom-[5.5rem] flex w-full max-w-[950px] items-center justify-between'>
+          <Code />
+          <Chat />
+        </div>
         <Players />
 
         <div className='relative w-full max-w-[950px]'>
@@ -208,7 +213,7 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
                 });
               }}
               onKeyDown={(e) => {
-                if (isOpen) {
+                if (isOpen || isChatOpen) {
                   setIsFocused(false);
                   return;
                 }

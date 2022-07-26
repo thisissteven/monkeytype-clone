@@ -14,10 +14,11 @@ export type Player = {
 export type RoomState = {
   user: Player;
   isFinished: boolean;
+  isPlaying: boolean;
+  isChatOpen: boolean;
   text: string;
   players: Player[];
   socket: Socket;
-  isPlaying: boolean;
   winner: string | null;
 };
 
@@ -42,5 +43,6 @@ export type Action =
   | { type: 'SET_PLAYERS'; payload: Player[] }
   | { type: 'SET_WINNER'; payload: string | null }
   | { type: 'SET_IS_PLAYING'; payload: boolean }
+  | { type: 'TOGGLE_CHAT' }
   | { type: 'SET_IS_READY'; payload: boolean }
   | { type: 'SET_IS_FINISHED'; payload: boolean };
