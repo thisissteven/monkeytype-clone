@@ -157,7 +157,11 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
       <>
         <div className='relative bottom-[5.5rem] flex w-full max-w-[950px] items-center justify-between'>
           <Code />
-          <ChatBox isRoomChat className='w-[calc(100%+2rem)]' label='chat' />
+          <ChatBox
+            isRoomChat
+            className='right-1 w-[calc(100%)] sm:right-2'
+            label='chat'
+          />
         </div>
         <Players />
 

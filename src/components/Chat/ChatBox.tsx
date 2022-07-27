@@ -82,8 +82,9 @@ export default function ChatBox({
         </div>
       )}
       <div
-        className={`pointer-events-none absolute -bottom-[26rem] -right-4 z-30 flex h-[24.5rem] gap-4 rounded-lg bg-bg/90 opacity-0 transition-opacity duration-300 ${
-          isChatOpen && 'opacity-100'
+        onClick={() => isChatOpen && dispatch({ type: 'TOGGLE_CHAT' })}
+        className={`fixed inset-0 flex cursor-default gap-4 rounded-lg bg-bg/90 opacity-0 transition-all duration-300 ${
+          isChatOpen ? 'z-30 opacity-100' : 'pointer-events-none -z-10'
         } ${className}`}
       ></div>
       <AnimatePresence exitBeforeEnter>
