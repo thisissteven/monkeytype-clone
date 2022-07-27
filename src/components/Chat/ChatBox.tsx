@@ -30,19 +30,19 @@ export default function ChatBox({
   } = useRoomContext();
 
   const {
-    chat: { roomChat, publicChat, onlineUsers },
+    chat: { roomChat, publicChat, onlineUsers, showNotification },
     dispatch: chatDispatch,
   } = useChatContext();
 
   const { pathname } = useRouter();
 
-  const [showNotification, setShowNotification] = React.useState(false);
   const [isPublic, setIsPublic] = React.useState(false);
 
   const divRef = React.useRef() as React.MutableRefObject<HTMLDivElement>;
 
   React.useEffect(() => {
-    isChatOpen && setShowNotification(false);
+    isChatOpen &&
+      chatDispatch({ type: 'SET_SHOW_NOTIFICATION', payload: false });
     socket
       .off('receive chat')
       .on('receive chat', ({ id, username, value, type, roomId }: Chat) => {
@@ -57,7 +57,8 @@ export default function ChatBox({
             payload: { id, username, value, type, roomId },
           });
         }
-        if (!isChatOpen) setShowNotification(true);
+        if (!isChatOpen)
+          chatDispatch({ type: 'SET_SHOW_NOTIFICATION', payload: true });
       });
   }, [chatDispatch, isChatOpen, socket]);
 
@@ -76,8 +77,12 @@ export default function ChatBox({
         <GiDiscussion />
         <span className='mr-2 text-sm'>{label}</span>
       </div>
-      {showNotification && isRoomChat && (
-        <div className='absolute -right-2 -top-2 h-4 w-4 animate-bounce rounded-full bg-fg text-xs text-bg'>
+      {showNotification && (
+        <div
+          className={`absolute -right-2 -top-2 h-4 w-4 animate-bounce rounded-full bg-fg text-xs text-bg ${
+            ['/multiplayer', '/'].includes(pathname) && 'right-2'
+          }`}
+        >
           !
         </div>
       )}

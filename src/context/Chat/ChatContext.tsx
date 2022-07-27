@@ -12,6 +12,7 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
     publicChat: [],
     roomChat: [],
     onlineUsers: 0,
+    showNotification: false,
   });
 
   const {

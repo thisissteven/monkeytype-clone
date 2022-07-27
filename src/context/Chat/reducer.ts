@@ -17,6 +17,11 @@ const reducer = (state: ChatState, action: Action): ChatState => {
         ...state,
         roomChat: [],
       };
+    case 'SET_SHOW_NOTIFICATION':
+      return {
+        ...state,
+        showNotification: action.payload,
+      };
     case 'SET_ONLINE_USERS':
       return {
         ...state,
