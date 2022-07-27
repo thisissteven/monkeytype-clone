@@ -44,6 +44,13 @@ export default function MultiplayerPage() {
           dispatch({ type: 'SET_WINNER', payload: playerId })
         );
 
+      dispatch({ type: 'SET_STATUS', payload: { progress: 0, wpm: 0 } });
+      dispatch({ type: 'SET_IS_READY', payload: false });
+      dispatch({ type: 'SET_IS_PLAYING', payload: false });
+      dispatch({ type: 'SET_IS_FINISHED', payload: false });
+      dispatch({ type: 'SET_WINNER', payload: null });
+      resetTime(5);
+
       socket.off('end game').on('end game', () => {
         dispatch({ type: 'SET_STATUS', payload: { progress: 0, wpm: 0 } });
         dispatch({ type: 'SET_IS_READY', payload: false });
