@@ -9,6 +9,7 @@ export type Chat = {
 export type ChatState = {
   publicChat: Chat[];
   roomChat: Chat[];
+  onlineUsers: number;
 };
 
 export type ChatContextValues = {
@@ -19,4 +20,5 @@ export type ChatContextValues = {
 export type Action =
   | { type: 'ADD_PUBLIC_CHAT'; payload: Chat }
   | { type: 'ADD_ROOM_CHAT'; payload: Chat }
-  | { type: 'CLEAR_ROOM_CHAT' };
+  | { type: 'CLEAR_ROOM_CHAT' }
+  | { type: 'SET_ONLINE_USERS'; payload: number };

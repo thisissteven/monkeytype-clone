@@ -86,11 +86,12 @@ export const RoomProvider = ({ children }: { children: React.ReactNode }) => {
       socket.emit('leave room', room.user);
     }
 
-    if (pathname === '/multiplayer' || pathname === '/multiplayer/[id]') {
-      socket.connect();
-    } else {
-      socket.disconnect();
-    }
+    socket.connect();
+    // if (pathname === '/multiplayer' || pathname === '/multiplayer/[id]') {
+    //   socket.connect();
+    // } else {
+    //   socket.disconnect();
+    // }
   }, [pathname, room.user]);
 
   return (

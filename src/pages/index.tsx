@@ -5,6 +5,7 @@ import { IoMdPerson } from 'react-icons/io';
 import { RiTeamFill } from 'react-icons/ri';
 
 import Button from '@/components/Button/Button';
+import ChatBox from '@/components/Chat/ChatBox';
 import Input from '@/components/Input';
 import Kbd from '@/components/Kbd';
 import AnimateFade from '@/components/Layout/AnimateFade';
@@ -27,7 +28,14 @@ export default function HomePage() {
 
       <main>
         <section>
-          <div className='layout flex flex-col items-center gap-8 pt-20 text-center'>
+          <div className='layout flex flex-col items-center gap-8 pt-8 text-center'>
+            <div className='relative flex h-8 w-full max-w-[800px] items-center justify-between'>
+              <ChatBox
+                className='-right-0 w-[calc(100%)]'
+                label='public chat'
+              />
+            </div>
+
             <div className='aspect-video w-full max-w-[450px] overflow-hidden rounded-lg ring-4 ring-fg ring-offset-4 ring-offset-bg'>
               <iframe
                 src='https://www.youtube.com/embed/nnM9h7twXg8?autoplay=1&mute=1&loop=1&color=white&controls=0&modestbranding=1&playsinline=1&rel=0&enablejsapi=1&playlist=nnM9h7twXg8'
@@ -65,15 +73,18 @@ export default function HomePage() {
                 <IoMdPerson className='mr-1' />
                 Play Solo
               </Button>
-              <Button
-                onClick={() => router.push('/multiplayer')}
-                className='flex items-center'
-              >
-                <RiTeamFill className='mr-1' />
-                Multiplayer
-              </Button>
+              <div>
+                <Button
+                  onClick={() => router.push('/multiplayer')}
+                  className='flex items-center'
+                >
+                  <RiTeamFill className='mr-1' />
+                  Multiplayer
+                </Button>
+              </div>
             </div>
-            <div className='mt-8 flex flex-col items-center justify-center gap-2 font-primary'>
+
+            <div className='flex flex-col items-center justify-center gap-2 font-primary'>
               <div className='flex items-center space-x-2 text-sm'>
                 <Kbd>tab</Kbd>
                 <span className='text-hl'> + </span>

@@ -30,7 +30,7 @@ export default function ChatBox({
   } = useRoomContext();
 
   const {
-    chat: { roomChat, publicChat },
+    chat: { roomChat, publicChat, onlineUsers },
     dispatch: chatDispatch,
   } = useChatContext();
 
@@ -96,33 +96,38 @@ export default function ChatBox({
             className={`absolute -bottom-[26rem] -right-4 z-40 flex h-[24.5rem] cursor-auto justify-between gap-4 rounded-lg bg-bg/30 p-4 ring ring-fg/60 ring-offset-2 ring-offset-bg ${className}`}
           >
             <div className='flex h-full w-full flex-col justify-between'>
-              <div className='mb-2 flex gap-2 text-sm'>
-                {isRoomChat && (
+              <div className='flex justify-between'>
+                <div className='mb-2 flex gap-2 text-sm'>
+                  {isRoomChat && (
+                    <button
+                      onClick={() => setIsPublic((isPublic) => !isPublic)}
+                      className={clsx(
+                        'rounded-lg px-2 py-1 transition-colors duration-200',
+                        [!isPublic ? 'bg-fg text-bg' : 'text-hl']
+                      )}
+                    >
+                      room
+                    </button>
+                  )}
                   <button
                     onClick={() => setIsPublic((isPublic) => !isPublic)}
                     className={clsx(
                       'rounded-lg px-2 py-1 transition-colors duration-200',
-                      [!isPublic ? 'bg-fg text-bg' : 'text-hl']
+                      [isPublic || !isRoomChat ? 'bg-fg text-bg' : 'text-hl']
                     )}
                   >
-                    room
+                    public
                   </button>
-                )}
-                <button
-                  onClick={() => setIsPublic((isPublic) => !isPublic)}
-                  className={clsx(
-                    'rounded-lg px-2 py-1 transition-colors duration-200',
-                    [isPublic || !isRoomChat ? 'bg-fg text-bg' : 'text-hl']
-                  )}
-                >
-                  public
-                </button>
+                </div>
+                <span className='pr-4 text-sm text-fg xs:pr-6'>
+                  {onlineUsers} online
+                </span>
               </div>
               <div
                 ref={divRef}
                 className='xs:scrollbar mx-auto flex h-full w-full flex-col overflow-y-scroll break-words py-2 pr-4 xs:pr-2'
               >
-                {(isPublic || pathname === '/multiplayer') &&
+                {(isPublic || ['/multiplayer', '/'].includes(pathname)) &&
                   publicChat.map((chat, index) =>
                     chat.id === id ? (
                       <Bubble
@@ -161,7 +166,9 @@ export default function ChatBox({
                   )}
               </div>
               <ChatInput
-                isPublic={pathname === '/multiplayer' ? true : isPublic}
+                isPublic={
+                  ['/multiplayer', '/'].includes(pathname) ? true : isPublic
+                }
               />
             </div>
           </motion.div>

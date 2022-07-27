@@ -17,6 +17,11 @@ const reducer = (state: ChatState, action: Action): ChatState => {
         ...state,
         roomChat: [],
       };
+    case 'SET_ONLINE_USERS':
+      return {
+        ...state,
+        onlineUsers: action.payload,
+      };
     default:
       throw new Error('Unknown action type');
   }
