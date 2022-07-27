@@ -30,7 +30,7 @@ const ChatInput = ({ isPublic }: { isPublic: boolean }) => {
       <input
         placeholder='type to chat'
         type='text'
-        className='w-full border-x-0 border-b border-t-0 border-fg bg-transparent font-normal text-fg focus:border-fg focus:outline-0 focus:ring-0'
+        className='w-full border-x-0 border-b border-t-0 border-fg bg-transparent font-normal text-fg placeholder:text-fg/50 focus:border-fg focus:outline-0 focus:ring-0'
       />
       <button
         className='absolute right-0 h-full border-b border-fg bg-bg px-2 text-sm font-normal xs:right-4'

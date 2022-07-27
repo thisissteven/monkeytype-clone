@@ -96,7 +96,7 @@ export default function ChatBox({
             className={`absolute -bottom-[26rem] -right-4 z-40 flex h-[24.5rem] cursor-auto justify-between gap-4 rounded-lg bg-bg/30 p-4 ring ring-fg/60 ring-offset-2 ring-offset-bg ${className}`}
           >
             <div className='flex h-full w-full flex-col justify-between'>
-              <div className='flex gap-2 text-sm'>
+              <div className='mb-2 flex gap-2 text-sm'>
                 {isRoomChat && (
                   <button
                     onClick={() => setIsPublic((isPublic) => !isPublic)}

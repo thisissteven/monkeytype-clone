@@ -54,6 +54,7 @@ export default function HomePage() {
                   if (!e.target.value) return;
                   dispatch({ type: 'SET_NICKNAME', payload: e.target.value });
                 }}
+                className='text-center'
               />
             </FormProvider>
             <div className='flex items-center gap-4'>

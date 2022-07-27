@@ -123,7 +123,7 @@ export default function LeaderboardPage() {
                 <Link href='/account'>
                   <a>
                     <div className='hover:text-bg-90 rounded-sm bg-fg px-2 py-1 font-primary text-xs leading-5 text-bg transition-colors duration-200 hover:bg-fg/90'>
-                      tip: sign in to see your name in leaderboard
+                      tip: sign in to save your stats
                     </div>
                   </a>
                 </Link>
