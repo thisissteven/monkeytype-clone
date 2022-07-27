@@ -159,7 +159,7 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
           <Code />
           <ChatBox
             isRoomChat
-            className='right-1 w-[calc(100%)] sm:right-2'
+            className='right-4 w-[calc(100%)] sm:right-2'
             label='chat'
           />
         </div>

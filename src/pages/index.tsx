@@ -31,7 +31,7 @@ export default function HomePage() {
           <div className='layout flex flex-col items-center gap-8 pt-8 text-center'>
             <div className='relative flex h-8 w-full max-w-[800px] items-center justify-between'>
               <ChatBox
-                className='right-1 w-[calc(100%)] sm:right-2'
+                className='right-4 w-[calc(100%)] sm:right-2'
                 label='public chat'
               />
             </div>
