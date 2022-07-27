@@ -1,4 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import clsx from 'clsx';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -33,7 +34,8 @@ export default function MultiplayerPage() {
   const { handleSubmit } = methods;
 
   const {
-    room: { socket },
+    room: { socket, mode },
+    dispatch,
   } = useRoomContext();
 
   const router = useRouter();
@@ -46,7 +48,7 @@ export default function MultiplayerPage() {
 
     // create another room id if already exist
     socket.off('room already exist').on('room already exist', () => {
-      createRoom(socket);
+      createRoom(socket, mode);
     });
 
     // on create room success, redirect to that room
@@ -110,11 +112,50 @@ export default function MultiplayerPage() {
               </FormProvider>
 
               <span className='mb-4 text-3xl font-bold'>or</span>
+              <div className='mx-auto mb-4 flex space-x-2 font-primary'>
+                <button
+                  onClick={() =>
+                    dispatch({ type: 'SET_MODE', payload: 'words' })
+                  }
+                  className={clsx(
+                    'rounded-lg px-2 py-1 transition-colors duration-200',
+                    [mode === 'words' ? 'text-hl ring-2 ring-fg' : 'text-hl']
+                  )}
+                >
+                  words
+                </button>
+                <button
+                  onClick={() =>
+                    dispatch({ type: 'SET_MODE', payload: 'sentences' })
+                  }
+                  className={clsx(
+                    'rounded-lg px-2 py-1 transition-colors duration-200',
+                    [
+                      mode === 'sentences'
+                        ? 'text-hl ring-2 ring-fg'
+                        : 'text-hl',
+                    ]
+                  )}
+                >
+                  sentences
+                </button>
+                <button
+                  onClick={() =>
+                    dispatch({ type: 'SET_MODE', payload: 'numbers' })
+                  }
+                  className={clsx(
+                    'rounded-lg px-2 py-1 transition-colors duration-200',
+                    [mode === 'numbers' ? 'text-hl ring-2 ring-fg' : 'text-hl']
+                  )}
+                >
+                  numbers
+                </button>
+              </div>
               <div className='flex items-center justify-center space-x-4'>
                 <Button
                   onClick={() => {
                     setIsCreatingRoom(true);
-                    createRoom(socket);
+                    createRoom(socket, mode);
                   }}
                   disabled={isCreatingRoom}
                   className={`${isCreatingRoom && 'cursor-not-allowed'} mb-0`}

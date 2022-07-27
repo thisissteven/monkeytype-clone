@@ -13,6 +13,7 @@ export type Player = {
 
 export type RoomState = {
   user: Player;
+  mode: 'words' | 'sentences' | 'numbers';
   isFinished: boolean;
   isPlaying: boolean;
   isChatOpen: boolean;
@@ -31,6 +32,7 @@ export type RoomContextValues = {
 
 export type Action =
   | { type: 'SET_ROOM_ID'; payload: string | null }
+  | { type: 'SET_MODE'; payload: 'words' | 'sentences' | 'numbers' }
   | { type: 'SET_TEXT'; payload: string }
   | { type: 'SET_USER_ID'; payload: string }
   | {

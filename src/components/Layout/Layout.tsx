@@ -1,7 +1,7 @@
 import clsx from 'clsx';
-import Image from 'next/image';
 import NextNProgress from 'nextjs-progressbar';
 import * as React from 'react';
+import { CgSpinner } from 'react-icons/cg';
 
 import Footer from '@/components/Layout/Footer';
 import Seo from '@/components/Seo';
@@ -38,18 +38,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             )}
           >
             <div className='flex max-w-[500px] flex-wrap items-center justify-center gap-x-8'>
-              <div className='flex flex-col'>
-                <Image
-                  src='/images/monkeytype-clone.gif'
-                  width={180}
-                  height={180}
-                  alt='Monkeytype Clone - Typeracer App based on Monkeytype'
-                  className='scale-50'
-                />
+              <div className='flex flex-col items-center gap-4'>
+                <CgSpinner className='animate-spin text-[3rem] text-fg' />
                 <p className='hidden'>
                   Monkeytype Clone - Typeracer App based on Monkeytype
                 </p>
-                <div className='loading -mt-12 font-primary text-hl'>
+                <div className='loading font-primary text-fg'>
                   Preparing the page for you...
                 </div>
               </div>

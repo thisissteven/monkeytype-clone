@@ -34,6 +34,7 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
         isChatOpen,
         socket,
         winner,
+        mode,
         user: { roomId, id },
       },
       dispatch,
@@ -48,7 +49,7 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
 
       if (isFinished) {
         progress = 100;
-        !winner && socket.emit('end game', roomId);
+        !winner && socket.emit('end game', roomId, mode);
       }
 
       dispatch({ type: 'SET_STATUS', payload: { wpm, progress } });

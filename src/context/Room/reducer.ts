@@ -10,6 +10,11 @@ const reducer = (state: RoomState, action: Action): RoomState => {
           roomId: action.payload,
         },
       };
+    case 'SET_MODE':
+      return {
+        ...state,
+        mode: action.payload,
+      };
     case 'TOGGLE_CHAT':
       return {
         ...state,

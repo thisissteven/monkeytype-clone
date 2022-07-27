@@ -23,6 +23,7 @@ export const RoomProvider = ({ children }: { children: React.ReactNode }) => {
 
   const [room, dispatch] = React.useReducer(reducer, {
     text: '',
+    mode: 'words',
     isPlaying: false,
     isFinished: false,
     isChatOpen: false,
