@@ -39,14 +39,14 @@ export default function Multiplayer() {
       if (isOpen || isChatOpen) return;
       if (event.key === 'tab') {
         buttonRef.current.focus();
-      } else if (event.key !== 'Enter' && !event.ctrlKey) {
+      } else if (event.key !== 'Enter' && !event.ctrlKey && isPlaying) {
         inputRef.current.focus();
       }
     };
 
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
-  }, [isOpen, isChatOpen]);
+  }, [isOpen, isChatOpen, isPlaying]);
 
   const inputRef = React.useRef() as React.MutableRefObject<HTMLInputElement>;
   const buttonRef = React.useRef() as React.MutableRefObject<HTMLButtonElement>;
