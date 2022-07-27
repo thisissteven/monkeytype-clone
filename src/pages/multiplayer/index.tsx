@@ -79,7 +79,7 @@ export default function MultiplayerPage() {
           <div className='layout flex min-h-[65vh] w-full flex-col items-center pt-10 text-center font-primary'>
             <div className='relative mb-8 flex h-8 w-full max-w-[800px] items-center justify-between'>
               <ChatBox
-                className='right-4 w-[calc(100%)] sm:right-2'
+                className='right-3 w-[calc(100%)] sm:right-2'
                 label='public chat'
               />
             </div>
