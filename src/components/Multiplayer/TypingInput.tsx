@@ -35,9 +35,10 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
         socket,
         winner,
         mode,
-        user: { roomId, id },
+        user: { roomId, id, isOwner },
       },
       dispatch,
+      timeBeforeRestart,
     } = useRoomContext();
 
     React.useEffect(() => {
@@ -263,7 +264,11 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
                 )}
               >
                 {' '}
-                Game will start when everyone is ready
+                {timeBeforeRestart && !winner
+                  ? `Starting in ${timeBeforeRestart}`
+                  : isOwner
+                  ? 'Waiting for you to start the game'
+                  : 'Waiting for owner to start the game'}
               </span>
             )}
             <div

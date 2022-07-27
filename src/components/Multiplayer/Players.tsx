@@ -42,9 +42,9 @@ export default function Players() {
                   (
                   {isPlaying
                     ? 'in game'
-                    : player.isReady
-                    ? 'ready'
-                    : 'not ready'}
+                    : player.isOwner
+                    ? 'owner'
+                    : 'waiting for owner'}
                   )
                 </span>
               </span>
@@ -74,9 +74,9 @@ export default function Players() {
                   (
                   {isPlaying
                     ? 'in game'
-                    : player.isReady
-                    ? 'ready'
-                    : 'not ready'}
+                    : player.isOwner
+                    ? 'owner'
+                    : 'waiting for owner'}
                   )
                 </span>
               </span>

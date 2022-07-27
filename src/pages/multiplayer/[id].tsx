@@ -32,32 +32,26 @@ export default function MultiplayerPage() {
         dispatch({ type: 'SET_PLAYERS', payload: players });
       });
 
-      socket
-        .off('start game')
-        .on('start game', () =>
-          dispatch({ type: 'SET_IS_PLAYING', payload: true })
+      socket.off('start game').on('start game', () => {
+        dispatch({ type: 'SET_STATUS', payload: { progress: 0, wpm: 0 } });
+        dispatch({ type: 'SET_IS_FINISHED', payload: false });
+        dispatch({ type: 'SET_WINNER', payload: null });
+        resetTime(5).then(() =>
+          dispatch({ type: 'SET_IS_READY', payload: true })
         );
-
-      socket
-        .off('winner')
-        .on('winner', (playerId: string) =>
-          dispatch({ type: 'SET_WINNER', payload: playerId })
-        );
+      });
 
       dispatch({ type: 'SET_STATUS', payload: { progress: 0, wpm: 0 } });
       dispatch({ type: 'SET_IS_READY', payload: false });
       dispatch({ type: 'SET_IS_PLAYING', payload: false });
       dispatch({ type: 'SET_IS_FINISHED', payload: false });
       dispatch({ type: 'SET_WINNER', payload: null });
-      resetTime(5);
+      resetTime(0);
 
-      socket.off('end game').on('end game', () => {
-        dispatch({ type: 'SET_STATUS', payload: { progress: 0, wpm: 0 } });
-        dispatch({ type: 'SET_IS_READY', payload: false });
+      socket.off('end game').on('end game', (playerId: string) => {
         dispatch({ type: 'SET_IS_PLAYING', payload: false });
-        dispatch({ type: 'SET_IS_FINISHED', payload: false });
-        dispatch({ type: 'SET_WINNER', payload: null });
-        resetTime(5);
+        dispatch({ type: 'SET_WINNER', payload: playerId });
+        dispatch({ type: 'SET_IS_READY', payload: false });
       });
 
       socket.off('room invalid').on('room invalid', () => {
@@ -78,24 +72,8 @@ export default function MultiplayerPage() {
         router.push('/multiplayer');
       });
 
-      socket.off('leave room').on('leave room', (username: string) => {
-        toast.success(`${username} left.`, {
-          position: toast.POSITION.TOP_CENTER,
-          toastId: `${username} left.`,
-          autoClose: 3000,
-        });
-      });
-
       socket.off('words generated').on('words generated', (text: string) => {
         dispatch({ type: 'SET_TEXT', payload: text });
-      });
-
-      socket.off('notify').on('notify', (msg: string) => {
-        toast.success(msg, {
-          position: toast.POSITION.TOP_CENTER,
-          toastId: msg,
-          autoClose: 3000,
-        });
       });
     }
 

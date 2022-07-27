@@ -29,6 +29,7 @@ export const RoomProvider = ({ children }: { children: React.ReactNode }) => {
     isChatOpen: false,
     winner: null,
     user: {
+      isOwner: false,
       roomId: null,
       username:
         localStorage?.getItem('nickname') ||
@@ -48,13 +49,17 @@ export const RoomProvider = ({ children }: { children: React.ReactNode }) => {
     socket,
   });
 
-  const [timeBeforeRestart, setTimeBeforeRestart] = React.useState(() => 5);
+  const [timeBeforeRestart, setTimeBeforeRestart] = React.useState(() => 0);
 
-  const resetTime = (time: number) => setTimeBeforeRestart(time);
+  const resetTime = async (time: number) => setTimeBeforeRestart(time);
 
   React.useEffect(() => {
+    const dispatchTimeout = setTimeout(() => {
+      room.user.isReady && dispatch({ type: 'SET_IS_PLAYING', payload: true });
+    }, 5000);
+
     const restartInterval = setInterval(() => {
-      if (room.winner) {
+      if (room.user.isReady) {
         setTimeBeforeRestart((previousTime) => {
           if (previousTime === 0) {
             clearInterval(restartInterval);
@@ -64,8 +69,11 @@ export const RoomProvider = ({ children }: { children: React.ReactNode }) => {
       }
     }, 1000);
 
-    return () => clearInterval(restartInterval);
-  }, [room.winner]);
+    return () => {
+      clearInterval(restartInterval);
+      clearTimeout(dispatchTimeout);
+    };
+  }, [room.user.isReady]);
 
   const { pathname } = useRouter();
 
@@ -88,11 +96,6 @@ export const RoomProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     socket.connect();
-    // if (pathname === '/multiplayer' || pathname === '/multiplayer/[id]') {
-    //   socket.connect();
-    // } else {
-    //   socket.disconnect();
-    // }
   }, [pathname, room.user]);
 
   return (

@@ -15,6 +15,14 @@ const reducer = (state: RoomState, action: Action): RoomState => {
         ...state,
         mode: action.payload,
       };
+    case 'SET_IS_OWNER':
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          isOwner: action.payload,
+        },
+      };
     case 'TOGGLE_CHAT':
       return {
         ...state,

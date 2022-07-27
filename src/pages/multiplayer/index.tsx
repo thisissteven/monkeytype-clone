@@ -58,7 +58,7 @@ export default function MultiplayerPage() {
       dispatch({ type: 'SET_IS_PLAYING', payload: false });
       dispatch({ type: 'SET_IS_FINISHED', payload: false });
       dispatch({ type: 'SET_WINNER', payload: null });
-      resetTime(5);
+      resetTime(0);
     });
 
     // on create room success, redirect to that room
@@ -71,6 +71,7 @@ export default function MultiplayerPage() {
           autoClose: 3000,
         });
         setIsCreatingRoom(false);
+        dispatch({ type: 'SET_IS_OWNER', payload: true });
         router.push(`/multiplayer/${roomId}`);
       });
 

@@ -19,9 +19,9 @@ export default function Multiplayer() {
       isPlaying,
       winner,
       isChatOpen,
-      user: { isReady, id, roomId },
+      socket,
+      user: { id, roomId, isOwner },
     },
-    dispatch,
     timeBeforeRestart,
   } = useRoomContext();
 
@@ -59,30 +59,23 @@ export default function Multiplayer() {
       <div>
         <button
           ref={buttonRef}
-          disabled={isPlaying}
+          disabled={isPlaying || !isOwner || timeBeforeRestart > 0}
           tabIndex={2}
-          onClick={() =>
-            id &&
-            roomId &&
-            dispatch({ type: 'SET_IS_READY', payload: !isReady })
-          }
+          onClick={() => id && roomId && socket.emit('start game', roomId)}
           className={clsx(
             'outline-solid mb-8 transform rounded-lg px-3 py-2 font-primary text-bg shadow-b shadow-fg/50 outline-offset-[6px] transition-all duration-200 focus:outline-dashed focus:outline-[3px] active:translate-y-[4px] active:shadow-none',
             [
-              isReady
+              isPlaying || !isOwner || timeBeforeRestart > 0
                 ? 'active:bg-fg-50 bg-fg/70 hover:bg-fg/60 focus:outline-fg/30'
                 : 'active:bg-fg-80 bg-fg hover:bg-fg/90 focus:outline-fg/50 ',
             ],
-            [isPlaying && 'cursor-not-allowed']
+            [
+              (isPlaying || !isOwner || timeBeforeRestart > 0) &&
+                'cursor-not-allowed',
+            ]
           )}
         >
-          {timeBeforeRestart && winner
-            ? `Restarting in ${timeBeforeRestart}`
-            : isPlaying
-            ? 'In Game'
-            : isReady
-            ? 'Cancel'
-            : 'Ready'}
+          {winner ? 'Restart' : isPlaying ? 'In Game' : 'Start'}
         </button>
       </div>
     </>

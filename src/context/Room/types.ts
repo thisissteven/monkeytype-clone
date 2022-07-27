@@ -2,6 +2,7 @@ import { Socket } from 'socket.io-client';
 
 export type Player = {
   username: string;
+  isOwner: boolean;
   roomId: string | null;
   id: string;
   status: {
@@ -27,13 +28,14 @@ export type RoomContextValues = {
   room: RoomState;
   dispatch: React.Dispatch<Action>;
   timeBeforeRestart: number;
-  resetTime: (time: number) => void;
+  resetTime: (time: number) => Promise<void>;
 };
 
 export type Action =
   | { type: 'SET_ROOM_ID'; payload: string | null }
   | { type: 'SET_MODE'; payload: 'words' | 'sentences' | 'numbers' }
   | { type: 'SET_TEXT'; payload: string }
+  | { type: 'SET_IS_OWNER'; payload: boolean }
   | { type: 'SET_USER_ID'; payload: string }
   | {
       type: 'SET_STATUS';
