@@ -57,6 +57,7 @@ export default function HomePage() {
                 autoComplete='off'
                 name='nickname'
                 id='nickname'
+                maxLength={14}
                 defaultValue={localStorage?.getItem('nickname') || ''}
                 onBlur={(e) => {
                   if (!e.target.value) return;
