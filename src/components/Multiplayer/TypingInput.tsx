@@ -1,9 +1,7 @@
 import clsx from 'clsx';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { BsCursorFill, BsFlagFill } from 'react-icons/bs';
+import { BsCursorFill } from 'react-icons/bs';
 import useTyping from 'react-typing-game-hook';
-
-import Tooltip from '@/components/Tooltip';
 
 import { usePreferenceContext } from '@/context/Preference/PreferenceContext';
 import { useRoomContext } from '@/context/Room/RoomContext';
@@ -323,37 +321,35 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
                   'animate-blink': phase === 0,
                 })}
               >
-                {phase === 2 ? (
-                  <div className='group relative z-40'>
-                    <Tooltip
-                      className='bg-fg text-bg group-hover:translate-y-0 group-hover:opacity-100'
-                      triangle='bg-fg'
-                    >
-                      You finished here.
-                    </Tooltip>
-                    <BsFlagFill className='-mb-[8px] text-fg' />
-                  </div>
-                ) : (
-                  '|'
-                )}
+                |
               </span>
             ) : null}
           </div>
           <div className='relative mt-4 flex w-full flex-col flex-wrap items-center justify-center gap-4 text-sm'>
-            {phase === 2 && startTime && endTime ? (
+            {winner ? (
               <div className='grid grid-rows-3 items-center gap-4 rounded-lg px-4 py-1 text-xl font-bold sm:flex'>
-                <span>
-                  WPM: {Math.ceil(((60 / duration) * correctChar) / 5)}
+                <span className='text-4xl'>
+                  {duration === 0
+                    ? '0'
+                    : Math.round(((60 / duration) * correctChar) / 5)}
+                  <span className='text-base'>WPM</span>
+                </span>{' '}
+                <span className='text-4xl'>
+                  {duration}
+                  <span className='text-2xl'>s</span>
                 </span>
-                <span>
-                  Accuracy:{' '}
-                  {(
-                    ((correctChar - errorChar) / (currIndex + 1)) *
-                    100
-                  ).toFixed(2)}
+                <span className='relative text-4xl'>
+                  {duration === 0
+                    ? '00.00'
+                    : (
+                        ((correctChar - errorChar) / (currIndex + 1)) *
+                        100
+                      ).toFixed(2)}
                   %
+                  <span className='absolute -bottom-4 right-1 text-sm'>
+                    ACCURACY
+                  </span>
                 </span>
-                <span>Duration: {duration}s</span>
               </div>
             ) : null}
             <div className='flex gap-4'></div>

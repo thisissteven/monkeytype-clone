@@ -70,13 +70,13 @@ export default function ChatBox({
 
   return (
     <span className='z-1 absolute flex w-full cursor-pointer items-center justify-end text-3xl font-bold text-bg'>
-      <div
+      <button
         onClick={() => dispatch({ type: 'TOGGLE_CHAT' })}
         className='active:text-fg/-80 flex flex-col items-center gap-1 text-3xl text-fg transition-colors duration-200 hover:text-fg/90'
       >
         <GiDiscussion />
         <span className='mr-2 text-sm'>{label}</span>
-      </div>
+      </button>
       {showNotification && (
         <div
           className={`absolute -right-2 -top-2 h-4 w-4 animate-bounce rounded-full bg-fg text-xs text-bg ${

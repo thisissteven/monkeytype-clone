@@ -310,23 +310,26 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
         <div className='relative z-40 mt-4 flex w-full flex-col flex-wrap items-center justify-center gap-4 text-sm'>
           {phase === 2 && startTime && endTime ? (
             <div className='grid grid-rows-3 items-center gap-4 rounded-lg px-4 py-1 text-xl font-bold sm:flex'>
-              <span>
-                WPM: {Math.round(((60 / duration) * correctChar) / 5)}
+              <span className='text-4xl'>
+                {Math.round(((60 / duration) * correctChar) / 5)}
+                <span className='text-base'>WPM</span>
+              </span>{' '}
+              <span className='text-4xl'>
+                {duration}
+                <span className='text-2xl'>s</span>
               </span>
-              <span>
-                Accuracy:{' '}
+              <span className='relative text-4xl'>
                 {(((correctChar - errorChar) / (currIndex + 1)) * 100).toFixed(
                   2
                 )}
                 %
+                <span className='absolute -bottom-4 right-1 text-sm'>
+                  ACCURACY
+                </span>
               </span>
-              <span>Duration: {duration}s</span>
             </div>
           ) : null}
-          <div className='flex gap-4'>
-            {/* <span> Correct Characters: {correctChar}</span>
-            <span> Error Characters: {errorChar}</span> */}
-          </div>
+          <div className='flex gap-4'></div>
         </div>
       </div>
     );
