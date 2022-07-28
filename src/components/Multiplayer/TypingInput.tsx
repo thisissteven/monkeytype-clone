@@ -327,7 +327,7 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
           </div>
           <div className='relative mt-4 flex w-full flex-col flex-wrap items-center justify-center gap-4 text-sm'>
             {winner ? (
-              <div className='grid grid-rows-3 items-center gap-4 rounded-lg px-4 py-1 text-xl font-bold sm:flex'>
+              <div className='mb-4 -mt-4 grid grid-rows-3 items-center gap-4 rounded-lg px-4 py-1 text-xl font-bold sm:flex'>
                 <span className='text-4xl'>
                   {duration === 0
                     ? '0'
