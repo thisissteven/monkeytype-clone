@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// !STARTERCONF You can delete this page
-import { gql, useQuery } from '@apollo/client';
 import clsx from 'clsx';
 import { AnimatePresence, motion } from 'framer-motion';
 import TimeAgo from 'javascript-time-ago';
@@ -8,90 +6,37 @@ import en from 'javascript-time-ago/locale/en';
 import * as React from 'react';
 import { FaSignOutAlt, FaUserCircle } from 'react-icons/fa';
 
+import useUser from '@/hooks/useUser';
+
 import Login from '@/components/Account/Login';
-import Register from '@/components/Account/Register';
+import Button from '@/components/Button/Button';
 import AnimateFade from '@/components/Layout/AnimateFade';
 import ArrowLink from '@/components/Link/ArrowLink';
 import Seo from '@/components/Seo';
 
-import { useAuthState } from '@/context/User/UserContext';
-
 // English.
 TimeAgo.addLocale(en);
 
-const GetProfile = gql`
-  query GetMyProfile($id: ID!) {
-    usersPermissionsUser(id: $id) {
-      data {
-        attributes {
-          username
-          createdAt
-        }
-      }
-    }
-  }
-`;
-
-const GetRecents = gql`
-  query GetRecents($id: ID!) {
-    leaderboards(
-      sort: "createdAt:desc"
-      pagination: { page: 0, pageSize: 4 }
-      filters: { user: { id: { eq: $id } } }
-    ) {
-      data {
-        id
-        attributes {
-          wpm
-          type
-          time
-          createdAt
-          name
-        }
-      }
-    }
-  }
-`;
-
-const GetPersonalBest = gql`
-  query GetPersonalBest($id: ID!) {
-    leaderboards(
-      sort: "wpm:desc"
-      pagination: { page: 0, pageSize: 4 }
-      filters: { user: { id: { eq: $id } } }
-    ) {
-      data {
-        id
-        attributes {
-          wpm
-          type
-          time
-          createdAt
-          name
-        }
-      }
-    }
-  }
-`;
+// get profile
+// get recents
+// get personal best
 
 export default function AccountPage() {
-  const {
-    state: { authenticated, user },
-    logout,
-  } = useAuthState();
+  const { user, logout } = useUser();
 
   // Create formatter (English).
-  const timeAgo = new TimeAgo('en-US');
+  // const timeAgo = new TimeAgo('en-US');
 
-  const { data } = useQuery(GetProfile, { variables: { id: user?.id } });
-  const { data: personalBest } = useQuery(GetPersonalBest, {
-    variables: { id: user?.id },
-    pollInterval: 500,
-  });
-  const { data: recents } = useQuery(GetRecents, {
-    variables: { id: user?.id },
-    pollInterval: 500,
-  });
+  // todo: ganti pake swr
+  // const { data } = useQuery(GetProfile, { variables: { id: user?.id } });
+  // const { data: personalBest } = useQuery(GetPersonalBest, {
+  //   variables: { id: user?.id },
+  //   pollInterval: 500,
+  // });
+  // const { data: recents } = useQuery(GetRecents, {
+  //   variables: { id: user?.id },
+  //   pollInterval: 500,
+  // });
 
   return (
     <AnimateFade>
@@ -106,7 +51,7 @@ export default function AccountPage() {
             <h1 className='mb-4'>account</h1>
 
             <AnimatePresence exitBeforeEnter>
-              {authenticated && user ? (
+              {user ? (
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
@@ -119,18 +64,10 @@ export default function AccountPage() {
                       <FaUserCircle className='text-6xl' />
                     </div>
                     <div className='flex flex-col'>
-                      <span className='text-lg text-hl'>
-                        {data?.usersPermissionsUser?.data?.attributes?.username}
-                      </span>
+                      <span className='text-lg text-hl'>{user.name}</span>
                       <span className='text-sm text-hl'>
                         Joined{' '}
-                        {timeAgo &&
-                          data &&
-                          timeAgo?.format(
-                            new Date(
-                              data?.usersPermissionsUser?.data?.attributes?.createdAt
-                            )
-                          )}
+                        {/* {timeAgo && timeAgo?.format(new Date(user.createdAt))} */}
                       </span>
                     </div>
                   </div>
@@ -139,7 +76,7 @@ export default function AccountPage() {
                       Personal Best
                     </p>
                     <div className='flex flex-wrap gap-8'>
-                      {personalBest?.leaderboards?.data.map((best: any) => (
+                      {/* {personalBest?.leaderboards?.data.map((best: any) => (
                         <div
                           key={best.id}
                           className='flex max-w-[240px] flex-1 flex-col items-start'
@@ -157,13 +94,12 @@ export default function AccountPage() {
                           </span>
                           <span className='mt-2 text-xs'>
                             {timeAgo &&
-                              data &&
                               timeAgo?.format(
                                 new Date(best.attributes.createdAt)
                               )}
                           </span>
                         </div>
-                      ))}
+                      ))} */}
                     </div>
                   </div>
                   <div className='mt-4 flex flex-col gap-4 rounded-lg bg-font/10 p-4'>
@@ -171,7 +107,7 @@ export default function AccountPage() {
                       Recent tests
                     </p>
                     <div className='flex flex-wrap gap-8'>
-                      {recents?.leaderboards?.data.map((recent: any) => (
+                      {/* {recents?.leaderboards?.data.map((recent: any) => (
                         <div
                           key={recent.id}
                           className='flex max-w-[240px] flex-1 flex-col items-start'
@@ -195,18 +131,18 @@ export default function AccountPage() {
                               )}
                           </span>
                         </div>
-                      ))}
+                      ))} */}
                     </div>
                   </div>
                   <div className='h-4'></div>
-                  {authenticated && user && (
-                    <button
+                  {user && (
+                    <Button
                       onClick={logout}
                       className='mt-4 flex items-center justify-center rounded-md bg-fg px-3 py-1.5 text-sm text-bg transition-opacity duration-200 hover:opacity-90 active:opacity-80'
                     >
                       <FaSignOutAlt className='mr-2' />
                       Sign out
-                    </button>
+                    </Button>
                   )}
                 </motion.div>
               ) : (
@@ -215,14 +151,8 @@ export default function AccountPage() {
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   key='not-authenticated'
-                  className='flex flex-col justify-center gap-8 sm:flex-row sm:items-center sm:gap-16'
                 >
-                  <div className='flex w-full max-w-[280px] flex-col'>
-                    <Register />
-                  </div>
-                  <div className='flex w-full max-w-[280px] flex-col'>
-                    <Login />
-                  </div>
+                  <Login />
                 </motion.div>
               )}
             </AnimatePresence>

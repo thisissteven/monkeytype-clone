@@ -11,7 +11,7 @@ export default function PreferenceProvider({
   children: React.ReactNode;
 }) {
   const [preferences, dispatch] = React.useReducer(reducer, {
-    theme: '',
+    theme: 'default',
     fontFamily: 'poppins',
     isOpen: false,
     zenMode: true,

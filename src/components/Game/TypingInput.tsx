@@ -1,16 +1,14 @@
-import { useMutation } from '@apollo/client';
 import clsx from 'clsx';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { BsCursorFill } from 'react-icons/bs';
 import { BsFlagFill } from 'react-icons/bs';
 import useTyping from 'react-typing-game-hook';
 
+import useUser from '@/hooks/useUser';
+
 import Tooltip from '@/components/Tooltip';
 
 import { usePreferenceContext } from '@/context/Preference/PreferenceContext';
-import { useAuthState } from '@/context/User/UserContext';
-
-import { CreateLeaderboard } from './queries';
 
 type TypingInputProps = {
   text: string;
@@ -24,14 +22,10 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
     const letterElements = useRef<HTMLDivElement>(null);
     const [timeLeft, setTimeLeft] = useState(() => parseInt(time));
 
-    const [createLeaderboard] = useMutation(CreateLeaderboard);
+    const { user } = useUser();
 
     const {
-      state: { user, authenticated },
-    } = useAuthState();
-
-    const {
-      preferences: { isOpen, zenMode, type },
+      preferences: { isOpen, zenMode },
     } = usePreferenceContext();
 
     const {
@@ -110,33 +104,35 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
         const dur = Math.floor((endTime - startTime) / 1000);
         setDuration(dur);
         // check if user and authenticated => save data so strapi
-        if (user && authenticated) {
-          createLeaderboard({
-            variables: {
-              data: {
-                name: user.username,
-                wpm: Math.round(((60 / dur) * correctChar) / 5),
-                user: user.id,
-                time: parseInt(time),
-                type: type || 'words',
-              },
-            },
-          });
+        if (user) {
+          // todo: create leaderboard
+          // createLeaderboard({
+          //   variables: {
+          //     data: {
+          //       name: user.username,
+          //       wpm: Math.round(((60 / dur) * correctChar) / 5),
+          //       user: user.id,
+          //       time: parseInt(time),
+          //       type: type || 'words',
+          //     },
+          //   },
+          // });
         } else {
-          fetch(`${process.env.NEXT_PUBLIC_API_URL}/leaderboards`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              data: {
-                name: localStorage?.getItem('nickname') || 'guest',
-                wpm: Math.round(((60 / dur) * correctChar) / 5),
-                time: parseInt(time),
-                type: type || 'words',
-              },
-            }),
-          });
+          // todo: create leaderboard without user
+          // fetch(`${process.env.NEXT_PUBLIC_API_URL}/leaderboards`, {
+          //   method: 'POST',
+          //   headers: {
+          //     'Content-Type': 'application/json',
+          //   },
+          //   body: JSON.stringify({
+          //     data: {
+          //       name: localStorage?.getItem('nickname') || 'guest',
+          //       wpm: Math.round(((60 / dur) * correctChar) / 5),
+          //       time: parseInt(time),
+          //       type: type || 'words',
+          //     },
+          //   }),
+          // });
         }
       } else {
         setDuration(0);

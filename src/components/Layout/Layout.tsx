@@ -3,11 +3,12 @@ import NextNProgress from 'nextjs-progressbar';
 import * as React from 'react';
 import { CgSpinner } from 'react-icons/cg';
 
+import useUser from '@/hooks/useUser';
+
 import Footer from '@/components/Layout/Footer';
 import Seo from '@/components/Seo';
 
 import { usePreferenceContext } from '@/context/Preference/PreferenceContext';
-import { useAuthState } from '@/context/User/UserContext';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   // Put Header or Footer Here
@@ -15,19 +16,17 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     preferences: { theme, fontFamily },
   } = usePreferenceContext();
 
-  const {
-    state: { loading },
-  } = useAuthState();
+  const { isLoading } = useUser();
 
-  const [isLoading, setIsLoading] = React.useState(true);
+  const [isClient, setIsClient] = React.useState(true);
 
   React.useEffect(() => {
-    setTimeout(() => setIsLoading(false), 1000);
+    setTimeout(() => setIsClient(false), 500);
   }, []);
 
   return (
     <>
-      {isLoading || loading ? (
+      {isClient && isLoading ? (
         <>
           <Seo title='Monkeytype Clone' />
           <div
