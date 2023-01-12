@@ -131,7 +131,7 @@ export default function ChatBox({
               </div>
               <div
                 ref={divRef}
-                className='xs:scrollbar mx-auto flex h-full w-full flex-col overflow-y-scroll break-words py-2 pr-4 xs:pr-2'
+                className='xs:scrollbar mx-auto flex h-full w-full flex-col overflow-y-auto break-words py-2 pr-4 xs:pr-2'
               >
                 {(isPublic || ['/multiplayer', '/'].includes(pathname)) &&
                   publicChat.map((chat, index) =>

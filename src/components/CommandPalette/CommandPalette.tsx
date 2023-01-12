@@ -141,7 +141,7 @@ const CommandPalette = ({ data }: { data: CommandType[] }) => {
             {filteredCommands.length > 0 && (
               <Combobox.Options
                 static
-                className='sm:scrollbar max-h-72 overflow-y-scroll py-4 text-sm'
+                className='sm:scrollbar max-h-72 overflow-y-auto py-4 text-sm'
               >
                 <AnimatePresence exitBeforeEnter>
                   <motion.div

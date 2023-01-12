@@ -7,27 +7,21 @@ import Footer from '@/components/Layout/Footer';
 import Seo from '@/components/Seo';
 
 import { usePreferenceContext } from '@/context/Preference/PreferenceContext';
-import { useAuthState } from '@/context/User/UserContext';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  // Put Header or Footer Here
   const {
     preferences: { theme, fontFamily },
   } = usePreferenceContext();
 
-  const {
-    state: { loading },
-  } = useAuthState();
-
-  const [isLoading, setIsLoading] = React.useState(true);
+  const [isClient, setIsClient] = React.useState(true);
 
   React.useEffect(() => {
-    setTimeout(() => setIsLoading(false), 1000);
+    setTimeout(() => setIsClient(false), 500);
   }, []);
 
   return (
     <>
-      {isLoading || loading ? (
+      {isClient ? (
         <>
           <Seo title='Monkeytype Clone' />
           <div
@@ -55,7 +49,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           className={clsx(
             theme,
             fontFamily,
-            'sm:scrollbar h-screen w-full overflow-y-scroll bg-bg transition-colors duration-300'
+            'sm:scrollbar h-screen w-full overflow-y-auto bg-bg transition-colors duration-300'
           )}
         >
           <div className='layout flex h-full flex-col bg-transparent'>

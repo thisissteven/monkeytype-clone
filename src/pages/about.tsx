@@ -1,13 +1,6 @@
-// !STARTERCONF You can delete this page
 import clsx from 'clsx';
 import * as React from 'react';
-import {
-  SiGraphql,
-  SiNextdotjs,
-  SiReact,
-  SiStrapi,
-  SiTailwindcss,
-} from 'react-icons/si';
+import { SiNextdotjs, SiPrisma, SiReact, SiTailwindcss } from 'react-icons/si';
 
 import Kbd from '@/components/Kbd';
 import AnimateFade from '@/components/Layout/AnimateFade';
@@ -21,9 +14,8 @@ import { usePreferenceContext } from '@/context/Preference/PreferenceContext';
 const techs = [
   { icon: <SiNextdotjs />, key: 'nextjs' },
   { icon: <SiReact />, key: 'react' },
-  { icon: <SiGraphql />, key: 'graphql' },
+  { icon: <SiPrisma />, key: 'prisma' },
   { icon: <SiTailwindcss />, key: 'tailwind' },
-  { icon: <SiStrapi />, key: 'strapi' },
 ];
 
 type Theme = typeof themeList[number];

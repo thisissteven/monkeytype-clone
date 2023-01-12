@@ -13,10 +13,11 @@ import {
 import { RiTeamFill } from 'react-icons/ri';
 import { TbKeyboard } from 'react-icons/tb';
 
+import useProfile from '@/hooks/useProfile';
+
 import Tooltip from '@/components/Tooltip';
 
 import { usePreferenceContext } from '@/context/Preference/PreferenceContext';
-import { useAuthState } from '@/context/User/UserContext';
 
 const typeList = ['words', 'sentences', 'numbers'];
 
@@ -28,9 +29,7 @@ export default function Header() {
     dispatch,
   } = usePreferenceContext();
 
-  const {
-    state: { user },
-  } = useAuthState();
+  const { user } = useProfile();
 
   const { pathname } = useRouter();
 
@@ -169,7 +168,7 @@ export default function Header() {
                           { 'text-hl/70': pathname !== '/account' }
                         )}
                       >
-                        {user?.username}
+                        {user?.name}
                       </span>
                     </div>
                   </a>

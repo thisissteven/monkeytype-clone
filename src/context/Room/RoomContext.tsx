@@ -3,9 +3,10 @@ import * as React from 'react';
 import { io } from 'socket.io-client';
 import { animals, uniqueNamesGenerator } from 'unique-names-generator';
 
+import useProfile from '@/hooks/useProfile';
+
 import reducer from './reducer';
 import { RoomContextValues } from './types';
-import { useAuthState } from '../User/UserContext';
 
 const socket = io(
   process.env.NEXT_PUBLIC_SOCKET_URL || 'http://localhost:8080',
@@ -17,9 +18,7 @@ const socket = io(
 const RoomContext = React.createContext({} as RoomContextValues);
 
 export const RoomProvider = ({ children }: { children: React.ReactNode }) => {
-  const {
-    state: { user },
-  } = useAuthState();
+  const { user } = useProfile();
 
   const [room, dispatch] = React.useReducer(reducer, {
     text: '',
@@ -33,7 +32,7 @@ export const RoomProvider = ({ children }: { children: React.ReactNode }) => {
       roomId: null,
       username:
         localStorage?.getItem('nickname') ||
-        user?.username ||
+        user?.name ||
         uniqueNamesGenerator({
           dictionaries: [animals],
           style: 'lowerCase',

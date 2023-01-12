@@ -96,12 +96,12 @@ export default function MultiplayerPage() {
                 label='public chat'
               />
             </div>
-            <div className='h-20rem flex w-full flex-col gap-4'>
+            <div className='flex w-full flex-col gap-4'>
               <RiTeamFill className='self-center text-[5rem] text-fg' />
               <h1 className='mb-2'>multiplayer mode</h1>
               <FormProvider {...methods}>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                  <div className='-mb-2 flex w-full justify-center gap-2'>
+                  <div className='mx-auto -mb-2 flex max-w-[330px] justify-center gap-2'>
                     <Input
                       name='code'
                       id='code'
