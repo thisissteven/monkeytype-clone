@@ -1,5 +1,7 @@
 import useSWR from 'swr';
 
+import { LeaderboardPayload } from './useLeaderboard';
+
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 type UserPayload = {
@@ -7,8 +9,21 @@ type UserPayload = {
   createdAt: string;
 };
 
+type ProfileStatsPayload = {
+  best: LeaderboardPayload[];
+  recent: LeaderboardPayload[];
+};
+
 export const getCurrentUser = async (): Promise<UserPayload> => {
   const res = await fetch(`${API_URL}/currentUser`);
+  if (!res.ok) {
+    throw new Error('An error occurred while fetching the data.');
+  }
+  return res.json();
+};
+
+const getProfileStats = async (): Promise<ProfileStatsPayload> => {
+  const res = await fetch(`${API_URL}/profile`);
   if (!res.ok) {
     throw new Error('An error occurred while fetching the data.');
   }
@@ -24,6 +39,10 @@ const useProfile = () => {
     fallbackData: null,
   });
 
+  const { data: profileStats } = useSWR('getProfileStats', getProfileStats, {
+    fallbackData: null,
+  });
+
   const clearUser = () =>
     mutate(() => null, {
       optimisticData: null,
@@ -31,7 +50,7 @@ const useProfile = () => {
       revalidate: false,
     });
 
-  return { user, clearUser, isLoading };
+  return { user, clearUser, isLoading, profileStats };
 };
 
 export default useProfile;

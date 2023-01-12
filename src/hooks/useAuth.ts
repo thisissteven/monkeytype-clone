@@ -34,7 +34,6 @@ const useAuth = () => {
         optimisticData: null,
         populateCache: true,
         revalidate: false,
-        rollbackOnError: true,
       }
     );
   };

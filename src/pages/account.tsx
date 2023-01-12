@@ -7,6 +7,7 @@ import * as React from 'react';
 import { FaSignOutAlt, FaUserCircle } from 'react-icons/fa';
 
 import useAuth from '@/hooks/useAuth';
+import { LeaderboardPayload } from '@/hooks/useLeaderboard';
 import useProfile from '@/hooks/useProfile';
 
 import Login from '@/components/Account/Login';
@@ -20,21 +21,10 @@ TimeAgo.addLocale(en);
 
 export default function AccountPage() {
   const { logout } = useAuth();
-  const { user } = useProfile();
+  const { user, profileStats } = useProfile();
 
   // Create formatter (English).
   const timeAgo = new TimeAgo('en-US');
-
-  // todo: ganti pake swr
-  // const { data } = useQuery(GetProfile, { variables: { id: user?.id } });
-  // const { data: personalBest } = useQuery(GetPersonalBest, {
-  //   variables: { id: user?.id },
-  //   pollInterval: 500,
-  // });
-  // const { data: recents } = useQuery(GetRecents, {
-  //   variables: { id: user?.id },
-  //   pollInterval: 500,
-  // });
 
   return (
     <AnimateFade>
@@ -74,30 +64,32 @@ export default function AccountPage() {
                       Personal Best
                     </p>
                     <div className='flex flex-wrap gap-8'>
-                      {/* {personalBest?.leaderboards?.data.map((best: any) => (
-                        <div
-                          key={best.id}
-                          className='flex max-w-[240px] flex-1 flex-col items-start'
-                        >
-                          <span className='flex items-center gap-2 whitespace-nowrap text-hl'>
-                            <span className='rounded-sm bg-fg px-2 py-1 text-sm text-bg'>
-                              {best.attributes.wpm} wpm
-                            </span>
-                            <span className='rounded-sm bg-hl px-2 py-1 text-sm text-bg'>
-                              {best.attributes.type}
-                            </span>
-                            <span className='rounded-sm bg-hl px-2 py-1 text-sm text-bg'>
-                              {best.attributes.time}s
-                            </span>
-                          </span>
-                          <span className='mt-2 text-xs'>
-                            {timeAgo &&
-                              timeAgo?.format(
-                                new Date(best.attributes.createdAt)
-                              )}
-                          </span>
-                        </div>
-                      ))} */}
+                      {profileStats?.best.length === 0
+                        ? '-'
+                        : profileStats?.best.map((best: LeaderboardPayload) => (
+                            <div
+                              key={best.id}
+                              className='flex max-w-[240px] flex-1 flex-col items-start'
+                            >
+                              <span className='flex items-center gap-2 whitespace-nowrap text-hl'>
+                                <span className='rounded-sm bg-fg px-2 py-1 text-sm text-bg'>
+                                  {best.wpm} wpm
+                                </span>
+                                <span className='rounded-sm bg-hl px-2 py-1 text-sm text-bg'>
+                                  {best.type}
+                                </span>
+                                <span className='rounded-sm bg-hl px-2 py-1 text-sm text-bg'>
+                                  {best.time}s
+                                </span>
+                              </span>
+                              <span className='mt-2 text-xs'>
+                                {timeAgo &&
+                                  timeAgo?.format(
+                                    new Date(best.createdAt as string)
+                                  )}
+                              </span>
+                            </div>
+                          ))}
                     </div>
                   </div>
                   <div className='mt-4 flex flex-col gap-4 rounded-lg bg-font/10 p-4'>
@@ -105,31 +97,32 @@ export default function AccountPage() {
                       Recent tests
                     </p>
                     <div className='flex flex-wrap gap-8'>
-                      {/* {recents?.leaderboards?.data.map((recent: any) => (
-                        <div
-                          key={recent.id}
-                          className='flex max-w-[240px] flex-1 flex-col items-start'
-                        >
-                          <span className='flex items-center gap-2 whitespace-nowrap text-hl'>
-                            <span className='rounded-sm bg-fg px-2 py-1 text-sm text-bg'>
-                              {recent.attributes.wpm} wpm
-                            </span>
-                            <span className='rounded-sm bg-hl px-2 py-1 text-sm text-bg'>
-                              {recent.attributes.type}
-                            </span>
-                            <span className='rounded-sm bg-hl px-2 py-1 text-sm text-bg'>
-                              {recent.attributes.time}s
-                            </span>
-                          </span>
-                          <span className='mt-2 text-xs'>
-                            {timeAgo &&
-                              data &&
-                              timeAgo?.format(
-                                new Date(recent.attributes.createdAt)
-                              )}
-                          </span>
-                        </div>
-                      ))} */}
+                      {profileStats?.recent.length === 0
+                        ? '-'
+                        : profileStats?.recent.map((recent: any) => (
+                            <div
+                              key={recent.id}
+                              className='flex max-w-[240px] flex-1 flex-col items-start'
+                            >
+                              <span className='flex items-center gap-2 whitespace-nowrap text-hl'>
+                                <span className='rounded-sm bg-fg px-2 py-1 text-sm text-bg'>
+                                  {recent.wpm} wpm
+                                </span>
+                                <span className='rounded-sm bg-hl px-2 py-1 text-sm text-bg'>
+                                  {recent.type}
+                                </span>
+                                <span className='rounded-sm bg-hl px-2 py-1 text-sm text-bg'>
+                                  {recent.time}s
+                                </span>
+                              </span>
+                              <span className='mt-2 text-xs'>
+                                {timeAgo &&
+                                  timeAgo?.format(
+                                    new Date(recent.createdAt as string)
+                                  )}
+                              </span>
+                            </div>
+                          ))}
                     </div>
                   </div>
                   <div className='h-4'></div>
