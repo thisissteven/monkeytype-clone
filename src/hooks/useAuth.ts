@@ -14,35 +14,17 @@ const useAuth = () => {
 
   const { clearUser } = useProfile();
 
-  const {
-    data: userData,
-    isValidating,
-    error,
-    mutate,
-  } = useSWR('getUser', getUser, {
+  const { isValidating, error } = useSWR('getUser', getUser, {
     fallbackData: data,
   });
 
   const logout = () => {
-    mutate(
-      () => {
-        signOut({ redirect: false });
-        clearUser();
-        return null;
-      },
-      {
-        optimisticData: null,
-        populateCache: true,
-        revalidate: false,
-      }
-    );
+    signOut({ redirect: false }).then(() => clearUser());
   };
 
   const login = () => signIn('google');
 
-  const isAuthenticated = !!userData?.user;
-
-  return { isAuthenticated, isValidating, error, logout, login };
+  return { isValidating, error, logout, login };
 };
 
 export default useAuth;

@@ -20,7 +20,7 @@ import Seo from '@/components/Seo';
 TimeAgo.addLocale(en);
 
 export default function AccountPage() {
-  const { logout } = useAuth();
+  const { logout, isValidating } = useAuth();
   const { user, profileStats } = useProfile();
 
   // Create formatter (English).
@@ -128,6 +128,7 @@ export default function AccountPage() {
                   <div className='h-4'></div>
                   {user && (
                     <Button
+                      disabled={isValidating}
                       onClick={logout}
                       className='mt-4 flex items-center justify-center rounded-md bg-fg px-3 py-1.5 text-sm text-bg transition-opacity duration-200 hover:opacity-90 active:opacity-80'
                     >
