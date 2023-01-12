@@ -17,7 +17,7 @@
     "release": "standard-version",
     "push-release": "git push --follow-tags origin main",
     "postbuild": "next-sitemap --config next-sitemap.config.js",
-    "prepare": "husky install"
+    "prepare": "cd .. && husky install app/.husky"
   },
   "dependencies": {
     "@headlessui/react": "^1.6.6",
