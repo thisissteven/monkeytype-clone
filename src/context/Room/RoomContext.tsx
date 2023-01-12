@@ -3,7 +3,7 @@ import * as React from 'react';
 import { io } from 'socket.io-client';
 import { animals, uniqueNamesGenerator } from 'unique-names-generator';
 
-import useUser from '@/hooks/useUser';
+import useProfile from '@/hooks/useProfile';
 
 import reducer from './reducer';
 import { RoomContextValues } from './types';
@@ -18,7 +18,7 @@ const socket = io(
 const RoomContext = React.createContext({} as RoomContextValues);
 
 export const RoomProvider = ({ children }: { children: React.ReactNode }) => {
-  const { user } = useUser();
+  const { user } = useProfile();
 
   const [room, dispatch] = React.useReducer(reducer, {
     text: '',

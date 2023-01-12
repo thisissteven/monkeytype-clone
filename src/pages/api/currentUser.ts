@@ -3,7 +3,7 @@ import { unstable_getServerSession } from 'next-auth/next';
 
 import prisma from '@/lib/prisma';
 
-import { authOptions } from '../api/auth/[...nextauth]';
+import { authOptions } from './auth/[...nextauth]';
 
 export default async function handler(
   req: NextApiRequest,
@@ -22,7 +22,7 @@ export default async function handler(
 
           res.status(200).json(user);
         } else {
-          res.status(401).json({ message: 'Unauthorized' });
+          res.status(200).json(null);
         }
         break;
 

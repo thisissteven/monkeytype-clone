@@ -6,7 +6,7 @@ import Link from 'next/link';
 import * as React from 'react';
 
 import useLeaderboard, { LeaderboardPayload } from '@/hooks/useLeaderboard';
-import useUser from '@/hooks/useUser';
+import useProfile from '@/hooks/useProfile';
 
 import AnimateFade from '@/components/Layout/AnimateFade';
 import TableRow from '@/components/Leaderboard/TableRow';
@@ -21,7 +21,7 @@ export default function LeaderboardPage() {
   // todo: Get all leaderboards
   // todo: Get daily leaderboards
 
-  const { user } = useUser();
+  const { user } = useProfile();
   const { daily, allTime, isLoading } = useLeaderboard();
 
   // Create formatter (English).

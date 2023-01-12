@@ -2,12 +2,12 @@ import * as React from 'react';
 import { CgSpinner } from 'react-icons/cg';
 import { FcGoogle } from 'react-icons/fc';
 
-import useUser from '@/hooks/useUser';
+import useAuth from '@/hooks/useAuth';
 
 import Button from '../Button/Button';
 
 export default function Login() {
-  const { isValidating, login } = useUser();
+  const { isValidating, login } = useAuth();
 
   return (
     <Button

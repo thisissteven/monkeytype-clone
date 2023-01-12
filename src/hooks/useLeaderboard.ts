@@ -25,7 +25,9 @@ export const getLeaderboard = async (): Promise<LeaderboardAPIPayload> => {
 };
 
 const useLeaderboard = () => {
-  const { data, isLoading } = useSWR('getLeaderboard', getLeaderboard);
+  const { data, isLoading } = useSWR('getLeaderboard', getLeaderboard, {
+    fallbackData: null,
+  });
 
   return { daily: data?.daily, allTime: data?.allTime, isLoading };
 };

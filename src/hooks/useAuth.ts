@@ -2,28 +2,17 @@ import { getSession, signOut, useSession } from 'next-auth/react';
 import { signIn } from 'next-auth/react';
 import useSWR from 'swr';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
-
-type UserPayload = {
-  name: string;
-  createdAt: string;
-};
+import useProfile from './useProfile';
 
 export const getUser = async () => {
   const user = await getSession();
   return user;
 };
 
-export const getCurrentUser = async (): Promise<UserPayload> => {
-  const res = await fetch(`${API_URL}/user`);
-  if (!res.ok) {
-    throw new Error('An error occurred while fetching the data.');
-  }
-  return res.json();
-};
-
-const useUser = () => {
+const useAuth = () => {
   const { data } = useSession();
+
+  const { clearUser } = useProfile();
 
   const {
     data: userData,
@@ -34,12 +23,11 @@ const useUser = () => {
     fallbackData: data,
   });
 
-  const { data: user } = useSWR('getCurrentUser', getCurrentUser);
-
   const logout = () => {
     mutate(
       () => {
         signOut({ redirect: false });
+        clearUser();
         return null;
       },
       {
@@ -55,7 +43,7 @@ const useUser = () => {
 
   const isAuthenticated = !!userData?.user;
 
-  return { user, isAuthenticated, isValidating, error, logout, login };
+  return { isAuthenticated, isValidating, error, logout, login };
 };
 
-export default useUser;
+export default useAuth;

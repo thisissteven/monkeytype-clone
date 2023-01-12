@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import useUser from '@/hooks/useUser';
+import useProfile from '@/hooks/useProfile';
 
 import reducer from './reducer';
 import { ChatContextValues } from './types';
@@ -20,7 +20,7 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
     room: { socket },
   } = useRoomContext();
 
-  const { user } = useUser();
+  const { user } = useProfile();
 
   React.useEffect(() => {
     if (socket) {

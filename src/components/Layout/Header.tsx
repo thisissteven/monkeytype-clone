@@ -13,7 +13,7 @@ import {
 import { RiTeamFill } from 'react-icons/ri';
 import { TbKeyboard } from 'react-icons/tb';
 
-import useUser from '@/hooks/useUser';
+import useProfile from '@/hooks/useProfile';
 
 import Tooltip from '@/components/Tooltip';
 
@@ -29,7 +29,7 @@ export default function Header() {
     dispatch,
   } = usePreferenceContext();
 
-  const { user } = useUser();
+  const { user } = useProfile();
 
   const { pathname } = useRouter();
 

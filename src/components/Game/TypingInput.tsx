@@ -4,7 +4,7 @@ import { BsCursorFill } from 'react-icons/bs';
 import { BsFlagFill } from 'react-icons/bs';
 import useTyping from 'react-typing-game-hook';
 
-import useUser from '@/hooks/useUser';
+import useProfile from '@/hooks/useProfile';
 
 import Tooltip from '@/components/Tooltip';
 
@@ -22,7 +22,7 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
     const letterElements = useRef<HTMLDivElement>(null);
     const [timeLeft, setTimeLeft] = useState(() => parseInt(time));
 
-    const { user } = useUser();
+    const { user } = useProfile();
 
     const {
       preferences: { isOpen, zenMode },

@@ -6,7 +6,8 @@ import en from 'javascript-time-ago/locale/en';
 import * as React from 'react';
 import { FaSignOutAlt, FaUserCircle } from 'react-icons/fa';
 
-import useUser from '@/hooks/useUser';
+import useAuth from '@/hooks/useAuth';
+import useProfile from '@/hooks/useProfile';
 
 import Login from '@/components/Account/Login';
 import Button from '@/components/Button/Button';
@@ -17,12 +18,9 @@ import Seo from '@/components/Seo';
 // English.
 TimeAgo.addLocale(en);
 
-// get profile
-// get recents
-// get personal best
-
 export default function AccountPage() {
-  const { user, logout } = useUser();
+  const { isAuthenticated, logout } = useAuth();
+  const { user } = useProfile();
 
   // Create formatter (English).
   const timeAgo = new TimeAgo('en-US');
@@ -51,7 +49,7 @@ export default function AccountPage() {
             <h1 className='mb-4'>account</h1>
 
             <AnimatePresence exitBeforeEnter>
-              {user ? (
+              {isAuthenticated && user ? (
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
