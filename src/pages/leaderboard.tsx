@@ -5,39 +5,27 @@ import en from 'javascript-time-ago/locale/en';
 import Link from 'next/link';
 import * as React from 'react';
 
+import useLeaderboard, { LeaderboardPayload } from '@/hooks/useLeaderboard';
 import useUser from '@/hooks/useUser';
 
 import AnimateFade from '@/components/Layout/AnimateFade';
+import TableRow from '@/components/Leaderboard/TableRow';
+import TableSkeleton from '@/components/Leaderboard/TableSkeleton';
 import ArrowLink from '@/components/Link/ArrowLink';
 import Seo from '@/components/Seo';
 
 // English.
 TimeAgo.addLocale(en);
 
-// type Leaderboard = {
-//   id: string;
-//   attributes: {
-//     wpm: number;
-//     type: 'words' | 'sentences' | 'numbers';
-//     time: 15 | 30 | 45 | 60 | 120;
-//     createdAt: string;
-//     name: string;
-//   };
-// };
-
-const today = new Date();
-today.setHours(0);
-today.setMinutes(0);
-today.setSeconds(0);
-
 export default function LeaderboardPage() {
   // todo: Get all leaderboards
   // todo: Get daily leaderboards
 
   const { user } = useUser();
+  const { daily, allTime, isLoading } = useLeaderboard();
 
   // Create formatter (English).
-  // const timeAgo = new TimeAgo('en-US');
+  const timeAgo = new TimeAgo('en-US');
 
   const [selected, setSelected] = React.useState('daily');
 
@@ -97,16 +85,14 @@ export default function LeaderboardPage() {
                   </tr>
                 </thead>
 
-                {/* {loading && selected === 'all time' && <TableSkeleton />} */}
-                {/* {dailyLoading && selected === 'daily' && <TableSkeleton />} */}
+                {isLoading && selected === 'all time' && <TableSkeleton />}
+                {isLoading && selected === 'daily' && <TableSkeleton />}
                 <tbody>
-                  {/* {selected === 'all time' &&
-                    data?.leaderboards?.data?.map(
-                      (leaderboard: Leaderboard, index: number) => {
-                        const {
-                          id,
-                          attributes: { wpm, time, type, createdAt, name },
-                        } = leaderboard;
+                  {selected === 'all time' &&
+                    allTime?.map(
+                      (leaderboard: LeaderboardPayload, index: number) => {
+                        const { wpm, time, type, createdAt, name, id } =
+                          leaderboard;
                         const date = timeAgo.format(new Date(createdAt));
                         return (
                           <TableRow
@@ -120,14 +106,12 @@ export default function LeaderboardPage() {
                           />
                         );
                       }
-                    )} */}
-                  {/* {selected === 'daily' &&
-                    dailyData?.leaderboards?.data?.map(
-                      (leaderboard: Leaderboard, index: number) => {
-                        const {
-                          id,
-                          attributes: { wpm, time, type, createdAt, name },
-                        } = leaderboard;
+                    )}
+                  {selected === 'daily' &&
+                    daily?.map(
+                      (leaderboard: LeaderboardPayload, index: number) => {
+                        const { id, wpm, time, type, createdAt, name } =
+                          leaderboard;
                         const date = timeAgo.format(new Date(createdAt));
                         return (
                           <TableRow
@@ -141,7 +125,7 @@ export default function LeaderboardPage() {
                           />
                         );
                       }
-                    )} */}
+                    )}
                 </tbody>
               </table>
             </div>
