@@ -93,7 +93,9 @@ export default function LeaderboardPage() {
                       (leaderboard: LeaderboardPayload, index: number) => {
                         const { wpm, time, type, createdAt, name, id } =
                           leaderboard;
-                        const date = timeAgo.format(new Date(createdAt));
+                        const date = timeAgo.format(
+                          new Date(createdAt as string)
+                        );
                         return (
                           <TableRow
                             key={id}
@@ -112,7 +114,9 @@ export default function LeaderboardPage() {
                       (leaderboard: LeaderboardPayload, index: number) => {
                         const { id, wpm, time, type, createdAt, name } =
                           leaderboard;
-                        const date = timeAgo.format(new Date(createdAt));
+                        const date = timeAgo.format(
+                          new Date(createdAt as string)
+                        );
                         return (
                           <TableRow
                             key={id}

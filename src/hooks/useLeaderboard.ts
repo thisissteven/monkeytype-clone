@@ -3,12 +3,12 @@ import useSWR from 'swr';
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export type LeaderboardPayload = {
-  id: string;
+  id?: string;
+  createdAt?: string | undefined;
   name: string;
-  createdAt: string;
   wpm: number;
-  type: 'words' | 'sentences' | 'numbers';
-  time: 15 | 30 | 45 | 60 | 120;
+  type: string;
+  time: number;
 };
 
 type LeaderboardAPIPayload = {
@@ -29,7 +29,24 @@ const useLeaderboard = () => {
     fallbackData: null,
   });
 
-  return { daily: data?.daily, allTime: data?.allTime, isLoading };
+  const createLeaderboardData = async (data: LeaderboardPayload) => {
+    const res = await fetch(`${API_URL}/leaderboard`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ...data }),
+    });
+    if (!res.ok) {
+      throw new Error('An error occurred while fetching the data.');
+    }
+    return res.json();
+  };
+
+  return {
+    daily: data?.daily,
+    allTime: data?.allTime,
+    isLoading,
+    createLeaderboardData,
+  };
 };
 
 export default useLeaderboard;

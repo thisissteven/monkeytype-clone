@@ -4,6 +4,7 @@ import { BsCursorFill } from 'react-icons/bs';
 import { BsFlagFill } from 'react-icons/bs';
 import useTyping from 'react-typing-game-hook';
 
+import useLeaderboard from '@/hooks/useLeaderboard';
 import useProfile from '@/hooks/useProfile';
 
 import Tooltip from '@/components/Tooltip';
@@ -24,8 +25,10 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
 
     const { user } = useProfile();
 
+    const { createLeaderboardData } = useLeaderboard();
+
     const {
-      preferences: { isOpen, zenMode },
+      preferences: { isOpen, zenMode, type },
     } = usePreferenceContext();
 
     const {
@@ -103,37 +106,14 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
       if (phase === 2 && endTime && startTime) {
         const dur = Math.floor((endTime - startTime) / 1000);
         setDuration(dur);
-        // check if user and authenticated => save data so strapi
-        if (user) {
-          // todo: create leaderboard
-          // createLeaderboard({
-          //   variables: {
-          //     data: {
-          //       name: user.username,
-          //       wpm: Math.round(((60 / dur) * correctChar) / 5),
-          //       user: user.id,
-          //       time: parseInt(time),
-          //       type: type || 'words',
-          //     },
-          //   },
-          // });
-        } else {
-          // todo: create leaderboard without user
-          // fetch(`${process.env.NEXT_PUBLIC_API_URL}/leaderboards`, {
-          //   method: 'POST',
-          //   headers: {
-          //     'Content-Type': 'application/json',
-          //   },
-          //   body: JSON.stringify({
-          //     data: {
-          //       name: localStorage?.getItem('nickname') || 'guest',
-          //       wpm: Math.round(((60 / dur) * correctChar) / 5),
-          //       time: parseInt(time),
-          //       type: type || 'words',
-          //     },
-          //   }),
-          // });
-        }
+
+        // todo: create leaderboard
+        createLeaderboardData({
+          name: user?.name || localStorage?.getItem('nickname') || 'guest',
+          wpm: Math.round(((60 / dur) * correctChar) / 5),
+          time: parseInt(time),
+          type: type || 'words',
+        });
       } else {
         setDuration(0);
       }

@@ -68,20 +68,28 @@ export default async function handler(
 
         break;
 
-      case 'PUT':
-        if (session && session.user?.email) {
-          const user = await prisma.user.update({
+      case 'POST':
+        if (session) {
+          const user = await prisma.leaderboard.create({
             data: {
-              name: 'Steven',
-            },
-            where: {
-              email: session.user?.email,
+              ...req.body,
+              user: {
+                connect: {
+                  email: session.user?.email as string,
+                },
+              },
             },
           });
 
           res.status(200).json(user);
         } else {
-          res.status(401).json({ message: 'Unauthorized' });
+          const user = await prisma.leaderboard.create({
+            data: {
+              ...req.body,
+            },
+          });
+
+          res.status(200).json(user);
         }
 
         break;

@@ -19,7 +19,7 @@ import Seo from '@/components/Seo';
 TimeAgo.addLocale(en);
 
 export default function AccountPage() {
-  const { isAuthenticated, logout } = useAuth();
+  const { logout } = useAuth();
   const { user } = useProfile();
 
   // Create formatter (English).
@@ -49,7 +49,7 @@ export default function AccountPage() {
             <h1 className='mb-4'>account</h1>
 
             <AnimatePresence exitBeforeEnter>
-              {isAuthenticated && user ? (
+              {user ? (
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}

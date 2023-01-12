@@ -9,7 +9,6 @@ import Seo from '@/components/Seo';
 import { usePreferenceContext } from '@/context/Preference/PreferenceContext';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  // Put Header or Footer Here
   const {
     preferences: { theme, fontFamily },
   } = usePreferenceContext();

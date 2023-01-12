@@ -6,8 +6,8 @@ import clsxm from '@/lib/clsxm';
 type TableRowProps = {
   index: number;
   wpm: number;
-  type: 'words' | 'sentences' | 'numbers';
-  time: 15 | 30 | 45 | 60 | 120;
+  type: string;
+  time: number;
   date: string;
   username: string;
 };
