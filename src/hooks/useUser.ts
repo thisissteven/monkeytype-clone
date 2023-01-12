@@ -9,6 +9,7 @@ export const getUser = async () => {
 
 const useUser = () => {
   const { data } = useSession();
+
   const {
     data: userData,
     isValidating,

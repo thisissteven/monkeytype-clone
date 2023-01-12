@@ -14,7 +14,7 @@ export default function PreferenceProvider({
     theme: 'default',
     fontFamily: 'poppins',
     isOpen: false,
-    zenMode: true,
+    zenMode: false,
     type: 'words',
     time: '15',
   });
