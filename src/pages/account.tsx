@@ -25,7 +25,7 @@ export default function AccountPage() {
   const { user, logout } = useUser();
 
   // Create formatter (English).
-  // const timeAgo = new TimeAgo('en-US');
+  const timeAgo = new TimeAgo('en-US');
 
   // todo: ganti pake swr
   // const { data } = useQuery(GetProfile, { variables: { id: user?.id } });
@@ -67,7 +67,7 @@ export default function AccountPage() {
                       <span className='text-lg text-hl'>{user.name}</span>
                       <span className='text-sm text-hl'>
                         Joined{' '}
-                        {/* {timeAgo && timeAgo?.format(new Date(user.createdAt))} */}
+                        {timeAgo && timeAgo?.format(new Date(user.createdAt))}
                       </span>
                     </div>
                   </div>

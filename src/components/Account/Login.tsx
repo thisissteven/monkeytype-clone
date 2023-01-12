@@ -7,15 +7,15 @@ import useUser from '@/hooks/useUser';
 import Button from '../Button/Button';
 
 export default function Login() {
-  const { isLoading, login } = useUser();
+  const { isValidating, login } = useUser();
 
   return (
     <Button
-      disabled={isLoading}
+      disabled={isValidating}
       onClick={login}
       className='flex items-center justify-center'
     >
-      {isLoading ? (
+      {isValidating ? (
         <CgSpinner className='animate-spin' />
       ) : (
         <>

@@ -3,8 +3,6 @@ import NextNProgress from 'nextjs-progressbar';
 import * as React from 'react';
 import { CgSpinner } from 'react-icons/cg';
 
-import useUser from '@/hooks/useUser';
-
 import Footer from '@/components/Layout/Footer';
 import Seo from '@/components/Seo';
 
@@ -16,8 +14,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     preferences: { theme, fontFamily },
   } = usePreferenceContext();
 
-  const { isLoading } = useUser();
-
   const [isClient, setIsClient] = React.useState(true);
 
   React.useEffect(() => {
@@ -26,7 +22,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   return (
     <>
-      {isClient && isLoading ? (
+      {isClient ? (
         <>
           <Seo title='Monkeytype Clone' />
           <div

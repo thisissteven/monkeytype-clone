@@ -2,9 +2,24 @@ import { getSession, signOut, useSession } from 'next-auth/react';
 import { signIn } from 'next-auth/react';
 import useSWR from 'swr';
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
+type UserPayload = {
+  name: string;
+  createdAt: string;
+};
+
 export const getUser = async () => {
   const user = await getSession();
   return user;
+};
+
+export const getCurrentUser = async (): Promise<UserPayload> => {
+  const res = await fetch(`${API_URL}/user`);
+  if (!res.ok) {
+    throw new Error('An error occurred while fetching the data.');
+  }
+  return res.json();
 };
 
 const useUser = () => {
@@ -18,6 +33,8 @@ const useUser = () => {
   } = useSWR('getUser', getUser, {
     fallbackData: data,
   });
+
+  const { data: user } = useSWR('getCurrentUser', getCurrentUser);
 
   const logout = () => {
     mutate(
@@ -36,9 +53,9 @@ const useUser = () => {
 
   const login = () => signIn('google');
 
-  const user = userData?.user;
+  const isAuthenticated = !!userData?.user;
 
-  return { user, isLoading: isValidating, error, logout, login };
+  return { user, isAuthenticated, isValidating, error, logout, login };
 };
 
 export default useUser;
