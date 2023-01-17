@@ -14,17 +14,14 @@ export default async function handler(
     switch (req.method) {
       case 'GET':
         // eslint-disable-next-line no-case-declarations
-        const today = new Date();
-        today.setHours(0);
-        today.setMinutes(0);
-        today.setSeconds(0);
+        const yesterday = new Date(new Date(). getTime() - (24 * 60 * 60 * 1000));
 
         // eslint-disable-next-line no-case-declarations
         const [daily, allTime] = await Promise.all([
           prisma.leaderboard.findMany({
             where: {
               createdAt: {
-                gte: today,
+                gte: yesterday,
               },
             },
             orderBy: [
