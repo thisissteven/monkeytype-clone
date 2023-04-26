@@ -1,0 +1,11 @@
+// run "npm install concurrently --save-dev" on your terminal
+
+{  "scripts": {
+    "start": "concurrently \"npm run start-app1\" \"npm run start-app2\"",
+    "start-app1": "cd app && yarn dev",
+    "start-app2": "cd socket && npm start"
+  },
+  "devDependencies": {
+    "concurrently": "^8.0.1"
+  }
+}
