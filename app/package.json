@@ -17,7 +17,7 @@
     "release": "standard-version",
     "push-release": "git push --follow-tags origin main",
     "postbuild": "next-sitemap --config next-sitemap.config.js",
-    "postinstall": "npx prisma generate",
+    "postinstall": "prisma generate",
     "prepare": "cd .. && husky install app/.husky"
   },
   "dependencies": {
